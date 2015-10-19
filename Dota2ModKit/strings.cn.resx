@@ -117,7 +117,285 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddonTileTooltip" xml:space="preserve">
+    <value>左键点击来变更当前自定义游戏，右键点击来查看更多选项。</value>
+  </data>
+  <data name="AskToBreakUpMsg" xml:space="preserve">
+    <value>你确定你要拆分此文件吗？文件名：</value>
+    <comment>ex. "Do you want to break up npc_items_custom.txt?"</comment>
+  </data>
+  <data name="BulkRecolor" xml:space="preserve">
+    <value>改变颜色</value>
+    <comment>particle designer</comment>
+  </data>
+  <data name="BulkResize" xml:space="preserve">
+    <value>改变大小：</value>
+  </data>
+  <data name="CHANGELOG" xml:space="preserve">
+    <value>更新日志</value>
+  </data>
+  <data name="CoffeeScriptCompileBtnTooltip" xml:space="preserve">
+    <value>将位于panorama/scripts/coffeescript文件夹中的coffescript文件编译成JavaScript文件并储存到panorama/scripts文件夹中</value>
+  </data>
+  <data name="CoffeeScriptFilesCompiled" xml:space="preserve">
+    <value>CoffeeScript文件编译成功！</value>
+  </data>
+  <data name="CombineKVFiles" xml:space="preserve">
+    <value>合并KV文件</value>
+  </data>
+  <data name="CombineKVFilesBtnTooltip" xml:space="preserve">
+    <value>将此自定游戏中的scripts/np文件，若尚未拆分过，提示拆分KV文件。</value>
+  </data>
+  <data name="CombineKVSuccess" xml:space="preserve">
+    <value>合并成功！</value>
+  </data>
+  <data name="ContentTileTooltip" xml:space="preserve">
+    <value>打开该自定义游戏的content文件夹</value>
+  </data>
+  <data name="Copied" xml:space="preserve">
+    <value>已复制！</value>
+    <comment>after copying text</comment>
+  </data>
+  <data name="CouldntFindRequiredFile" xml:space="preserve">
+    <value>无法载入文件!</value>
+  </data>
+  <data name="CouldntParseID" xml:space="preserve">
+    <value>无法获取ID！</value>
+  </data>
+  <data name="CustomTileTooltip" xml:space="preserve">
+    <value>点击来自定义方块！</value>
+  </data>
+  <data name="D2ModKitWillDownloadItNow" xml:space="preserve">
+    <value>D2ModKit现在将开始下载！</value>
+  </data>
+  <data name="DirectoryDoesntExistCaption" xml:space="preserve">
+    <value>不存在！</value>
+  </data>
+  <data name="DirectoryDoesntExistMsg" xml:space="preserve">
+    <value>目录不存在</value>
+  </data>
+  <data name="DonateBtnTooltip" xml:space="preserve">
+    <value>考虑下捐赠开发者！</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>正在下载</value>
+  </data>
+  <data name="EnterWorkshopID" xml:space="preserve">
+    <value>输入创意工坊ID</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="FindSoundName" xml:space="preserve">
+    <value>查找Sound.Name</value>
+  </data>
+  <data name="FindSoundNameBtnTooltip" xml:space="preserve">
+    <value>通过一个.vsnd文件路径查找对应的声音文件。</value>
+  </data>
+  <data name="ForThisToWork_UseGCF" xml:space="preserve">
+    <value>为了让这个能正常工作，使用GCFSpace解压.vtex_c到此文件夹。</value>
+    <comment>part2</comment>
+  </data>
+  <data name="GameTileTooltip" xml:space="preserve">
+    <value>打开这个自定义游戏的game文件夹</value>
+  </data>
+  <data name="GenerateTooltips" xml:space="preserve">
+    <value>生成提示文件</value>
+  </data>
+  <data name="GenerateTooltipsBtnTooltip" xml:space="preserve">
+    <value>生成这个自定义游戏的scripts/npc提示，你能够把生成的文件简单地移动到 addon_language.txt 文件中</value>
+  </data>
+  <data name="GithubGoTooltip" xml:space="preserve">
+    <value>到GitHub.com搜索一下~</value>
+  </data>
+  <data name="HasNotBeenBrokenUpCaption" xml:space="preserve">
+    <value>拆分KV文件</value>
+  </data>
+  <data name="HasNotBeenBrokenUpMsg" xml:space="preserve">
+    <value>尚未被拆分，要现在拆分他吗？</value>
+  </data>
   <data name="Hello" xml:space="preserve">
-    <value>您好</value>
+    <value>你好</value>
+  </data>
+  <data name="KeyValues" xml:space="preserve">
+    <value>KeyValues</value>
+  </data>
+  <data name="LuaScript" xml:space="preserve">
+    <value>Lua程序</value>
+  </data>
+  <data name="MatchTheNumbers" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MustBeInsideTheContentDirOf" xml:space="preserve">
+    <value>必须位于content文件夹中</value>
+  </data>
+  <data name="NoDota2AddonsDetectedCaption" xml:space="preserve">
+    <value>没有检测到任何的DOTA2自定义游戏。</value>
+  </data>
+  <data name="NoDota2AddonsDetectedMsg" xml:space="preserve">
+    <value>没有检测到任何的DOTA2自定义游戏，程序需要至少一个自定义游戏，正在退出。</value>
+  </data>
+  <data name="NoSoundNamesFound" xml:space="preserve">
+    <value>没有发现对应的声音名称</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>提示</value>
+  </data>
+  <data name="NoTextInputted" xml:space="preserve">
+    <value>没有文本被输入！</value>
+  </data>
+  <data name="OpensTheKVEntry" xml:space="preserve">
+    <value>打开这个技能的KV文件</value>
+  </data>
+  <data name="OpensTheLuaScript" xml:space="preserve">
+    <value>打开这个技能的Lua文件</value>
+  </data>
+  <data name="OptionsSaved" xml:space="preserve">
+    <value>选项保存成功！</value>
+  </data>
+  <data name="OptionsTooltip" xml:space="preserve">
+    <value>启动选项窗口</value>
+  </data>
+  <data name="ParticleDesigner" xml:space="preserve">
+    <value>粒子特效编辑器</value>
+  </data>
+  <data name="ParticleDesignerBtnTooltip" xml:space="preserve">
+    <value>提供修改粒子特效的颜色和大小的功能。</value>
+  </data>
+  <data name="ParticleDesignFailed" xml:space="preserve">
+    <value>修改粒子特效失败！</value>
+  </data>
+  <data name="ParticleFiles" xml:space="preserve">
+    <value>粒子特效文件</value>
+  </data>
+  <data name="ParticleSelected" xml:space="preserve">
+    <value>选择粒子特效</value>
+  </data>
+  <data name="ParticlesSelected" xml:space="preserve">
+    <value>选择多个粒子特效</value>
+  </data>
+  <data name="ParticlesSuccessfullyDesigned" xml:space="preserve">
+    <value>粒子特效修改成功！</value>
+  </data>
+  <data name="ReportBugTooltip" xml:space="preserve">
+    <value>反馈BUG！</value>
+  </data>
+  <data name="RightClickToEditTile" xml:space="preserve">
+    <value>右键单击来编辑</value>
+  </data>
+  <data name="SelectParticlesToDesign" xml:space="preserve">
+    <value>选择要修改的粒子特效</value>
+  </data>
+  <data name="SelectTGAFilesToCompile" xml:space="preserve">
+    <value>选择要压缩的.tga文件</value>
+  </data>
+  <data name="SelectVTEXCToDecompile" xml:space="preserve">
+    <value>选择要解压的vtex_c文件</value>
+  </data>
+  <data name="SizeChange" xml:space="preserve">
+    <value>变更大小</value>
+  </data>
+  <data name="SpellLibNotFoundCaption" xml:space="preserve">
+    <value>未找到SpellLibrary</value>
+  </data>
+  <data name="SpellLibrary" xml:space="preserve">
+    <value>SpellLibrary</value>
+  </data>
+  <data name="SpellLibraryBtnTooltip" xml:space="preserve">
+    <value>启动一个浏览Spelllibrary的GUI窗口</value>
+  </data>
+  <data name="SpellLibWillNowBeClonedMsg" xml:space="preserve">
+    <value>Spelllibrary将会被克隆到</value>
+  </data>
+  <data name="SteamTileTooltip" xml:space="preserve">
+    <value>打开这自定义游戏的创意工坊页面</value>
+  </data>
+  <data name="WasSuccessfullyDeleted" xml:space="preserve">
+    <value>已成功删除</value>
+    <comment>part2</comment>
+  </data>
+  <data name="TheAddon" xml:space="preserve">
+    <value>自定义游戏</value>
+    <comment>part1</comment>
+  </data>
+  <data name="PleaseClose" xml:space="preserve">
+    <value>请关闭所有占用这个自定义游戏的程序，包括Windows文件浏览器的进程之后重试。</value>
+    <comment>part1</comment>
+  </data>
+  <data name="CouldNotFullyDelete" xml:space="preserve">
+    <value>无法完全删此自定义游戏</value>
+  </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>你确定你要删除这个自定义游戏吗</value>
+  </data>
+  <data name="PermanentlyDelete" xml:space="preserve">
+    <value>这将会永久将这个自定义游戏的content和game文件夹删除。</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>警告</value>
+  </data>
+  <data name="TooltipsSuccessfully" xml:space="preserve">
+    <value>生成提示文本文件成功</value>
+  </data>
+  <data name="CouldntAutoCreateContent" xml:space="preserve">
+    <value>无法为此文件自动创建content路径</value>
+  </data>
+  <data name="String9" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>提交</value>
+  </data>
+  <data name="TGAFilesSuccessfullyCompiled" xml:space="preserve">
+    <value>.tga文件编译成功！</value>
+  </data>
+  <data name="UpdateAvailable" xml:space="preserve">
+    <value>有新的更新！</value>
+  </data>
+  <data name="VersionTooltip" xml:space="preserve">
+    <value>查看版本更新日志</value>
+  </data>
+  <data name="VPKTooltip" xml:space="preserve">
+    <value>打开DOTA 2 PVK文件(需要GCFScape)</value>
+  </data>
+  <data name="VTEXCFilesMustBePresentIn" xml:space="preserve">
+    <value>.vtex_c 文件必在此路径中</value>
+    <comment>part1: ".vtex_c files must be present in some/path"</comment>
+  </data>
+  <data name="WorkshopID" xml:space="preserve">
+    <value>创意工坊ID</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String10" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String11" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String12" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String2" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String3" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String4" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String5" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String6" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String7" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="String8" xml:space="preserve">
+    <value>f</value>
   </data>
 </root>
