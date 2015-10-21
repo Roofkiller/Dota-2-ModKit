@@ -15,7 +15,6 @@ using System.Text;
 using Dota2ModKit.Features;
 using Dota2ModKit.Forms;
 using System.Globalization;
-using Timer = System.Windows.Forms.Timer;
 using System.Threading;
 using Dota2ModKit.HelperClasses;
 
@@ -54,30 +53,23 @@ namespace Dota2ModKit {
 			// bring up the UI
 			InitializeComponent();
 
+			// localize ModKit strings.
 			Localizer localizer = new Localizer(this);
-			localizer.localize();
 
 			Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("cn-CN");
 			Console.WriteLine(strings.Hello);
 
-			setupMainFormHooks();
+			// setup MainForm hooks.
+			setupHooks();
 
 			// check for updates
 			updater = new Updater(this);
-			updater.checkForUpdates();
 
 			// init mainform controls stuff
 			initControls();
 
 			// get the dota dir
 			retrieveDotaDir();
-
-			// *** at this point assume valid dota dir. ***
-
-			// save the dota dir
-			Settings.Default.DotaDir = dotaDir;
-
-			Debug.WriteLine("Directory: " + dotaDir);
 
 			// get the master 'game' and 'content' paths.
 			gamePath = Path.Combine(dotaDir, "game", "dota_addons");
@@ -94,27 +86,27 @@ namespace Dota2ModKit {
 			// get all the addons in the 'game' dir.
 			addons = getAddons();
 
-			// does this computer have any dota addons?
-			if (addons.Count == 0) {
-				MetroMessageBox.Show(this, strings.NoDota2AddonsDetectedMsg,
-					strings.NoDota2AddonsDetectedCaption,
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Error);
-				Environment.Exit(0);
-			}
-
 			// setup custom tiles
 			setupCustomTiles();
+		}
 
-			// some functions in the Tick try and use mainform's controls on another thread. so we need to allot a very small amount of time for
-			// mainform to init its controls. this is mainly for the very first run of modkit.
-			Timer initTimer = new Timer();
-			initTimer.Interval = 100;
-			initTimer.Tick += (s, e) => {
-				// run it once
-				Timer t = (Timer)s;
-				t.Stop();
+		private void initFeatures() {
+			kvFeatures = new KVFeatures(this);
+			vtexFeatures = new VTEXFeatures(this);
+			particleFeatures = new ParticleFeatures(this);
+			soundFeatures = new SoundFeatures(this);
+		}
 
+		private void initControls() {
+			steamTile.TileImage = new Bitmap(Resources.steam_icon, new Size(steamTile.Width, steamTile.Height));
+			luaRadioBtn.Checked = true;
+			tabControl.SelectedIndex = 0;
+			notificationLabel.Text = "";
+			versionLabel.Text = "v" + version;
+		}
+
+		private void setupHooks() {
+			Shown += (s, e) => {
 				// clone a barebones repo if we don't have one, pull if we do
 				updater.clonePullBarebones();
 
@@ -140,26 +132,7 @@ namespace Dota2ModKit {
 				// init our features of Modkit
 				initFeatures();
 			};
-			initTimer.Start();
-		}
 
-		private void initFeatures() {
-			kvFeatures = new KVFeatures(this);
-			vtexFeatures = new VTEXFeatures(this);
-			particleFeatures = new ParticleFeatures(this);
-			soundFeatures = new SoundFeatures(this);
-		}
-
-		private void initControls() {
-			Size size = new Size(steamTile.Width, steamTile.Height);
-			steamTile.TileImage = (Image)new Bitmap(Resources.steam_icon, size);
-			luaRadioBtn.Checked = true;
-			tabControl.SelectedIndex = 0;
-			notificationLabel.Text = "";
-			versionLabel.Text = "v" + version;
-		}
-
-		private void setupMainFormHooks() {
 			// setup hooks
 			FormClosing += (s, e) => {
 				serializeSettings();
@@ -168,8 +141,6 @@ namespace Dota2ModKit {
 			tabControl.Selected += (s, e) => {
 				//PlaySound(Properties.Resources.browser_click_navigate);
 			};
-
-
 
 			githubTextBox.KeyDown += (s, e) => {
 				if (e.KeyCode == Keys.Enter) {
@@ -183,11 +154,10 @@ namespace Dota2ModKit {
 			// start process of retrieving dota dir
 			dotaDir = Settings.Default.DotaDir;
 
-			if (Settings.Default.DotaDir == "") {
-				// this is first run of application
-
+			if (dotaDir == "") {
+				// user opened this application for the first time ever.
 				// try to auto-get the dir
-				dotaDir = Util.getDotaDir();
+				dotaDir = Util.GetDotaDir();
 
 				DialogResult dr = DialogResult.No;
 				if (dotaDir != "") {
@@ -210,50 +180,16 @@ namespace Dota2ModKit {
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Error);
 
-						Environment.Exit(0);
+						Application.Exit();
+						return;
 					}
 					string p = fbd.SelectedPath;
 					dotaDir = p;
 				}
 			}
 
-			// ModKit must ran in the same drive as the dota dir.
-			if (!Util.hasSameDrives(Environment.CurrentDirectory, dotaDir)) {
-				MetroMessageBox.Show(this, "Dota 2 ModKit must be ran from the same drive as Dota 2 or else errors " +
-					"will occur. Please move Dota 2 ModKit to the '" + dotaDir[0] + "' Drive and create a shortcut to it. Exiting.",
-					"Error",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Error);
-
-				Environment.Exit(0);
-			}
-
-			// trying to read vpk practice. this works currently
-			/*
-			string s2vpkPath = Path.Combine(dotaDir, "game", "dota_imported", "pak01_dir.vpk");
-			using (var vpk = new VpkFile(s2vpkPath)) {
-				vpk.Open();
-				Debug.WriteLine("Got VPK version {0}", vpk.Version);
-				VpkNode node = vpk.GetFile("scripts/npc/npc_units.txt");
-				using (var inputStream = VPKUtil.GetInputStream(s2vpkPath, node)) {
-					var pathPieces = node.FilePath.Split('/');
-					var directory = pathPieces.Take(pathPieces.Count() - 1);
-					var fileName = pathPieces.Last();
-
-					//EnsureDirectoryExists(Path.Combine(directory.ToArray()));
-
-					using (var fsout = File.OpenWrite(Path.Combine(Environment.CurrentDirectory, "something.txt"))) {
-						var buffer = new byte[1024];
-						int amtToRead = (int)node.EntryLength;
-						int read;
-
-						while ((read = inputStream.Read(buffer, 0, buffer.Length)) > 0 && amtToRead > 0) {
-							fsout.Write(buffer, 0, Math.Min(amtToRead, read));
-							amtToRead -= read;
-						}
-					}
-				}
-			}*/
+			Settings.Default.DotaDir = dotaDir;
+			Settings.Default.Save();
 		}
 
 		private string getDefaultAddonName() {
@@ -436,6 +372,16 @@ namespace Dota2ModKit {
 						firstAddonName = a.name;
 					}
 				}
+			}
+
+			// does this computer have any dota addons?
+			if (addons.Count == 0) {
+				MetroMessageBox.Show(this, strings.NoDota2AddonsDetectedMsg,
+					strings.NoDota2AddonsDetectedCaption,
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
+				Environment.Exit(0);
+				return addons;
 			}
 
 			//Util.Log(addons_constructed, false);

@@ -76,7 +76,7 @@ namespace Dota2ModKit {
 		private void recolorBtn_Click(object sender, EventArgs e) {
 			metroRadioButton1.Select();
 
-			rgb = Util.getRGB();
+			rgb = Util.GetRGB();
 
 			if (rgb == null) {
 				return;

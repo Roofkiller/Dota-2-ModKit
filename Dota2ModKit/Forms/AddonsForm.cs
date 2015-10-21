@@ -12,12 +12,12 @@ using System.Net;
 using System.Text;
 using System.Windows.Forms;
 
+// 10/7/15 TODO:
 namespace Dota2ModKit {
 	public partial class AddonsForm : MetroForm {
 		private MainForm mainForm;
-		int currPage = 1;
-		int totalPages = 1;
 		List<MetroTile> mts = new List<MetroTile>();
+		Random random = new Random();
 
 		// for addon forking
 		string newAddonName;
@@ -36,95 +36,51 @@ namespace Dota2ModKit {
 			createAddonBtn.Enabled = true;
 			bmdRadioButton.Checked = true;
 
-			mts.Add(metroTile1);
-			mts.Add(metroTile2);
-			mts.Add(metroTile3);
-			mts.Add(metroTile4);
-			mts.Add(metroTile5);
-			mts.Add(metroTile6);
-			mts.Add(metroTile7);
-			mts.Add(metroTile8);
-			mts.Add(metroTile9);
-			mts.Add(metroTile10);
-			mts.Add(metroTile11);
-			mts.Add(metroTile12);
-			mts.Add(metroTile13);
-			mts.Add(metroTile14);
-			mts.Add(metroTile15);
-			mts.Add(metroTile16);
+			initAddonTab();
+		}
 
-			totalPages = mainForm.addons.Count / 16;
+		private void initAddonTab() {
+			int count = 1, tileX = 4, tileY = 4;
+			foreach (var addon in mainForm.addons) {
+				MetroTile mt;
+				MetroProgressSpinner ps;
+				CreateAddonTile(new Point(tileX, tileY), out mt, out ps);
 
-			if (mainForm.addons.Count % 16 != 0) {
-				totalPages++;
+
 			}
 
-			if (totalPages == 1) {
-				nextBtn.Visible = false;
-			}
+		}
 
-			int addonCount = 0;
-			int pos = 1;
-			int page = 1;
-			foreach (KeyValuePair<string, Addon> kv in mainForm.addons) {
-				Addon a = kv.Value;
-				addonCount++;
-
-				// store the page and pos of this addon
-				a.libraryPos = pos;
-				a.libraryPage = page;
-
-				//if ()
-
-				pos++;
-
-				if (addonCount % 16 == 0) {
-					page++;
-					pos = 1;
+		private void CreateAddonTile(Point location, out MetroTile out_mt, out MetroProgressSpinner out_ps) {
+			var mt = new MetroTile();
+			mt.Parent = myAddonsTab;
+			mt.Location = location;
+			//mt.ContextMenuStrip = metroContextMenu1;
+			mt.Style = (MetroColorStyle)random.Next(4, 14);
+			mt.Theme = MetroThemeStyle.Light;
+			mt.Size = new Size(128, 116);
+			mt.Click += (sender, e) => {
+				dummyBtn.Select();
+				foreach (var addon in mainForm.addons) {
+					string s = sender.ToString();
+					string addonName = s.Substring(s.LastIndexOf(':') + 2);
+					mainForm.changeCurrAddon(mainForm.getAddonFromName(addonName));
+					mainForm.addonTile.Text = addonName;
+					Close();
 				}
-			}
+			};
 
-			backBtn.Visible = false;
+			// Setup the spinner
+			MetroProgressSpinner ps = new MetroProgressSpinner();
+			ps.Parent = mt;
+			ps.Visible = false;
+			ps.Size = new Size(38, 38);
+			ps.Location = new Point(44, 38);
+			ps.Style = mt.Style;
+			ps.Value = 70;
 
-			refreshPage();
-		}
-
-		private void nextBtn_Click(object sender, EventArgs e) {
-			dummyRadioBtn.Select();
-
-			if (currPage != totalPages) {
-				currPage++;
-				refreshPage();
-			}
-
-			if (currPage == totalPages) {
-				nextBtn.Visible = false;
-			}
-
-			if (!backBtn.Visible) {
-				backBtn.Visible = true;
-			}
-
-		}
-
-		private void backBtn_Click(object sender, EventArgs e) {
-			dummyRadioBtn.Select();
-
-			if (currPage == 1) {
-				return;
-			}
-
-			currPage--;
-
-			if (currPage == 1) {
-				backBtn.Visible = false;
-			}
-
-			if (!nextBtn.Visible) {
-				nextBtn.Visible = true;
-			}
-
-			refreshPage();
+			out_mt = mt;
+			out_ps = ps;
 		}
 
 		private void refreshPage() {
@@ -172,16 +128,6 @@ namespace Dota2ModKit {
 			}
 		}
 
-		private void metroTile_Click(object sender, EventArgs e) {
-			string s = sender.ToString();
-
-			string addonName = s.Substring(s.LastIndexOf(':') + 2);
-			mainForm.changeCurrAddon(mainForm.getAddonFromName(addonName));
-			mainForm.addonTile.Text = addonName;
-
-			this.Close();
-		}
-
 		private void createAddonBtn_Click(object sender, EventArgs e) {
 			try {
 				createAddon();
@@ -196,7 +142,7 @@ namespace Dota2ModKit {
         }
 
 		private void createAddon() {
-			dummyRadioBtn.Select();
+			dummyBtn.Select();
 
 			// ensure an addon is selected.
 			if (existingAddonRadioButton1.Checked) {
@@ -369,7 +315,7 @@ namespace Dota2ModKit {
 				Directory.Move(dirs[i], newDir);
 			}
 
-			List<string> files = Util.getFiles(newRootDir, "*.txt;*.lua;*.vmap");
+			List<string> files = Util.GetFiles(newRootDir, "*.txt;*.lua;*.vmap");
 			for (int i = 0; i < files.Count; i++) {
 				// let's change the filename first, before modifying the contents.
 				string newFileName = files[i].Replace("barebones", newLower);

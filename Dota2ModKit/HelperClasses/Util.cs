@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -9,8 +10,54 @@ using System.Windows.Forms;
 
 namespace Dota2ModKit {
 	public static class Util {
-		public static string logPath = Path.Combine(Environment.CurrentDirectory, "debug_log.txt");
+		// useful with dynamic types
+		public static bool IsPropertyExist(dynamic settings, string name) {
+			return settings.GetType().GetProperty(name) != null;
+		}
 
+		public static object GetCallingControl(dynamic item, object dummy) {
+			if (!IsPropertyExist(item, "Owner")) {
+				Debug.WriteLine("Owner doesn't exit!");
+				return null;
+			}
+
+			Type type = dummy.GetType();
+			var owner = (ContextMenuStrip)item.Owner;
+			return Convert.ChangeType(owner.SourceControl, type);
+		}
+
+		public static Timer CreateTimer(int interval, Action<Timer> onTick) {
+			Timer timer = new Timer();
+			timer.Interval = interval;
+			timer.Tick += (s, e) => {
+				onTick(timer);
+			};
+			timer.Start();
+			return timer;
+		}
+
+		public static void Delay(int delay, Action action) {
+			Timer timer = new Timer();
+			timer.Interval = delay;
+			timer.Tick += (s, e) => {
+				timer.Stop();
+				action();
+			};
+			timer.Start();
+		}
+
+		public static Exception TryDeleteFile(string filePath) {
+			try {
+				if (File.Exists(filePath)) {
+					File.Delete(filePath);
+				}
+			} catch (Exception ex) {
+				return ex;
+			}
+			return null;
+		}
+
+		public static string logPath = Path.Combine(Environment.CurrentDirectory, "debug_log.txt");
 		public static void Log(string text) {
 			try {
 				// if log file is over xxx KB, delete.
@@ -24,8 +71,8 @@ namespace Dota2ModKit {
 
 				StringBuilder logText = new StringBuilder(File.ReadAllText(logPath));
 				if (logText.Length == 0) {
-					logText.AppendLine("REPORT THIS TO https://github.com/Myll/Dota-2-ModKit/issues IF CRASHES OCCUR.\n");
-                }
+					logText.AppendLine("REPORT THIS TO https://github.com/stephenfournier/Dota-2-ModKit/issues/new IF CRASHES OCCUR.\n");
+				}
 
 				logText.AppendLine("\n\nNEW ENTRY: " + DateTime.Now.ToShortDateString() + ", " + DateTime.Now.ToLongTimeString());
 				logText.AppendLine(text);
@@ -84,7 +131,7 @@ namespace Dota2ModKit {
 			return totalBytes;
 		}
 
-		public static string findCommonBeginning(string[] strs) {
+		public static string FindCommonBeginning(string[] strs) {
 			string commonBeginning = "";
 			int maxLength = Int32.MaxValue;
 
@@ -106,7 +153,7 @@ namespace Dota2ModKit {
 			return commonBeginning;
 		}
 
-		public static string getDotaDir() {
+		public static string GetDotaDir() {
 			string dotaDir = "";
 			// Auto-find the dota path.
 			Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.LocalMachine;
@@ -117,9 +164,7 @@ namespace Dota2ModKit {
 					string dir = regKey.GetValue("InstallLocation").ToString();
 					dotaDir = dir;
 				}
-			} catch (Exception) {
-
-			}
+			} catch (Exception) { }
 
 			if (dotaDir != "") {
 				return dotaDir;
@@ -147,11 +192,10 @@ namespace Dota2ModKit {
 			} else if (Directory.Exists(p2)) {
 				dotaDir = p2;
 			}
-
 			return dotaDir;
 		}
 
-		public static bool hasSameDrives(string path1, string path2) {
+		public static bool HasSameDrives(string path1, string path2) {
 			// D2ModKit must be ran from the same drive as dota or else things will break.
 			char path1Drive = path1[0];
 			char path2Drive = path2[0];
@@ -183,19 +227,19 @@ namespace Dota2ModKit {
 			return Encoding.ASCII;
 		}
 
-		public static List<string> getFiles(string directory, string searchPattern) {
-		List<string> allFiles = new List<string>();
-		string[] exts = searchPattern.Split(';');
-		for (int i = 0; i < exts.Count(); i++) {
-			string[] foundFiles = Directory.GetFiles(directory, exts[i], SearchOption.AllDirectories);
-			for (int j = 0; j < foundFiles.Count(); j++) {
-				allFiles.Add(foundFiles[j]);
+		public static List<string> GetFiles(string directory, string searchPattern) {
+			List<string> allFiles = new List<string>();
+			string[] exts = searchPattern.Split(';');
+			for (int i = 0; i < exts.Count(); i++) {
+				string[] foundFiles = Directory.GetFiles(directory, exts[i], SearchOption.AllDirectories);
+				for (int j = 0; j < foundFiles.Count(); j++) {
+					allFiles.Add(foundFiles[j]);
+				}
 			}
+			return allFiles;
 		}
-		return allFiles;
-	}
 
-	public static string[] getRGB() {
+		public static string[] GetRGB() {
 			string[] rgb = new string[3];
 			ColorDialog color = new ColorDialog();
 			color.AnyColor = true;
@@ -212,27 +256,37 @@ namespace Dota2ModKit {
 			return rgb;
 		}
 
-		public static string incrementVers(string vers, int add) {
-			//Debug.WriteLine("input: " + vers);
+		public static string IncrementVers(string vers, int add) {
 			// check for new Vers
-			string[] numStrings = vers.Split('.');
-			int thousands = Int32.Parse(numStrings[0]) * 1000;
-			int hundreds = Int32.Parse(numStrings[1]) * 100;
-			int tens = Int32.Parse(numStrings[2]) * 10;
-			int ones = Int32.Parse(numStrings[3]);
-			int num = thousands + hundreds + tens + ones + add;
+			string[] numStrs = vers.Split('.');
+			string newVers = "";
+			if (numStrs.Length == 4) {
+				int thousands = Int32.Parse(numStrs[0]) * 1000;
+				int hundreds = Int32.Parse(numStrs[1]) * 100;
+				int tens = Int32.Parse(numStrs[2]) * 10;
+				int ones = Int32.Parse(numStrs[3]);
+				int num = thousands + hundreds + tens + ones + add;
 
-			//Debug.WriteLine("new num: " + num);
-			int newThousands = num / 1000;
-			int newHundreds = (num - newThousands * 1000) / 100;
-			int newTens = (num - newThousands * 1000 - newHundreds * 100) / 10;
-			int newOnes = num - newThousands * 1000 - newHundreds * 100 - newTens * 10;
-			string newVers = newThousands + "." + newHundreds + "." + newTens + "." + newOnes;
-			//Debug.WriteLine("New vers: " + newVers);
+				int newThousands = num / 1000;
+				int newHundreds = (num - newThousands * 1000) / 100;
+				int newTens = (num - newThousands * 1000 - newHundreds * 100) / 10;
+				int newOnes = num - newThousands * 1000 - newHundreds * 100 - newTens * 10;
+				newVers = newThousands + "." + newHundreds + "." + newTens + "." + newOnes;
+			} else if (numStrs.Length == 3) {
+				int hundreds = Int32.Parse(numStrs[0]) * 100;
+				int tens = Int32.Parse(numStrs[1]) * 10;
+				int ones = Int32.Parse(numStrs[2]);
+				int num = hundreds + tens + ones + add;
+
+				int newHundreds = num / 100;
+				int newTens = (num - newHundreds * 100) / 10;
+				int newOnes = num - newHundreds * 100 - newTens * 10;
+				newVers = newHundreds + "." + newTens + "." + newOnes;
+			}
 			return newVers;
 		}
 
-		internal static System.Drawing.Image imageUrlToObj(string url) {
+		internal static System.Drawing.Image ImageUrlToObj(string url) {
 			WebClient wc = new WebClient();
 			byte[] bytes = wc.DownloadData("http://localhost/image.gif");
 			MemoryStream ms = new MemoryStream(bytes);

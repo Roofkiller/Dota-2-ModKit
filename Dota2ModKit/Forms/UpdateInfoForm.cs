@@ -59,9 +59,7 @@ namespace Dota2ModKit.Forms {
 					startFound = true;
 				}
 			}
-
 			return changelog.ToString();
-
 		}
 
 		private void updateBtn_Click(object sender, EventArgs e) {

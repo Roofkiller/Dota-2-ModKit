@@ -186,7 +186,7 @@ namespace Dota2ModKit.Forms {
 				} else {
 					currHeroName = heroName;
 
-					string commonHeroName = Util.findCommonBeginning(abilArr.ToArray());
+					string commonHeroName = Util.FindCommonBeginning(abilArr.ToArray());
 					if (commonHeroName.EndsWith("_")) {
 						commonHeroName = commonHeroName.Substring(0, commonHeroName.Length - 1);
 					}

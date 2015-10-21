@@ -77,9 +77,9 @@
 			this.customTile5 = new MetroFramework.Controls.MetroTile();
 			this.versionLabel = new MetroFramework.Controls.MetroLink();
 			this.donateBtn = new MetroFramework.Controls.MetroLink();
+			this.reportBugBtn = new System.Windows.Forms.PictureBox();
 			this.progressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
 			this.metroComboBox1 = new MetroFramework.Controls.MetroComboBox();
-			this.reportBugBtn = new System.Windows.Forms.PictureBox();
 			this.addonTileContextMenu.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.toolsTab.SuspendLayout();
@@ -109,9 +109,9 @@
 			// 
 			this.addonTile.ActiveControl = null;
 			this.addonTile.ContextMenuStrip = this.addonTileContextMenu;
-			this.addonTile.Location = new System.Drawing.Point(8, 56);
+			this.addonTile.Location = new System.Drawing.Point(16, 64);
 			this.addonTile.Name = "addonTile";
-			this.addonTile.Size = new System.Drawing.Size(160, 124);
+			this.addonTile.Size = new System.Drawing.Size(144, 120);
 			this.addonTile.Style = MetroFramework.MetroColorStyle.Green;
 			this.addonTile.TabIndex = 0;
 			this.addonTile.Text = "AddonName";
@@ -161,7 +161,7 @@
 			this.tabControl.FontSize = MetroFramework.MetroTabControlSize.Tall;
 			this.tabControl.FontWeight = MetroFramework.MetroTabControlWeight.Regular;
 			this.tabControl.ItemSize = new System.Drawing.Size(40, 25);
-			this.tabControl.Location = new System.Drawing.Point(208, 44);
+			this.tabControl.Location = new System.Drawing.Point(332, 56);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
 			this.tabControl.ShowToolTips = true;
@@ -586,7 +586,7 @@
 			this.notificationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.notificationLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
 			this.notificationLabel.ForeColor = System.Drawing.Color.Maroon;
-			this.notificationLabel.Location = new System.Drawing.Point(-4, 252);
+			this.notificationLabel.Location = new System.Drawing.Point(160, 312);
 			this.notificationLabel.Name = "notificationLabel";
 			this.notificationLabel.Size = new System.Drawing.Size(153, 25);
 			this.notificationLabel.Style = MetroFramework.MetroColorStyle.Green;
@@ -610,9 +610,9 @@
 			// gameTile
 			// 
 			this.gameTile.ActiveControl = null;
-			this.gameTile.Location = new System.Drawing.Point(172, 56);
+			this.gameTile.Location = new System.Drawing.Point(164, 64);
 			this.gameTile.Name = "gameTile";
-			this.gameTile.Size = new System.Drawing.Size(36, 28);
+			this.gameTile.Size = new System.Drawing.Size(40, 36);
 			this.gameTile.Style = MetroFramework.MetroColorStyle.Blue;
 			this.gameTile.TabIndex = 7;
 			this.gameTile.Text = "G";
@@ -625,9 +625,9 @@
 			// contentTile
 			// 
 			this.contentTile.ActiveControl = null;
-			this.contentTile.Location = new System.Drawing.Point(172, 88);
+			this.contentTile.Location = new System.Drawing.Point(164, 104);
 			this.contentTile.Name = "contentTile";
-			this.contentTile.Size = new System.Drawing.Size(36, 28);
+			this.contentTile.Size = new System.Drawing.Size(40, 36);
 			this.contentTile.Style = MetroFramework.MetroColorStyle.Orange;
 			this.contentTile.TabIndex = 10;
 			this.contentTile.Text = "C";
@@ -640,7 +640,7 @@
 			// steamTile
 			// 
 			this.steamTile.ActiveControl = null;
-			this.steamTile.Location = new System.Drawing.Point(172, 120);
+			this.steamTile.Location = new System.Drawing.Point(264, 128);
 			this.steamTile.Name = "steamTile";
 			this.steamTile.Size = new System.Drawing.Size(36, 28);
 			this.steamTile.Style = MetroFramework.MetroColorStyle.Silver;
@@ -663,7 +663,7 @@
 			// vpkTile
 			// 
 			this.vpkTile.ActiveControl = null;
-			this.vpkTile.Location = new System.Drawing.Point(48, 184);
+			this.vpkTile.Location = new System.Drawing.Point(212, 244);
 			this.vpkTile.Name = "vpkTile";
 			this.vpkTile.Size = new System.Drawing.Size(40, 28);
 			this.vpkTile.Style = MetroFramework.MetroColorStyle.Red;
@@ -678,7 +678,7 @@
 			// optionsTile
 			// 
 			this.optionsTile.ActiveControl = null;
-			this.optionsTile.Location = new System.Drawing.Point(8, 184);
+			this.optionsTile.Location = new System.Drawing.Point(172, 244);
 			this.optionsTile.Name = "optionsTile";
 			this.optionsTile.Size = new System.Drawing.Size(36, 28);
 			this.optionsTile.Style = MetroFramework.MetroColorStyle.Silver;
@@ -694,7 +694,7 @@
 			// 
 			this.customTile1.ActiveControl = null;
 			this.customTile1.ContextMenuStrip = this.tileContextMenu;
-			this.customTile1.Location = new System.Drawing.Point(172, 152);
+			this.customTile1.Location = new System.Drawing.Point(264, 160);
 			this.customTile1.Name = "customTile1";
 			this.customTile1.Size = new System.Drawing.Size(36, 28);
 			this.customTile1.Style = MetroFramework.MetroColorStyle.Purple;
@@ -724,7 +724,7 @@
 			// 
 			this.customTile2.ActiveControl = null;
 			this.customTile2.ContextMenuStrip = this.tileContextMenu;
-			this.customTile2.Location = new System.Drawing.Point(172, 216);
+			this.customTile2.Location = new System.Drawing.Point(336, 276);
 			this.customTile2.Name = "customTile2";
 			this.customTile2.Size = new System.Drawing.Size(36, 28);
 			this.customTile2.Style = MetroFramework.MetroColorStyle.Brown;
@@ -739,7 +739,7 @@
 			// 
 			this.customTile3.ActiveControl = null;
 			this.customTile3.ContextMenuStrip = this.tileContextMenu;
-			this.customTile3.Location = new System.Drawing.Point(92, 184);
+			this.customTile3.Location = new System.Drawing.Point(256, 244);
 			this.customTile3.Name = "customTile3";
 			this.customTile3.Size = new System.Drawing.Size(36, 28);
 			this.customTile3.Style = MetroFramework.MetroColorStyle.Yellow;
@@ -754,7 +754,7 @@
 			// 
 			this.customTile4.ActiveControl = null;
 			this.customTile4.ContextMenuStrip = this.tileContextMenu;
-			this.customTile4.Location = new System.Drawing.Point(172, 184);
+			this.customTile4.Location = new System.Drawing.Point(336, 244);
 			this.customTile4.Name = "customTile4";
 			this.customTile4.Size = new System.Drawing.Size(36, 28);
 			this.customTile4.Style = MetroFramework.MetroColorStyle.Lime;
@@ -769,7 +769,7 @@
 			// 
 			this.customTile5.ActiveControl = null;
 			this.customTile5.ContextMenuStrip = this.tileContextMenu;
-			this.customTile5.Location = new System.Drawing.Point(132, 184);
+			this.customTile5.Location = new System.Drawing.Point(296, 244);
 			this.customTile5.Name = "customTile5";
 			this.customTile5.Size = new System.Drawing.Size(36, 28);
 			this.customTile5.Style = MetroFramework.MetroColorStyle.Magenta;
@@ -810,9 +810,22 @@
 			this.donateBtn.UseStyleColors = true;
 			this.donateBtn.Click += new System.EventHandler(this.donateBtn_Click);
 			// 
+			// reportBugBtn
+			// 
+			this.reportBugBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.reportBugBtn.Image = ((System.Drawing.Image)(resources.GetObject("reportBugBtn.Image")));
+			this.reportBugBtn.Location = new System.Drawing.Point(284, 28);
+			this.reportBugBtn.Name = "reportBugBtn";
+			this.reportBugBtn.Size = new System.Drawing.Size(16, 16);
+			this.reportBugBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.reportBugBtn.TabIndex = 31;
+			this.reportBugBtn.TabStop = false;
+			this.mainFormToolTip.SetToolTip(this.reportBugBtn, "Report a bug!");
+			this.reportBugBtn.Click += new System.EventHandler(this.reportBug_Click);
+			// 
 			// progressSpinner1
 			// 
-			this.progressSpinner1.Location = new System.Drawing.Point(452, 252);
+			this.progressSpinner1.Location = new System.Drawing.Point(520, 292);
 			this.progressSpinner1.Maximum = 100;
 			this.progressSpinner1.Name = "progressSpinner1";
 			this.progressSpinner1.Size = new System.Drawing.Size(24, 24);
@@ -833,31 +846,18 @@
             "npc_units_custom.txt",
             "addon_english.txt",
             "... etc"});
-			this.metroComboBox1.Location = new System.Drawing.Point(8, 216);
+			this.metroComboBox1.Location = new System.Drawing.Point(172, 276);
 			this.metroComboBox1.Name = "metroComboBox1";
 			this.metroComboBox1.Size = new System.Drawing.Size(161, 29);
 			this.metroComboBox1.TabIndex = 30;
 			this.metroComboBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroComboBox1.UseSelectable = true;
 			// 
-			// reportBugBtn
-			// 
-			this.reportBugBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.reportBugBtn.Image = ((System.Drawing.Image)(resources.GetObject("reportBugBtn.Image")));
-			this.reportBugBtn.Location = new System.Drawing.Point(284, 28);
-			this.reportBugBtn.Name = "reportBugBtn";
-			this.reportBugBtn.Size = new System.Drawing.Size(16, 16);
-			this.reportBugBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-			this.reportBugBtn.TabIndex = 31;
-			this.reportBugBtn.TabStop = false;
-			this.mainFormToolTip.SetToolTip(this.reportBugBtn, "Report a bug!");
-			this.reportBugBtn.Click += new System.EventHandler(this.reportBug_Click);
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(479, 278);
+			this.ClientSize = new System.Drawing.Size(738, 531);
 			this.Controls.Add(this.reportBugBtn);
 			this.Controls.Add(this.donateBtn);
 			this.Controls.Add(this.versionLabel);
@@ -886,6 +886,7 @@
 			this.Resizable = false;
 			this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+			this.Style = MetroFramework.MetroColorStyle.Teal;
 			this.Text = "Dota 2 ModKit";
 			this.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.addonTileContextMenu.ResumeLayout(false);
@@ -902,7 +903,6 @@
 		}
 
 		#endregion
-		private MetroFramework.Controls.MetroTabControl tabControl;
 		private MetroFramework.Controls.MetroTabPage toolsTab;
 		private MetroFramework.Controls.MetroRadioButton metroRadioButton1;
 		private MetroFramework.Controls.MetroTabPage helpTab;
@@ -915,7 +915,6 @@
 		private MetroFramework.Controls.MetroButton compileVtexButton;
 		private MetroFramework.Controls.MetroContextMenu tileContextMenu;
 		private System.Windows.Forms.ToolStripMenuItem editTileToolStripMenuItem;
-		private MetroFramework.Controls.MetroComboBox metroComboBox1;
 		public MetroFramework.Controls.MetroTile addonTile;
 		public MetroFramework.Controls.MetroButton generateAddonLangsBtn;
 		public MetroFramework.Controls.MetroButton particleDesignBtn;
@@ -957,5 +956,7 @@
 		public MetroFramework.Controls.MetroLink metroLink10;
 		public MetroFramework.Controls.MetroLink metroLink11;
 		public MetroFramework.Controls.MetroLink metroLink12;
+		public MetroFramework.Controls.MetroTabControl tabControl;
+		public MetroFramework.Controls.MetroComboBox metroComboBox1;
 	}
 }
