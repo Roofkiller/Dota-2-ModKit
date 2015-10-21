@@ -10,6 +10,7 @@ namespace Dota2ModKit.HelperClasses {
 
 		public Localizer(MainForm mf) {
 			this.mf = mf;
+			localize();
 		}
 
 		public void localize() {

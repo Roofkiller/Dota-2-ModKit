@@ -90,7 +90,7 @@ namespace Dota2ModKit {
 		}
 
 		private void nextBtn_Click(object sender, EventArgs e) {
-			dummyRadioBtn.Select();
+			dummyBtn.Select();
 
 			if (currPage != totalPages) {
 				currPage++;
@@ -108,7 +108,7 @@ namespace Dota2ModKit {
 		}
 
 		private void backBtn_Click(object sender, EventArgs e) {
-			dummyRadioBtn.Select();
+			dummyBtn.Select();
 
 			if (currPage == 1) {
 				return;
@@ -196,7 +196,7 @@ namespace Dota2ModKit {
         }
 
 		private void createAddon() {
-			dummyRadioBtn.Select();
+			dummyBtn.Select();
 
 			// ensure an addon is selected.
 			if (existingAddonRadioButton1.Checked) {
@@ -369,7 +369,7 @@ namespace Dota2ModKit {
 				Directory.Move(dirs[i], newDir);
 			}
 
-			List<string> files = Util.getFiles(newRootDir, "*.txt;*.lua;*.vmap");
+			List<string> files = Util.GetFiles(newRootDir, "*.txt;*.lua;*.vmap");
 			for (int i = 0; i < files.Count; i++) {
 				// let's change the filename first, before modifying the contents.
 				string newFileName = files[i].Replace("barebones", newLower);

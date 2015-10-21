@@ -54,7 +54,7 @@
 			this.addonNameLabel = new MetroFramework.Controls.MetroLabel();
 			this.createAddonBtn = new MetroFramework.Controls.MetroButton();
 			this.bmdRadioButton = new MetroFramework.Controls.MetroRadioButton();
-			this.dummyRadioBtn = new MetroFramework.Controls.MetroRadioButton();
+			this.dummyBtn = new MetroFramework.Controls.MetroRadioButton();
 			this.tabControl.SuspendLayout();
 			this.myAddonsTab.SuspendLayout();
 			this.newAddonTab.SuspendLayout();
@@ -485,14 +485,14 @@
 			// 
 			// dummyRadioBtn
 			// 
-			this.dummyRadioBtn.AutoSize = true;
-			this.dummyRadioBtn.Location = new System.Drawing.Point(289, 2);
-			this.dummyRadioBtn.Name = "dummyRadioBtn";
-			this.dummyRadioBtn.Size = new System.Drawing.Size(127, 15);
-			this.dummyRadioBtn.TabIndex = 10;
-			this.dummyRadioBtn.Text = "metroRadioButton2";
-			this.dummyRadioBtn.UseSelectable = true;
-			this.dummyRadioBtn.Visible = false;
+			this.dummyBtn.AutoSize = true;
+			this.dummyBtn.Location = new System.Drawing.Point(289, 2);
+			this.dummyBtn.Name = "dummyRadioBtn";
+			this.dummyBtn.Size = new System.Drawing.Size(127, 15);
+			this.dummyBtn.TabIndex = 10;
+			this.dummyBtn.Text = "metroRadioButton2";
+			this.dummyBtn.UseSelectable = true;
+			this.dummyBtn.Visible = false;
 			// 
 			// AddonsForm
 			// 
@@ -500,7 +500,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(541, 586);
-			this.Controls.Add(this.dummyRadioBtn);
+			this.Controls.Add(this.dummyBtn);
 			this.Controls.Add(this.tabControl);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
@@ -540,7 +540,7 @@
 		private MetroFramework.Controls.MetroTile metroTile2;
 		private MetroFramework.Controls.MetroButton nextBtn;
 		private MetroFramework.Controls.MetroButton backBtn;
-		private MetroFramework.Controls.MetroRadioButton dummyRadioBtn;
+		private MetroFramework.Controls.MetroRadioButton dummyBtn;
 		private MetroFramework.Controls.MetroButton createAddonBtn;
 		private MetroFramework.Controls.MetroLabel addonNameLabel;
 		private MetroFramework.Controls.MetroTextBox addonNameTextBox;

@@ -27,7 +27,7 @@ namespace Dota2ModKit
 		internal bool doesntHaveThumbnail;
 		internal MetroColorStyle tileColor = MetroColorStyle.Green;
 
-		// for generate addon_lang files
+		// for generating addon_lang files
 		HashSet<string> abilityModifierNames = new HashSet<string>();
 		HashSet<string> itemModifierNames = new HashSet<string>();
 		List<AbilityEntry> abilityEntries = new List<AbilityEntry>();
@@ -35,11 +35,14 @@ namespace Dota2ModKit
 		List<UnitEntry> unitEntries = new List<UnitEntry>();
 		List<HeroEntry> heroEntries = new List<HeroEntry>();
 		HashSet<string> alreadyHasKeys = new HashSet<string>();
+
+		// deserialized settings
 		internal bool generateNote0;
 		internal bool generateLore;
 		internal bool askToBreakUp;
 		internal bool autoDeleteBin;
 		internal bool barebonesLibUpdates;
+
 		private string gameSizeStr = "";
 		private string contentSizeStr = "";
 		private MainForm mainForm;
@@ -50,12 +53,16 @@ namespace Dota2ModKit
 		internal bool generateUTF8 = true;
 		internal bool autoCompileCoffeeScript;
 
+		// FileSystemWatcher's
+		public Dictionary<string, FileSystemWatcher> npcWatchers = new Dictionary<string, FileSystemWatcher>();
+		internal FileSystemWatcher coffeeWatcher;
+
 		public Addon(string gamePath) {
 			this.gamePath = gamePath;
 
 			// extract other info from the gamePath
 			name = gamePath.Substring(gamePath.LastIndexOf('\\')+1);
-			Debug.WriteLine("New Addon detected: " + name);
+			//Debug.WriteLine("New Addon detected: " + name);
 			this.relativeGamePath = gamePath.Substring(gamePath.IndexOf(Path.Combine("game", "dota_addons")));
 
 			string dotaDir = Settings.Default.DotaDir;
@@ -418,12 +425,9 @@ namespace Dota2ModKit
 						}
 					}
 				}
-
 				File.WriteAllText(outputPath, content.ToString(), Encoding.Unicode);
 				Process.Start(outputPath);
 			}
-
-
 		}
 
 		internal void deleteBinFiles() {
@@ -437,7 +441,6 @@ namespace Dota2ModKit
 					File.Delete(binFilePath);
 				} catch (Exception) { }
 			}
-
 		}
 
 		private List<string> getAddonLangPaths() {
@@ -538,7 +541,7 @@ namespace Dota2ModKit
 		internal void deserializeSettings(KeyValue kv) {
 			foreach (KeyValue kv2 in kv.Children) {
 				if (kv2.Key == "workshopID") {
-					Debug.WriteLine("#Children: " + kv2.Children.Count());
+					//Debug.WriteLine("#Children: " + kv2.Children.Count());
 					if (kv2.HasChildren) {
 						if (!Int32.TryParse(kv2.Children.ElementAt(0).Key, out this.workshopID)) {
 							Debug.WriteLine("Couldn't parse workshopID for " + this.name);
@@ -760,8 +763,37 @@ namespace Dota2ModKit
 				deleteBinFiles();
 			}
 
+			Util.CreateTimer(200, (timer) => {
+				timer.Stop();
+				mainForm.kvFeatures.setupNPCWatchers(this);
+				mainForm.kvFeatures.setupCoffeeWatcher(this);
+			});
+
+			displayAddonSize();
+
+			if (barebonesLibUpdates) {
+				// we need to allot time to pull or clone barebones, before checking for lib updates.
+				// lib update code is called in Updater.cs in this case.
+				if (!mainForm.firstAddonChange) {
+					mainForm.firstAddonChange = true;
+					return;
+				}
+
+				Util.CreateTimer(200, (timer) => {
+					timer.Stop();
+					checkForDefaultLibs();
+
+					foreach (KeyValuePair<string, Library> libKV in libraries) {
+						Library lib = libKV.Value;
+						lib.checkForUpdates();
+					}
+				});
+			}
+		}
+
+		private void displayAddonSize() {
 			var addonSizeWorker = new BackgroundWorker();
-            addonSizeWorker.DoWork += (s, e) => {
+			addonSizeWorker.DoWork += (s, e) => {
 				double gameSize = (Util.GetDirectorySize(gamePath) / 1024.0) / 1024.0;
 				gameSize = Math.Round(gameSize, 1);
 				gameSizeStr = gameSize.ToString();
@@ -777,33 +809,6 @@ namespace Dota2ModKit
 				tooltip.SetToolTip(mainForm.contentTile, "(" + contentSizeStr + " MB)." + " Opens the content directory of this addon.");
 			};
 			addonSizeWorker.RunWorkerAsync();
-
-			if (barebonesLibUpdates) {
-				// we need to allot time to pull or clone barebones, before checking for lib updates.
-				// lib update code is called in Updater.cs in this case.
-				if (!mainForm.firstAddonChange) {
-					mainForm.firstAddonChange = true;
-					return;
-				}
-
-				Timer onChangedToTimer = new Timer();
-				onChangedToTimer.Interval = 500;
-				onChangedToTimer.Tick += (s, e) => {
-					// run it once
-					Timer t = (Timer)s;
-					t.Stop();
-
-					checkForDefaultLibs();
-
-					foreach (KeyValuePair<string, Library> libKV in libraries) {
-						Library lib = libKV.Value;
-						lib.checkForUpdates();
-
-					}
-					t.Dispose();
-				};
-				onChangedToTimer.Start();
-			}
 		}
 
 		#endregion

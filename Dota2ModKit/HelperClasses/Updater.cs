@@ -23,6 +23,9 @@ namespace Dota2ModKit {
 		public Updater(MainForm mainForm) {
 			this.mainForm = mainForm;
 			version = mainForm.version;
+
+			checkForUpdates();
+			clonePullBarebones();
         }
 
 		public void checkForUpdates() {
@@ -52,7 +55,7 @@ namespace Dota2ModKit {
 				int count = 1;
 				int j = 0;
 				while (true) {
-					newVers = Util.incrementVers(version, count + j);
+					newVers = Util.IncrementVers(version, count + j);
 					url = "https://github.com/stephenfournier/Dota-2-ModKit/releases/download/v";
 					url += newVers + "/D2ModKit.zip";
 					WebClient wc = new WebClient();
@@ -72,7 +75,7 @@ namespace Dota2ModKit {
 					count += j + 1;
 					j = 0;
 				}
-				newVers = Util.incrementVers(version, count - 1);
+				newVers = Util.IncrementVers(version, count - 1);
 				url = "https://github.com/stephenfournier/Dota-2-ModKit/releases/download/v";
 				url += newVers + "/D2ModKit.zip";
 			};

@@ -15,7 +15,6 @@ using System.Text;
 using Dota2ModKit.Features;
 using Dota2ModKit.Forms;
 using System.Globalization;
-using Timer = System.Windows.Forms.Timer;
 using System.Threading;
 using Dota2ModKit.HelperClasses;
 
@@ -23,7 +22,7 @@ namespace Dota2ModKit {
 	public partial class MainForm : MetroForm {
 		public bool DEBUG = false;
 
-        public Addon currAddon;
+		public Addon currAddon;
 		public Dictionary<string, Addon> addons;
 		public string dotaDir = "";
 		public string gamePath = "";
@@ -54,30 +53,23 @@ namespace Dota2ModKit {
 			// bring up the UI
 			InitializeComponent();
 
+			// localize ModKit strings.
 			Localizer localizer = new Localizer(this);
-			localizer.localize();
 
-			//Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("cn-CN");
+			Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
 			Console.WriteLine(strings.Hello);
 
-			setupMainFormHooks();
+			// setup MainForm hooks.
+			setupHooks();
 
 			// check for updates
 			updater = new Updater(this);
-			updater.checkForUpdates();
 
 			// init mainform controls stuff
 			initControls();
 
 			// get the dota dir
 			retrieveDotaDir();
-
-			// *** at this point assume valid dota dir. ***
-
-			// save the dota dir
-			Settings.Default.DotaDir = dotaDir;
-
-			Debug.WriteLine("Directory: " + dotaDir);
 
 			// get the master 'game' and 'content' paths.
 			gamePath = Path.Combine(dotaDir, "game", "dota_addons");
@@ -94,53 +86,31 @@ namespace Dota2ModKit {
 			// get all the addons in the 'game' dir.
 			addons = getAddons();
 
-			// does this computer have any dota addons?
-			if (addons.Count == 0) {
-				MetroMessageBox.Show(this, strings.NoDota2AddonsDetectedMsg,
-					strings.NoDota2AddonsDetectedCaption,
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Error);
-				Environment.Exit(0);
-			}
-
 			// setup custom tiles
 			setupCustomTiles();
 
-			// some functions in the Tick try and use mainform's controls on another thread. so we need to allot a very small amount of time for
-			// mainform to init its controls. this is mainly for the very first run of modkit.
-			Timer initTimer = new Timer();
-			initTimer.Interval = 100;
-			initTimer.Tick += (s, e) => {
-				// run it once
-				Timer t = (Timer)s;
-				t.Stop();
+			// deserialize settings
+			deserializeSettings();
 
-				// clone a barebones repo if we don't have one, pull if we do
-				updater.clonePullBarebones();
+			// auto-retrieve the workshop IDs for published addons if there are any.
+			getWorkshopIDs();
 
-				// deserialize settings
-				deserializeSettings();
-
-				// auto-retrieve the workshop IDs for published addons if there are any.
-				getWorkshopIDs();
-
-				// set currAddon to the addon that was last opened in last run of modkit.
-				if (Settings.Default.LastAddon != "") {
-					Addon a = getAddonFromName(Settings.Default.LastAddon);
-					if (a != null) {
-						changeCurrAddon(a);
-					}
+			// set currAddon to the addon that was last opened in last run of modkit.
+			if (Settings.Default.LastAddon != "") {
+				Addon a = getAddonFromName(Settings.Default.LastAddon);
+				if (a != null) {
+					changeCurrAddon(a);
 				}
+			}
 
-				// basically, if this is first run of modkit, set the currAddon to w/e the default addon is in the workshop tools.
-				if (currAddon == null) {
-					changeCurrAddon(addons[getDefaultAddonName()]);
-				}
+			// basically, if this is first run of modkit, set the currAddon to w/e the default addon is in the workshop tools.
+			if (currAddon == null) {
+				changeCurrAddon(addons[getDefaultAddonName()]);
+			}
 
-				// init our features of Modkit
-				initFeatures();
-			};
-			initTimer.Start();
+			// init our features of Modkit
+			initFeatures();
+
 		}
 
 		private void initFeatures() {
@@ -151,16 +121,15 @@ namespace Dota2ModKit {
 		}
 
 		private void initControls() {
-			Size size = new Size(steamTile.Width, steamTile.Height);
-			steamTile.TileImage = (Image)new Bitmap(Resources.steam_icon, size);
+			steamTile.TileImage = new Bitmap(Resources.steam_icon, new Size(steamTile.Width, steamTile.Height));
 			luaRadioBtn.Checked = true;
 			tabControl.SelectedIndex = 0;
 			notificationLabel.Text = "";
 			versionLabel.Text = "v" + version;
 		}
 
-		private void setupMainFormHooks() {
-			// setup hooks
+		private void setupHooks() {
+
 			FormClosing += (s, e) => {
 				serializeSettings();
 			};
@@ -168,8 +137,6 @@ namespace Dota2ModKit {
 			tabControl.Selected += (s, e) => {
 				//PlaySound(Properties.Resources.browser_click_navigate);
 			};
-
-
 
 			githubTextBox.KeyDown += (s, e) => {
 				if (e.KeyCode == Keys.Enter) {
@@ -183,11 +150,10 @@ namespace Dota2ModKit {
 			// start process of retrieving dota dir
 			dotaDir = Settings.Default.DotaDir;
 
-			if (Settings.Default.DotaDir == "") {
-				// this is first run of application
-
+			if (dotaDir == "") {
+				// user opened this application for the first time ever.
 				// try to auto-get the dir
-				dotaDir = Util.getDotaDir();
+				dotaDir = Util.GetDotaDir();
 
 				DialogResult dr = DialogResult.No;
 				if (dotaDir != "") {
@@ -210,50 +176,16 @@ namespace Dota2ModKit {
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Error);
 
-						Environment.Exit(0);
+						Application.Exit();
+						return;
 					}
 					string p = fbd.SelectedPath;
 					dotaDir = p;
 				}
 			}
 
-			// ModKit must ran in the same drive as the dota dir.
-			if (!Util.hasSameDrives(Environment.CurrentDirectory, dotaDir)) {
-				MetroMessageBox.Show(this, "Dota 2 ModKit must be ran from the same drive as Dota 2 or else errors " +
-					"will occur. Please move Dota 2 ModKit to the '" + dotaDir[0] + "' Drive and create a shortcut to it. Exiting.",
-					"Error",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Error);
-
-				Environment.Exit(0);
-			}
-
-			// trying to read vpk practice. this works currently
-			/*
-			string s2vpkPath = Path.Combine(dotaDir, "game", "dota_imported", "pak01_dir.vpk");
-			using (var vpk = new VpkFile(s2vpkPath)) {
-				vpk.Open();
-				Debug.WriteLine("Got VPK version {0}", vpk.Version);
-				VpkNode node = vpk.GetFile("scripts/npc/npc_units.txt");
-				using (var inputStream = VPKUtil.GetInputStream(s2vpkPath, node)) {
-					var pathPieces = node.FilePath.Split('/');
-					var directory = pathPieces.Take(pathPieces.Count() - 1);
-					var fileName = pathPieces.Last();
-
-					//EnsureDirectoryExists(Path.Combine(directory.ToArray()));
-
-					using (var fsout = File.OpenWrite(Path.Combine(Environment.CurrentDirectory, "something.txt"))) {
-						var buffer = new byte[1024];
-						int amtToRead = (int)node.EntryLength;
-						int read;
-
-						while ((read = inputStream.Read(buffer, 0, buffer.Length)) > 0 && amtToRead > 0) {
-							fsout.Write(buffer, 0, Math.Min(amtToRead, read));
-							amtToRead -= read;
-						}
-					}
-				}
-			}*/
+			Settings.Default.DotaDir = dotaDir;
+			Settings.Default.Save();
 		}
 
 		private string getDefaultAddonName() {
@@ -317,7 +249,7 @@ namespace Dota2ModKit {
 
 		private void deserializeSettings() {
 			string addonSettings = Settings.Default.AddonsKV;
-            if (addonSettings == "") {
+			if (addonSettings == "") {
 				// no addon settings to deserialize.
 				return;
 			}
@@ -438,6 +370,16 @@ namespace Dota2ModKit {
 				}
 			}
 
+			// does this computer have any dota addons?
+			if (addons.Count == 0) {
+				MetroMessageBox.Show(this, strings.NoDota2AddonsDetectedMsg,
+					strings.NoDota2AddonsDetectedCaption,
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
+				Environment.Exit(0);
+				return addons;
+			}
+
 			//Util.Log(addons_constructed, false);
 			return addons;
 		}
@@ -496,20 +438,17 @@ namespace Dota2ModKit {
 		}
 
 		public void text_notification(string text, MetroColorStyle color, int duration) {
-			System.Timers.Timer notificationLabelTimer = new System.Timers.Timer(duration);
-			notificationLabelTimer.SynchronizingObject = this;
-			notificationLabelTimer.AutoReset = false;
-			notificationLabelTimer.Start();
-			notificationLabelTimer.Elapsed += (s, e) => {
+			Util.CreateTimer(duration, (timer) => {
+				timer.Stop();
 				notificationLabel.Text = "";
-			};
+			});
 			notificationLabel.Style = color;
-			notificationLabel.Text = text;
+			try { notificationLabel.Text = text; } catch(Exception ex) { }
 		}
 
 		private void combineKVBtn_Click(object sender, EventArgs e) {
 			fixButton();
-			kvFeatures.combine();
+			kvFeatures.combine(null);
 		}
 
 		/// <summary>
@@ -687,12 +626,12 @@ namespace Dota2ModKit {
 
 			if (Application.OpenForms["SpellLibraryForm"] != null) {
 				Application.OpenForms["SpellLibraryForm"].BringToFront();
-                Application.OpenForms["SpellLibraryForm"].WindowState = FormWindowState.Normal;
+				Application.OpenForms["SpellLibraryForm"].WindowState = FormWindowState.Normal;
 				return;
-            }
+			}
 
 			//try {
-				SpellLibraryForm slf = new SpellLibraryForm(this);
+			SpellLibraryForm slf = new SpellLibraryForm(this);
 			/*} catch (Exception ex) {
 				MetroMessageBox.Show(this, ex.Message,
 					ex.ToString(),
@@ -713,44 +652,11 @@ namespace Dota2ModKit {
 
 		private void versionLabel_Click(object sender, EventArgs e) {
 			Process.Start("https://github.com/stephenfournier/Dota-2-ModKit/releases/tag/v" + version);
-        }
+		}
 
 		private void compileCoffeeBtn_Click(object sender, EventArgs e) {
 			fixButton();
-			var coffeeScriptDir = Path.Combine(currAddon.contentPath, "panorama", "scripts", "coffeescript");
-
-			if (!Directory.Exists(coffeeScriptDir)) {
-				MetroMessageBox.Show(this,
-					coffeeScriptDir + " " + strings.DirectoryDoesntExistCaption,
-					strings.DirectoryDoesntExistMsg,
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Error);
-				return;
-			}
-
-			if (cse == null) {
-				cse = new CoffeeSharp.CoffeeScriptEngine();
-			}
-
-            var coffeePaths = Directory.GetFiles(coffeeScriptDir, "*.coffee", SearchOption.AllDirectories);
-
-			foreach (var coffeePath in coffeePaths) {
-				string coffeeCode = File.ReadAllText(coffeePath, Util.GetEncoding(coffeePath));
-				string js = cse.Compile(coffeeCode, true);
-
-				string relativePath = coffeePath.Substring(coffeePath.IndexOf("coffeescript")+13);
-
-				var jsPath = Path.Combine(currAddon.contentPath, "panorama", "scripts", relativePath);
-				jsPath = jsPath.Replace(".coffee", ".js");
-
-				// ensure the dir housing the new js file exists.
-				string foldPath = jsPath.Substring(0, jsPath.LastIndexOf('\\') + 1);
-				if (!Directory.Exists(foldPath)) {
-					Directory.CreateDirectory(foldPath);
-				}
-
-				File.WriteAllText(jsPath, js, Encoding.UTF8);
-			}
+			kvFeatures.compileCoffee(currAddon);
 			text_notification(strings.CoffeeScriptFilesCompiled, MetroColorStyle.Green, 1500);
 		}
 
@@ -780,7 +686,7 @@ namespace Dota2ModKit {
 			var owner = (ContextMenuStrip)item.Owner;
 			MetroTile tile = (MetroTile)(owner.SourceControl);
 			string name = tile.Name;
-			int tileNum = Int32.Parse(name.Substring(name.LastIndexOf('e')+1))-1;
+			int tileNum = Int32.Parse(name.Substring(name.LastIndexOf('e') + 1)) - 1;
 			customTiles[tileNum].editTile();
 		}
 
