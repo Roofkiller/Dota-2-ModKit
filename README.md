@@ -1,38 +1,43 @@
-# Dota 2 ModKit Reborn
+# Dota 2 ModKit
 
 ### [Download the latest version here!](https://github.com/Myll/Dota-2-ModKit/releases)
 
-## Dota 2 ModKit is now...
+Dota 2 ModKit is a GUI tool that provides automation for several custom game development tasks:
 
-### Re-coded.
+* Generate addon_language files based on KeyValue files in the scripts/npc folder.
+* Bulk modify the color and size of particle systems without the complexities of Valve's Particle Editor Tool.
+* Break up scripts/npc KeyValue files into several individual files for better structuring of your custom game.
+* Find sound names based on their .vsnd paths (given from the Asset Browser).
+* Create Panorama JS files in CoffeeScript
+* Instantly access various parts of your custom game with shortcut buttons.
+* Browse the SpellLibrary and easily swap between the Lua and KeyValue code of spells.
+* Convert .tga to .vtex_c and .vtex_c to .tga.
 
-D2ModKit has been almost completely recoded. When I first started the project, it was my first C# project ever. The code became pretty ugly fast, to the point where I had to ctrl+f through everything to find code that I needed. So, it's been recoded in a more smarter manner with better design in mind!
+## Installation
 
-### Re-designed.
+Extract the contents of the .zip into a folder. Run D2ModKit.exe.
 
-D2ModKit now utilizes the open source [Metro WinForms](https://github.com/viperneo/winforms-modernui) framework for its UI. It's so beautiful, and it's the biggest motivation for me to do all this work on D2ModKit.
+## Usage
 
-### Reborn compatible.
+Here are some gif examples of features:
 
-D2ModKit has been updated to work with Reborn's new file structure.
+**[Breaking up and combining KV files](http://gfycat.com/HomelyIncompatibleBangeltiger)**
 
-### Let's look at D2ModKit v2 in action:
+**[Forking a Barebones addon](http://gfycat.com/SharpFelineAllosaurus)**
 
--------
+**[Generating tooltips](http://gfycat.com/LividSevereElk)**
 
-#### Breaking up and combining KV files:
+## Contributing
 
-![DEMO](http://zippy.gfycat.com/HomelyIncompatibleBangeltiger.gif)
+Unfortunately, since I'm inactive in developing this these days, I don't have the time to review pull requests.
 
-#### Forking a Barebones addon:
+## History
 
-![DEMO](http://giant.gfycat.com/SharpFelineAllosaurus.gif)
-
-#### Generating tooltips:
-
-![DEMO](http://giant.gfycat.com/LividSevereElk.gif)
+D2ModKit started around October 2014 as a project to provide a GUI to import decompiled particles into your custom game (at the time Valve didn't have a Particle Copy Tool). The project was called ParticleForker, and it was my first experience with C#. I began asking several other members of the community what else could be automated, and started implementing several more features. The project was shortly renamed to Dota 2 ModKit.
 
 ## Credits
+
+[Metro WinForms](https://github.com/viperneo/winforms-modernui)
 
 Thank you to these people who have contributed to D2ModKit in some way during its lifetime:
 
@@ -42,6 +47,10 @@ Thank you to these people who have contributed to D2ModKit in some way during it
 * [ToraxXx](https://github.com/toraxxx): Decompiled particles
 * [XavierCHN](https://github.com/XavierCHN): Helping with VTEX features
 * [SebRut](https://github.com/sebrut): Ideas and C# tips.
+
+## License
+
+GNU GPLv3
 
 ## Donations
 
