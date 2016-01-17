@@ -37,7 +37,7 @@ namespace Dota2ModKit {
 
 			bool colorKeyFound = false;
 			int count = 0;
-			int r, g, b, a;
+			int r, g, b;
 			//int rIndex, gIndex, bIndex, aIndex;
 			bool error = false;
 

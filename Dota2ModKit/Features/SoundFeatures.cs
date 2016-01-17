@@ -144,7 +144,7 @@ namespace Dota2ModKit.Features {
 							}
 						}
 					}
-				} catch (Exception ex) {
+				} catch (Exception) {
 					Debug.WriteLine("Skipping " + file + ":");
 					//Debug.WriteLine(ex.ToString());
 					continue;

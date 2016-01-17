@@ -24,7 +24,6 @@ namespace Dota2ModKit
 		internal int libraryPage;
 		internal int workshopID;
 		internal Image image;
-		internal bool doesntHaveThumbnail;
 		internal MetroColorStyle tileColor = MetroColorStyle.Green;
 
 		// for generate addon_lang files
@@ -35,22 +34,24 @@ namespace Dota2ModKit
 		List<UnitEntry> unitEntries = new List<UnitEntry>();
 		List<HeroEntry> heroEntries = new List<HeroEntry>();
 		HashSet<string> alreadyHasKeys = new HashSet<string>();
-		internal bool generateNote0;
-		internal bool generateLore;
-		internal bool askToBreakUp;
-		internal bool autoDeleteBin;
-		internal bool barebonesLibUpdates;
-		private string gameSizeStr = "";
-		private string contentSizeStr = "";
+		internal bool generateNote0,
+            doesntHaveThumbnail,
+            generateLore, 
+            askToBreakUp, 
+            autoDeleteBin, 
+            barebonesLibUpdates,
+            autoCompileCoffeeScript,
+            generateUTF8 = true;
+		private string gameSizeStr = "", contentSizeStr = "";
 		private MainForm mainForm;
 		//public List<Library> libraries = new List<Library>();
 		public Dictionary<string, Library> libraries = new Dictionary<string, Library>();
 		HashSet<string> NotDefaultLibs = new HashSet<string>();
 		public string relativeGamePath;
-		internal bool generateUTF8 = true;
-		internal bool autoCompileCoffeeScript;
 
-		public Addon(string gamePath) {
+        public MetroTile panelTile { get; internal set; }
+
+        public Addon(string gamePath) {
 			this.gamePath = gamePath;
 
 			// extract other info from the gamePath
@@ -430,7 +431,29 @@ namespace Dota2ModKit
 
 		}
 
-		internal void deleteBinFiles() {
+        internal Image getThumbnail(MainForm mf) {
+            if (image != null) {
+                return image;
+            }
+            string thumbnailDir = Path.Combine(mf.dotaDir, "game", "bin", "win64");
+
+            if (Directory.Exists(thumbnailDir) && workshopID != 0) {
+                string imagePath = Path.Combine(thumbnailDir, workshopID + "_thumb.jpg");
+
+                if (File.Exists(imagePath)) {
+                    Debug.WriteLine(imagePath + " found!");
+                    Image thumbnail = Image.FromFile(imagePath, true);
+                    //Size size = new Size(mf.addonTile.Width, mf.addonTile.Height);
+                    //thumbnail = (Image)new Bitmap(thumbnail, size);
+
+                    image = thumbnail;
+                    return thumbnail;
+                }
+            }
+            return null;
+        }
+
+        internal void deleteBinFiles() {
 			if (!autoDeleteBin) {
 				return;
 			}

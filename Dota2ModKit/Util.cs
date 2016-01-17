@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetroFramework;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -6,9 +7,10 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
+//using Timer = System.Timers.Timer;
 
 namespace Dota2ModKit {
-	public static class Util {
+    public static class Util {
 		public static string logPath = Path.Combine(Environment.CurrentDirectory, "debug_log.txt");
 
 		public static void Log(string text) {
@@ -34,6 +36,11 @@ namespace Dota2ModKit {
 			} catch (Exception) { }
 		}
 
+        public static MetroColorStyle getRandomStyle() {
+            Random rand = new Random();
+            return (MetroColorStyle)rand.Next(4, 14);
+        }
+
 		internal static void LogException(Exception ex) {
 			StringBuilder txt = new StringBuilder();
 			txt.AppendLine("ex.toString(): " + ex.ToString());
@@ -47,7 +54,17 @@ namespace Dota2ModKit {
 			Log(txt.ToString());
 		}
 
-		public static string Relative(string str) {
+        public static Timer CreateTimer(int interval, Action<Timer> onTick) {
+            Timer timer = new Timer();
+            timer.Interval = interval;
+            timer.Tick += (s, e) => {
+                onTick(timer);
+            };
+            timer.Start();
+            return timer;
+        }
+
+        public static string Relative(string str) {
 			if (str.Contains(Path.Combine("game", "dota_addons"))) {
 				return str.Substring(str.IndexOf(Path.Combine("game", "dota_addons")));
 			} else if (str.Contains(Path.Combine("content", "dota_addons"))) {

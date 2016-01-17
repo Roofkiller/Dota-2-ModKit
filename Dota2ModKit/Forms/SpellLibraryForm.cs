@@ -78,7 +78,7 @@ namespace Dota2ModKit.Forms {
 				try {
 					string gitPath = Repository.Clone("https://github.com/Pizzalol/SpellLibrary", spellLibPath);
 					Console.WriteLine("repo path:" + gitPath);
-				} catch (Exception ex) {
+				} catch (Exception) {
 
 				}
 				return;
@@ -87,13 +87,10 @@ namespace Dota2ModKit.Forms {
 			// pull from the repo
 			using (var repo = new Repository(spellLibPath)) {
 				try {
-					//var remote = repo.Network.Remotes["origin"];
-					MergeResult mr = repo.Network.Pull(new Signature(new Identity("myname", "myname@email.com"),
-						new DateTimeOffset()),
-						new PullOptions());
+                    MergeResult mr = repo.Network.Pull(new Signature("myname", "myname@gmail.com", new DateTimeOffset()), new PullOptions());
 					MergeStatus ms = mr.Status;
 					Console.WriteLine("MergeStatus: " + ms.ToString());
-				} catch (Exception ex) {
+				} catch (Exception) {
 
 				}
 			}

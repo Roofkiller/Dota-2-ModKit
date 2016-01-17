@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Dota2ModKit {
-
 	public class Pair {
 		public string key, val;
 

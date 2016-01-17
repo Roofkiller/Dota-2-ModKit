@@ -148,7 +148,7 @@ namespace Dota2ModKit {
 							if (a.image != null) {
 								useImage = true;
 							} else if (!a.doesntHaveThumbnail) {
-								if (mainForm.findAddonThumbnail(a) != null) {
+								if (a.getThumbnail(mainForm) != null) {
 									useImage = true;
 								}
 							}
@@ -160,7 +160,7 @@ namespace Dota2ModKit {
 							} else {
 								if (a == mainForm.currAddon) {
 									// we alrdy know the tileColor for the currAddon if it's not using an image.
-									mt.Style = mainForm.AddonTile.Style;
+									mt.Style = mainForm.addonTile.Style;
 								} else {
 									a.tileColor = mt.Style;
 								}	
@@ -177,7 +177,7 @@ namespace Dota2ModKit {
 
 			string addonName = s.Substring(s.LastIndexOf(':') + 2);
 			mainForm.changeCurrAddon(mainForm.getAddonFromName(addonName));
-			mainForm.AddonTile.Text = addonName;
+			mainForm.addonTile.Text = addonName;
 
 			this.Close();
 		}
