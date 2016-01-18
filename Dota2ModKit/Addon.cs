@@ -16,17 +16,12 @@ using MetroFramework.Controls;
 namespace Dota2ModKit
 {
 	public class Addon {
-		public string gamePath;
-		public string contentPath;
-		public string name;
-		public bool hasContentPath = true;
-		public int libraryPos;
-		internal int libraryPage;
+		public string gamePath, contentPath, name, relativeGamePath;
 		internal int workshopID;
 		internal Image image;
 		internal MetroColorStyle tileColor = MetroColorStyle.Green;
 
-		// for generate addon_lang files
+		// tooltip generation stuff
 		HashSet<string> abilityModifierNames = new HashSet<string>();
 		HashSet<string> itemModifierNames = new HashSet<string>();
 		List<AbilityEntry> abilityEntries = new List<AbilityEntry>();
@@ -34,6 +29,7 @@ namespace Dota2ModKit
 		List<UnitEntry> unitEntries = new List<UnitEntry>();
 		List<HeroEntry> heroEntries = new List<HeroEntry>();
 		HashSet<string> alreadyHasKeys = new HashSet<string>();
+
 		internal bool generateNote0,
             doesntHaveThumbnail,
             generateLore, 
@@ -41,13 +37,10 @@ namespace Dota2ModKit
             autoDeleteBin, 
             barebonesLibUpdates,
             autoCompileCoffeeScript,
-            generateUTF8 = true;
+            generateUTF8 = true,
+            hasContentPath = true;
 		private string gameSizeStr = "", contentSizeStr = "";
 		private MainForm mainForm;
-		//public List<Library> libraries = new List<Library>();
-		public Dictionary<string, Library> libraries = new Dictionary<string, Library>();
-		HashSet<string> NotDefaultLibs = new HashSet<string>();
-		public string relativeGamePath;
 
         public MetroTile panelTile { get; internal set; }
 
@@ -57,11 +50,9 @@ namespace Dota2ModKit
 			// extract other info from the gamePath
 			name = gamePath.Substring(gamePath.LastIndexOf('\\')+1);
 			Debug.WriteLine("New Addon detected: " + name);
-			this.relativeGamePath = gamePath.Substring(gamePath.IndexOf(Path.Combine("game", "dota_addons")));
+			relativeGamePath = gamePath.Substring(gamePath.IndexOf(Path.Combine("game", "dota_addons")));
 
-			string dotaDir = Settings.Default.DotaDir;
-
-			contentPath = Path.Combine(dotaDir, "content", "dota_addons", name);
+			contentPath = Path.Combine(Settings.Default.DotaDir, "content", "dota_addons", name);
 
 			if (!Directory.Exists(contentPath)) {
 				try {
@@ -69,196 +60,6 @@ namespace Dota2ModKit
 				} catch (Exception) {
 					Debug.WriteLine("Couldn't auto-create content path for " + name);
 					hasContentPath = false;
-				}
-			}
-		}
-
-		public class Library {
-			public string local;
-			public string remote;
-			internal int gridRow;
-			public bool updateAvailable;
-			internal MetroGrid grid;
-			string tempFile = "";
-			internal string defaultLibPath;
-			public Addon addon;
-			public bool neverCheckForUpdates;
-			public string name;
-			public bool isDummyLib;
-			private Exception exception;
-			private bool needsUpdate;
-			private string libName;
-			private string libFileName;
-
-			public string LibFileName {
-				get {
-					if (libFileName != null) {
-						return libFileName;
-					}
-
-					if (defaultLibPath != null) {
-						libFileName = defaultLibPath.Substring(defaultLibPath.LastIndexOf('\\') + 1);
-					}
-					return libFileName;
-				} set {
-					libFileName = value;
-				}
-			}
-
-			public string LibName {
-				get {
-					if (libName != null) {
-						return libName;
-					}
-
-					if (defaultLibPath != null) {
-						if (defaultLibPath.Contains(Path.Combine("dota_addons", "barebones"))) {
-							libName = "barebones";
-						}
-					}
-					return libName;
-				} set {
-					libName = value;
-				}
-			}
-
-			public Library(string local, Addon a) {
-				this.local = local;
-				this.addon = a;
-				name = local.Substring(local.LastIndexOf('\\') + 1);
-			}
-
-			public void checkForUpdates() {
-				using (var libUpdateWorker = new BackgroundWorker()) {
-					libUpdateWorker.DoWork += LibUpdateWorker_DoWork;
-					libUpdateWorker.RunWorkerCompleted += LibUpdateWorker_RunWorkerCompleted;
-					libUpdateWorker.RunWorkerAsync();
-				}
-			}
-
-			private void LibUpdateWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
-				if (!needsUpdate) {
-					return;
-				}
-				needsUpdate = false;
-
-				DialogResult dr = MetroMessageBox.Show(addon.mainForm,
-					name + " in " + addon.name +
-					" does not match the contents of " + LibFileName + " in " + LibName + ". " +
-					"Replace the contents now? Press 'Cancel' to never see this again.",
-					"Library Update",
-					MessageBoxButtons.YesNoCancel,
-					MessageBoxIcon.Information);
-
-				if (dr == DialogResult.Cancel) {
-					this.neverCheckForUpdates = true;
-					return;
-				} else if (dr == DialogResult.No) {
-					return;
-				}
-
-				try {
-					File.WriteAllText(local, File.ReadAllText(defaultLibPath));
-				} catch (Exception ex) {
-					this.exception = ex;
-				}
-
-				if (exception != null) {
-					MetroMessageBox.Show(addon.mainForm,
-						exception.Message,
-						exception.ToString(),
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Error);
-
-					exception = null;
-				} else {
-					addon.mainForm.text_notification(name + " updated!", MetroColorStyle.Blue, 1500);
-				}
-			}
-
-			private void LibUpdateWorker_DoWork(object sender, DoWorkEventArgs e) {
-				if (!File.Exists(local)) {
-					// this shouldn't even be a library
-					addon.libraries.Remove(local);
-
-					return;
-				}
-
-				// check for dummy lib
-				if (defaultLibPath == null && remote == null) {
-					isDummyLib = true;
-					return;
-				}
-
-				if (defaultLibPath != null && File.Exists(defaultLibPath) && !neverCheckForUpdates) {
-					string defaultLibTxt = File.ReadAllText(defaultLibPath);
-					string localTxt = File.ReadAllText(local);
-					if (localTxt != defaultLibTxt) {
-						needsUpdate = true;
-					}
-
-					return;
-				}
-
-				// lib wasn't a local lib. do remote stuff
-				WebClient wc = new WebClient();
-
-				try {
-					tempFile = Path.Combine(Environment.CurrentDirectory, "temp", Util.DoUniqueString());
-                    wc.DownloadFile(remote, tempFile);
-					byte[] responseBytes = wc.DownloadData(remote);
-
-					if (new FileInfo(tempFile).Length != new FileInfo(local).Length) {
-						updateAvailable = true;
-					}
-
-					//File.Delete(tempFile);
-
-				} catch (Exception) { }
-				
-			}
-		}
-
-		/// <summary>
-		/// Default libs are mainly libs that are local.
-		/// </summary>
-		public void checkForDefaultLibs() {
-			string vscriptsPath = Path.Combine(gamePath, "scripts", "vscripts");
-			string barebonesLibsPath = Path.Combine(Environment.CurrentDirectory, "barebones", "game", "dota_addons",
-				"barebones", "scripts", "vscripts", "libraries");
-
-            if (!Directory.Exists(vscriptsPath) || !Directory.Exists(barebonesLibsPath)) {
-				return;
-			}
-
-			Dictionary<string, string> libNameToPath = new Dictionary<string, string>();
-			foreach (string barebonesLib in Directory.GetFiles(barebonesLibsPath, "*.lua", SearchOption.AllDirectories)) {
-				string fn = barebonesLib.Substring(barebonesLib.LastIndexOf('\\') + 1);
-				libNameToPath.Add(fn, barebonesLib);
-
-			}
-
-            string[] vscripts = Directory.GetFiles(vscriptsPath, "*.lua", SearchOption.AllDirectories);
-			foreach (string path in vscripts) {
-				string fn = path.Substring(path.LastIndexOf('\\') + 1);
-				if (libNameToPath.ContainsKey(fn)) {
-					if (libraries.ContainsKey(path) || NotDefaultLibs.Contains(path)) {
-						// this has already been checked and it's not a default lib. don't waste user's time
-						continue;
-					}
-
-					Library lib = new Library(path, this);
-					DialogResult dr = MetroMessageBox.Show(mainForm,
-						Util.Relative(path) + " has been detected to be a Barebones library. Enable auto update checker for this library?",
-						"Library detected",
-						MessageBoxButtons.YesNo,
-						MessageBoxIcon.Information);
-
-					if (dr == DialogResult.Yes) {
-						lib.defaultLibPath = libNameToPath[fn];
-					} // if it's No, still add it as a dummy library, to remember this decision later.
-
-					libraries.Add(path, lib);
 				}
 			}
 		}
@@ -317,120 +118,6 @@ namespace Dota2ModKit
 			}
 		}
 
-		private void writeTooltips() {
-			foreach (string path in getAddonLangPaths()) {
-
-				alreadyHasKeys.Clear();
-
-				string thisLang = path.Substring(path.LastIndexOf('\\') + 1);
-
-				string thisLangCopy = thisLang;
-				thisLang = thisLang.Substring(thisLang.LastIndexOf('_') + 1);
-
-				string outputPath = Path.Combine(contentPath, "tooltips_" + thisLang);
-
-				KeyValue kv = KVParser.KV1.ParseAll(File.ReadAllText(path, Encoding.Unicode))[0];
-
-				foreach (KeyValue kv2 in kv.Children) {
-					if (kv2.Key == "Tokens") {
-						foreach (KeyValue kv3 in kv2.Children) {
-							alreadyHasKeys.Add(kv3.Key.ToLowerInvariant());
-						}
-					}
-				}
-
-				StringBuilder content = new StringBuilder();
-
-				string head0 =
-				"\t\t// DOTA 2 MODKIT GENERATED TOOLTIPS FOR: " + this.name + "\n" +
-				"\t\t// Keys already defined in " + thisLangCopy + " are not listed, nor are Modifiers with the property \"IsHidden\" \"1\".\n";
-				content.Append(head0);
-
-				string head1 = "\n\t\t// ******************** HEROES ********************\n";
-				content.Append(head1);
-				foreach (HeroEntry he in heroEntries) {
-					if (!alreadyHasKeys.Contains(he.name.key.ToLowerInvariant())) {
-						content.Append(he);
-					}
-				}
-
-				string head2 = "\n\t\t// ******************** UNITS ********************\n";
-				content.Append(head2);
-				foreach (UnitEntry ue in unitEntries) {
-					if (!alreadyHasKeys.Contains(ue.name.key.ToLowerInvariant())) {
-						content.Append(ue);
-					}
-				}
-
-				string head3 = "\n\t\t// ******************** ABILITY MODIFIERS ********************\n";
-				content.Append(head3);
-				foreach (string amn in abilityModifierNames) {
-					ModifierEntry me = new ModifierEntry(this, amn);
-					if (!alreadyHasKeys.Contains(me.name.key.ToLowerInvariant())) {
-						content.Append(me + "\n");
-					}
-				}
-
-				string head4 = "\n\t\t// ******************** ITEM MODIFIERS ********************\n";
-				content.Append(head4);
-				foreach (string imn in itemModifierNames) {
-					ModifierEntry me = new ModifierEntry(this, imn);
-					if (!alreadyHasKeys.Contains(me.name.key.ToLowerInvariant())) {
-						content.Append(me + "\n");
-					}
-				}
-
-				string head5 = "\n\t\t// ******************** ABILITIES ********************\n";
-				content.Append(head5);
-				foreach (AbilityEntry ae in abilityEntries) {
-					if (!alreadyHasKeys.Contains(ae.name.key.ToLowerInvariant())) {
-						content.Append(ae + "\n");
-					} else {
-						// the addon_language already has this ability. but let's check
-						// if there are any new AbilitySpecials.
-						bool missingAbilSpecials = false;
-						foreach (Pair p in ae.abilitySpecials) {
-							if (!alreadyHasKeys.Contains(p.key.ToLowerInvariant())) {
-								// the addon_language doesn't contain this abil special.
-								content.Append(p.ToString());
-								missingAbilSpecials = true;
-							}
-						}
-						if (missingAbilSpecials) {
-							content.Append("\n");
-						}
-					}
-				}
-
-				string head6 = "\n\t\t// ******************** ITEMS ********************\n";
-				content.Append(head6);
-				foreach (AbilityEntry ae in itemEntries) {
-					if (!alreadyHasKeys.Contains(ae.name.key.ToLowerInvariant())) {
-						content.Append(ae + "\n");
-					} else {
-						// the addon_language already has this ability. but let's check
-						// if there are any new AbilitySpecials.
-						bool missingAbilSpecials = false;
-						foreach (Pair p in ae.abilitySpecials) {
-							if (!alreadyHasKeys.Contains(p.key.ToLowerInvariant())) {
-								// the addon_language doesn't contain this abil special.
-								content.Append(p.ToString());
-								missingAbilSpecials = true;
-							}
-						}
-						if (missingAbilSpecials) {
-							content.Append("\n");
-						}
-					}
-				}
-
-				File.WriteAllText(outputPath, content.ToString(), Encoding.Unicode);
-				Process.Start(outputPath);
-			}
-
-
-		}
-
         internal Image getThumbnail(MainForm mf) {
             if (image != null) {
                 return image;
@@ -464,7 +151,6 @@ namespace Dota2ModKit
 					File.Delete(binFilePath);
 				} catch (Exception) { }
 			}
-
 		}
 
 		private List<string> getAddonLangPaths() {
@@ -481,54 +167,8 @@ namespace Dota2ModKit
 			return langFiles;
 		}
 
-		#region private generate tooltip functions
-
-		private void generateHeroTooltips() {
-			string path = Path.Combine(gamePath, "scripts", "npc", "npc_heroes_custom.txt");
-
-			if (!File.Exists(path)) {
-				return;
-			}
-
-			KeyValue kvs = kvs = KVParser.KV1.ParseAll(File.ReadAllText(path))[0];
-
-			foreach (KeyValue kv in kvs.Children) {
-				if (kv.Key == "Version") {
-					continue;
-				}
-
-				string name = kv.Key;
-
-				foreach (KeyValue kv2 in kv.Children) {
-					if (kv2.Key == "override_hero") {
-						heroEntries.Add(new HeroEntry(this, kv2.GetString(), name));
-						break;
-					}
-
-				}
-
-				unitEntries.Add(new UnitEntry(this, kv.Key));
-			}
-		}
-
-		private void generateUnitTooltips() {
-			string path = Path.Combine(gamePath, "scripts", "npc", "npc_units_custom.txt");
-
-			if (!File.Exists(path)) {
-				return;
-			}
-
-			KeyValue kvs = kvs = KVParser.KV1.ParseAll(File.ReadAllText(path))[0];
-
-			foreach (KeyValue kv in kvs.Children) {
-				if (kv.Key == "Version") {
-					continue;
-				}
-				unitEntries.Add(new UnitEntry(this, kv.Key));
-			}
-		}
-
-		internal void deserializeSettings(KeyValue kv) {
+        #region serializer/deserializer
+        internal void deserializeSettings(KeyValue kv) {
 			foreach (KeyValue kv2 in kv.Children) {
 				if (kv2.Key == "workshopID") {
 					Debug.WriteLine("#Children: " + kv2.Children.Count());
@@ -600,31 +240,6 @@ namespace Dota2ModKit
 							this.generateUTF8 = false;
 						}
 					}
-				} else if (kv2.Key == "libraries") {
-					if (kv2.HasChildren) {
-						foreach (KeyValue kv3 in kv2.Children) {
-							string localPath = kv3.Key;
-							Library lib = new Library(localPath, this);
-							if (kv3.HasChildren) {
-								foreach (KeyValue kv4 in kv3.Children) {
-									if (kv4.Key == "Remote") {
-										lib.remote = kv4.GetString();
-									} else if (kv4.Key == "DefaultLibPath") {
-										lib.defaultLibPath = kv4.GetString();
-									} else if (kv4.Key == "NeverCheckForUpdates" && kv4.GetBool()) {
-										lib.neverCheckForUpdates = true;
-									}
-								}
-							}
-							libraries.Add(lib.local, lib);
-
-							if (lib.remote == null && lib.defaultLibPath == null) {
-								// this was checked to be a default addon, but the user said it wasn't a default addon.
-								// we still need to store it so we don't ask user "is this a default addon?" later again
-								NotDefaultLibs.Add(lib.local);
-							}
-						}
-					}
 				}
 			}
 		}
@@ -661,31 +276,11 @@ namespace Dota2ModKit
 			KeyValue autoCompileCoffeeScript = new KeyValue("autoCompileCoffeeScript");
 			autoCompileCoffeeScript.AddChild(new KeyValue(this.autoCompileCoffeeScript.ToString()));
 			addonKV.AddChild(autoCompileCoffeeScript);
-
-			KeyValue libraries = new KeyValue("libraries");
-			addonKV.AddChild(libraries);
-			foreach (KeyValuePair<string, Library> libraryKV in this.libraries) {
-				Library lib = libraryKV.Value;
-				KeyValue libKV = new KeyValue(lib.local);
-				libraries.AddChild(libKV);
-				// populate libKV
-				if (lib.remote != null) {
-					KeyValue remoteKV = new KeyValue("Remote");
-					remoteKV.Set(lib.remote);
-					libKV.AddChild(remoteKV);
-				}
-				if (lib.defaultLibPath != null) {
-					KeyValue kv = new KeyValue("DefaultLibPath");
-					kv.Set(lib.defaultLibPath);
-					libKV.AddChild(kv);
-				}
-				var kv2 = new KeyValue("NeverCheckForUpdates");
-				kv2.Set(lib.neverCheckForUpdates);
-				libKV.AddChild(kv2);
-			}
 		}
+        #endregion
 
-		private void generateAbilityTooltips(bool item) {
+        #region generate tooltip functions
+        private void generateAbilityTooltips(bool item) {
 			string path = Path.Combine(gamePath, "scripts", "npc", "npc_abilities_custom.txt");
 
 			if (item) {
@@ -745,7 +340,164 @@ namespace Dota2ModKit
 			}
 		}
 
-		internal void onChangedTo(MainForm mainForm) {
+        private void generateHeroTooltips() {
+            string path = Path.Combine(gamePath, "scripts", "npc", "npc_heroes_custom.txt");
+
+            if (!File.Exists(path)) {
+                return;
+            }
+
+            KeyValue kvs = kvs = KVParser.KV1.ParseAll(File.ReadAllText(path))[0];
+
+            foreach (KeyValue kv in kvs.Children) {
+                if (kv.Key == "Version") {
+                    continue;
+                }
+
+                string name = kv.Key;
+
+                foreach (KeyValue kv2 in kv.Children) {
+                    if (kv2.Key == "override_hero") {
+                        heroEntries.Add(new HeroEntry(this, kv2.GetString(), name));
+                        break;
+                    }
+
+                }
+
+                unitEntries.Add(new UnitEntry(this, kv.Key));
+            }
+        }
+
+        private void generateUnitTooltips() {
+            string path = Path.Combine(gamePath, "scripts", "npc", "npc_units_custom.txt");
+
+            if (!File.Exists(path)) {
+                return;
+            }
+
+            KeyValue kvs = kvs = KVParser.KV1.ParseAll(File.ReadAllText(path))[0];
+
+            foreach (KeyValue kv in kvs.Children) {
+                if (kv.Key == "Version") {
+                    continue;
+                }
+                unitEntries.Add(new UnitEntry(this, kv.Key));
+            }
+        }
+
+        private void writeTooltips() {
+            foreach (string path in getAddonLangPaths()) {
+
+                alreadyHasKeys.Clear();
+
+                string thisLang = path.Substring(path.LastIndexOf('\\') + 1);
+
+                string thisLangCopy = thisLang;
+                thisLang = thisLang.Substring(thisLang.LastIndexOf('_') + 1);
+
+                string outputPath = Path.Combine(contentPath, "tooltips_" + thisLang);
+
+                KeyValue kv = KVParser.KV1.ParseAll(File.ReadAllText(path, Encoding.Unicode))[0];
+
+                foreach (KeyValue kv2 in kv.Children) {
+                    if (kv2.Key == "Tokens") {
+                        foreach (KeyValue kv3 in kv2.Children) {
+                            alreadyHasKeys.Add(kv3.Key.ToLowerInvariant());
+                        }
+                    }
+                }
+
+                StringBuilder content = new StringBuilder();
+
+                string head0 =
+                "\t\t// DOTA 2 MODKIT GENERATED TOOLTIPS FOR: " + this.name + "\n" +
+                "\t\t// Keys already defined in " + thisLangCopy + " are not listed, nor are Modifiers with the property \"IsHidden\" \"1\".\n";
+                content.Append(head0);
+
+                string head1 = "\n\t\t// ******************** HEROES ********************\n";
+                content.Append(head1);
+                foreach (HeroEntry he in heroEntries) {
+                    if (!alreadyHasKeys.Contains(he.name.key.ToLowerInvariant())) {
+                        content.Append(he);
+                    }
+                }
+
+                string head2 = "\n\t\t// ******************** UNITS ********************\n";
+                content.Append(head2);
+                foreach (UnitEntry ue in unitEntries) {
+                    if (!alreadyHasKeys.Contains(ue.name.key.ToLowerInvariant())) {
+                        content.Append(ue);
+                    }
+                }
+
+                string head3 = "\n\t\t// ******************** ABILITY MODIFIERS ********************\n";
+                content.Append(head3);
+                foreach (string amn in abilityModifierNames) {
+                    ModifierEntry me = new ModifierEntry(this, amn);
+                    if (!alreadyHasKeys.Contains(me.name.key.ToLowerInvariant())) {
+                        content.Append(me + "\n");
+                    }
+                }
+
+                string head4 = "\n\t\t// ******************** ITEM MODIFIERS ********************\n";
+                content.Append(head4);
+                foreach (string imn in itemModifierNames) {
+                    ModifierEntry me = new ModifierEntry(this, imn);
+                    if (!alreadyHasKeys.Contains(me.name.key.ToLowerInvariant())) {
+                        content.Append(me + "\n");
+                    }
+                }
+
+                string head5 = "\n\t\t// ******************** ABILITIES ********************\n";
+                content.Append(head5);
+                foreach (AbilityEntry ae in abilityEntries) {
+                    if (!alreadyHasKeys.Contains(ae.name.key.ToLowerInvariant())) {
+                        content.Append(ae + "\n");
+                    } else {
+                        // the addon_language already has this ability. but let's check
+                        // if there are any new AbilitySpecials.
+                        bool missingAbilSpecials = false;
+                        foreach (Pair p in ae.abilitySpecials) {
+                            if (!alreadyHasKeys.Contains(p.key.ToLowerInvariant())) {
+                                // the addon_language doesn't contain this abil special.
+                                content.Append(p.ToString());
+                                missingAbilSpecials = true;
+                            }
+                        }
+                        if (missingAbilSpecials) {
+                            content.Append("\n");
+                        }
+                    }
+                }
+
+                string head6 = "\n\t\t// ******************** ITEMS ********************\n";
+                content.Append(head6);
+                foreach (AbilityEntry ae in itemEntries) {
+                    if (!alreadyHasKeys.Contains(ae.name.key.ToLowerInvariant())) {
+                        content.Append(ae + "\n");
+                    } else {
+                        // the addon_language already has this ability. but let's check
+                        // if there are any new AbilitySpecials.
+                        bool missingAbilSpecials = false;
+                        foreach (Pair p in ae.abilitySpecials) {
+                            if (!alreadyHasKeys.Contains(p.key.ToLowerInvariant())) {
+                                // the addon_language doesn't contain this abil special.
+                                content.Append(p.ToString());
+                                missingAbilSpecials = true;
+                            }
+                        }
+                        if (missingAbilSpecials) {
+                            content.Append("\n");
+                        }
+                    }
+                }
+                File.WriteAllText(outputPath, content.ToString(), Encoding.Unicode);
+                Process.Start(outputPath);
+            }
+        }
+        #endregion
+
+        internal void onChangedTo(MainForm mainForm) {
 			this.mainForm = mainForm;
 
 			// delete .bin files if the option is checked.
@@ -754,58 +506,90 @@ namespace Dota2ModKit
 			}
 
 			using (var addonSizeWorker = new BackgroundWorker()) {
-				addonSizeWorker.DoWork += AddonSizeWorker_DoWork;
-				addonSizeWorker.RunWorkerCompleted += AddonSizeWorker_RunWorkerCompleted;
+				addonSizeWorker.DoWork += (s,e) => {
+                    double gameSize = (Util.GetDirectorySize(gamePath) / 1024.0) / 1024.0;
+                    gameSize = Math.Round(gameSize, 1);
+                    gameSizeStr = gameSize.ToString();
+
+                    double contentSize = (Util.GetDirectorySize(contentPath) / 1024.0) / 1024.0;
+                    contentSize = Math.Round(contentSize, 1);
+                    contentSizeStr = contentSize.ToString();
+                };
+				addonSizeWorker.RunWorkerCompleted += (s,e) => {
+                    mainForm.MetroToolTip1.SetToolTip(mainForm.GameTile, "(" + gameSizeStr + " MB)." + " Opens the game directory of this addon.");
+                    mainForm.MetroToolTip1.SetToolTip(mainForm.ContentTile, "(" + contentSizeStr + " MB)." + " Opens the content directory of this addon.");
+                };
 				addonSizeWorker.RunWorkerAsync();
 			}
-
-			if (barebonesLibUpdates) {
-				// we need to allot time to pull or clone barebones, before checking for lib updates.
-				// lib update code is called in Updater.cs in this case.
-				if (!mainForm.firstAddonChange) {
-					mainForm.firstAddonChange = true;
-					return;
-				}
-
-				Timer onChangedToTimer = new Timer();
-				onChangedToTimer.Interval = 500;
-				onChangedToTimer.Tick += OnChangedToTimer_Tick;
-				onChangedToTimer.Start();
-			}
+            mainForm.atAGlanceLabel.Text = name + " at a glance...";
+            createTree();
 		}
 
-		private void OnChangedToTimer_Tick(object sender, EventArgs e) {
-			// run it once
-			Timer t = (Timer)sender;
-			t.Stop();
+        public void createTree() {
+            string bannedExtensionsStr = "";
+            if (mainForm.hideCompiledFilesCheckBox1.Checked) {
+                bannedExtensionsStr += ".vpcf_c;.vjs_c;.vcss_c;.vxml_c;.vtex_c;.vmat_c;.vsndevts_c;";
+            }
+            if (mainForm.imagesCheckBox1.Checked) {
+                bannedExtensionsStr += ".png;.jpg;.jpeg;.bmp;.gif;.psd;.tga;";
+            }
 
-			checkForDefaultLibs();
+            var bannedExtensions = bannedExtensionsStr.Split(';').ToDictionary(v => v, v => true);
 
-			foreach (KeyValuePair<string, Library> libKV in libraries) {
-				Library lib = libKV.Value;
-				lib.checkForUpdates();
+            var scriptsTree = mainForm.scriptsTree;
+            var panoramaTree = mainForm.panoramaTree;
+            var scriptsNode = scriptsTree.Nodes[0];
+            var panoramaNode = panoramaTree.Nodes[0];
+            scriptsNode.Nodes.Clear();
+            panoramaNode.Nodes.Clear();
+            scriptsNode.Name = Path.Combine(gamePath, "scripts");
+            panoramaNode.Name = Path.Combine(contentPath, "panorama");
+            if (!Directory.Exists(scriptsNode.Name) || !Directory.Exists(panoramaNode.Name)) { return; }
 
-			}
-
-			t.Dispose();
-		}
-
-		private void AddonSizeWorker_DoWork(object sender, DoWorkEventArgs e) {
-			double gameSize = (Util.GetDirectorySize(gamePath) / 1024.0) / 1024.0;
-			gameSize = Math.Round(gameSize, 1);
-			gameSizeStr = gameSize.ToString();
-
-			double contentSize = (Util.GetDirectorySize(contentPath) / 1024.0) / 1024.0;
-			contentSize = Math.Round(contentSize, 1);
-			contentSizeStr = contentSize.ToString();
-		}
-
-		private void AddonSizeWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
-			mainForm.MetroToolTip1.SetToolTip(mainForm.GameTile, "(" + gameSizeStr + " MB)." + " Opens the game directory of this addon.");
-			mainForm.MetroToolTip1.SetToolTip(mainForm.ContentTile, "(" + contentSizeStr + " MB)." + " Opens the content directory of this addon.");
-		}
-
-		#endregion
-
-	}
+            var stack = new Stack<TreeNode>();
+            stack.Push(scriptsNode);
+            while (stack.Count > 0) {
+                var node = stack.Pop();
+                foreach (var dir in Directory.GetDirectories(node.Name)) {
+                    var text = dir.Substring(dir.LastIndexOf('\\')+1);
+                    TreeNode node2 = new TreeNode(text);
+                    node2.Name = dir;
+                    node.Nodes.Add(node2);
+                    stack.Push(node2);
+                }
+                foreach (var file in Directory.GetFiles(node.Name)) {
+                    var text = file.Substring(file.LastIndexOf('\\') + 1);
+                    if (bannedExtensions.ContainsKey(Path.GetExtension(file))) {
+                        continue;
+                    }
+                    TreeNode node2 = new TreeNode(text);
+                    node2.Name = file;
+                    node.Nodes.Add(node2);
+                }
+            }
+            stack.Clear();
+            stack.Push(panoramaNode);
+            while (stack.Count > 0) {
+                var node = stack.Pop();
+                foreach (var dir in Directory.GetDirectories(node.Name)) {
+                    var text = dir.Substring(dir.LastIndexOf('\\') + 1);
+                    TreeNode node2 = new TreeNode(text);
+                    node2.Name = dir;
+                    node.Nodes.Add(node2);
+                    stack.Push(node2);
+                }
+                foreach (var file in Directory.GetFiles(node.Name)) {
+                    var text = file.Substring(file.LastIndexOf('\\') + 1);
+                    if (bannedExtensions.ContainsKey(Path.GetExtension(file))) {
+                        continue;
+                    }
+                    TreeNode node2 = new TreeNode(text);
+                    node2.Name = file;
+                    node.Nodes.Add(node2);
+                }
+            }
+            scriptsNode.ExpandAll();
+            panoramaNode.ExpandAll();
+        }
+    }
 }

@@ -9,6 +9,9 @@ using System.Text;
 using System.Windows.Forms;
 //using Timer = System.Timers.Timer;
 
+// Note: ShowDialog() will not allow the user to go back to parent dialog until this dialog is dealt with.
+// Show() still allows the user to go back to the parent dialog.
+
 namespace Dota2ModKit {
     public static class Util {
 		public static string logPath = Path.Combine(Environment.CurrentDirectory, "debug_log.txt");

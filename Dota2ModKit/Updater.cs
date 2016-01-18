@@ -105,10 +105,6 @@ namespace Dota2ModKit {
 			mainForm.ProgressSpinner1.Visible = false;
 
 			if (mainForm.currAddon != null && mainForm.currAddon.barebonesLibUpdates) {
-				mainForm.currAddon.checkForDefaultLibs();
-				foreach (var lib in mainForm.currAddon.libraries) {
-					lib.Value.checkForUpdates();
-				}
 			}
 
 		}

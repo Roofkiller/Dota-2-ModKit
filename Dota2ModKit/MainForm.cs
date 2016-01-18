@@ -21,7 +21,7 @@ namespace Dota2ModKit {
         public bool DEBUG = false;
         public Addon currAddon;
         public Dictionary<string, Addon> addons;
-        internal bool firstAddonChange, firstRun = false;
+        internal bool firstRun = false;
         public string dotaDir = "",
             gamePath = "",
             contentPath = "",
@@ -104,7 +104,7 @@ namespace Dota2ModKit {
             // some functions in the Tick try and use mainform's controls on another thread. so we need to allot a very small amount of time for
             // mainform to init its controls. this is mainly for the very first run of modkit.
             Util.CreateTimer(200, (timer) => {
-                timer.Stop();
+                timer.Dispose();
 
                 // clone a barebones repo if we don't have one, pull if we do
                 updater.clonePullBarebones();
@@ -173,6 +173,24 @@ namespace Dota2ModKit {
                 if (e.KeyCode == Keys.Enter) {
                     doGithubSearch();
                 }
+            };
+
+            Load += (s, e) => {
+
+            };
+            scriptsTree.AfterSelect += (s, e) => {
+                Debug.WriteLine("scriptsTree afterSelect");
+                var node = scriptsTree.SelectedNode;
+                try {
+                    Process.Start(node.Name);
+                } catch (Exception) { }
+            };
+            panoramaTree.AfterSelect += (s, e) => {
+                Debug.WriteLine("panoramaTree afterSelect");
+                var node = panoramaTree.SelectedNode;
+                try {
+                    Process.Start(node.Name);
+                } catch (Exception) { }
             };
 
         }
@@ -392,12 +410,14 @@ namespace Dota2ModKit {
             // perform the tile swap of currAddon and a.
             // first change the addonTile.
             var addonTileImage = a.getThumbnail(this);
-            //Size size = new Size(mf.addonTile.Width, mf.addonTile.Height);
-            //thumbnail = (Image)new Bitmap(thumbnail, size);
             if (addonTileImage != null) {
                 addonTile.UseTileImage = true;
-                Size size = new Size(addonTile.Width, addonTile.Height);
-                addonTile.TileImage = (Image)new Bitmap(addonTileImage, size);
+                Util.CreateTimer(100, (timer) => {
+                    timer.Dispose();
+                    Size size = new Size(addonTile.Width, addonTile.Height);
+                    addonTile.TileImage = (Image)new Bitmap(addonTileImage, size);
+                    addonTile.Refresh();
+                });
             } else {
                 addonTile.UseTileImage = false;
                 a.doesntHaveThumbnail = true;
@@ -462,7 +482,7 @@ namespace Dota2ModKit {
             Random rand = new Random();
             var x = 0;
             var y = 0;
-            int addon_height = 120;
+            int addon_height = 126;
             int y_padding = 6;
             var bar = (MetroScrollBar)addonsPanel.Controls[0];
             bar.Theme = MetroThemeStyle.Dark;
@@ -473,7 +493,7 @@ namespace Dota2ModKit {
             int addon_width = addonsPanel.Size.Width - scrollbar_width;
             addonTile.Width = addon_width+scrollbar_width-y_padding;
             addonTile.Height = addon_height;
-            addonsPanel.Location = new Point(addonTile.Location.X, addonTile.Location.Y + addonTile.Height + y_padding);
+            //addonsPanel.Location = new Point(addonTile.Location.X, addonTile.Location.Y + addonTile.Height + y_padding);
             foreach (var kv in addons) {
                 var a = kv.Value;
                 if (a == currAddon) {
@@ -504,14 +524,6 @@ namespace Dota2ModKit {
 
                 mt.Refresh();
             }
-        }
-
-        /// Opens up info about all addons on the computer. User is able to change addon here.
-        private void addonTile_Click(object sender, EventArgs e) {
-            AddonsForm addonsForm = new AddonsForm(this);
-            // Note: ShowDialog() will not allow the user to go back to parent dialog until this dialog is dealt with.
-            // Show() still allows the user to go back to the parent dialog.
-            addonsForm.ShowDialog();
         }
 
         private void generateAddonLangsBtn_Click(object sender, EventArgs e) {
@@ -682,9 +694,9 @@ namespace Dota2ModKit {
             try {
                 string text = sender.ToString();
                 Debug.WriteLine(text);
-                if (text.EndsWith("G")) {
+                if (text.EndsWith("Game")) {
                     Process.Start(currAddon.gamePath);
-                } else if (text.EndsWith("C")) {
+                } else if (text.EndsWith("Content")) {
                     Process.Start(currAddon.contentPath);
                 } else if (text.EndsWith("VS")) {
                     Process.Start(Path.Combine(currAddon.gamePath, "scripts", "vscripts"));
@@ -699,6 +711,7 @@ namespace Dota2ModKit {
                 } else if (text.EndsWith("E")) {
                     //dota_english.txt
                 }
+                fixButton();
             } catch (Exception ex) {
                 // likely directoryNotFound exceptions.
                 MetroMessageBox.Show(this, ex.Message,
@@ -745,6 +758,15 @@ namespace Dota2ModKit {
             onOptionsClick();
         }
 
+        private void filterExtensionsBtn_Click(object sender, EventArgs e) {
+            currAddon.createTree();
+        }
+
+        private void hideExtensionsCheckbox_Click(object sender, EventArgs e) {
+            fixButton();
+            currAddon.createTree();
+        }
+
         void onOptionsClick() {
             OptionsForm of = new OptionsForm(this);
             DialogResult dr = of.ShowDialog();
@@ -780,12 +802,6 @@ namespace Dota2ModKit {
             }
 
             SpellLibraryForm slf = new SpellLibraryForm(this);
-        }
-
-        private void libraryManagerBtn_Click(object sender, EventArgs e) {
-            LibraryManagerForm lmf = new LibraryManagerForm(this);
-            lmf.ShowDialog();
-
         }
 
         private void versionLabel_Click(object sender, EventArgs e) {
