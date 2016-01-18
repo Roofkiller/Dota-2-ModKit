@@ -83,8 +83,8 @@ namespace Dota2ModKit {
 		}
 
 		internal void clonePullBarebones() {
-			mainForm.ProgressSpinner1.Value = 60;
-			mainForm.ProgressSpinner1.Visible = true;
+			//mainForm.ProgressSpinner1.Value = 60;
+			//mainForm.ProgressSpinner1.Visible = true;
 
 			if (!Directory.Exists(barebonesPath)) {
 				mainForm.text_notification("Cloning Barebones...", MetroColorStyle.Blue, 999999);
@@ -102,7 +102,7 @@ namespace Dota2ModKit {
 
 		private void BarebonesCloneWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
 			mainForm.text_notification("", MetroColorStyle.Blue, 500);
-			mainForm.ProgressSpinner1.Visible = false;
+			//mainForm.ProgressSpinner1.Visible = false;
 
 			if (mainForm.currAddon != null && mainForm.currAddon.barebonesLibUpdates) {
 			}

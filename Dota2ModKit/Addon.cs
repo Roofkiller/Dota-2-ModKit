@@ -21,14 +21,14 @@ namespace Dota2ModKit
 		internal Image image;
 		internal MetroColorStyle tileColor = MetroColorStyle.Green;
 
-		// tooltip generation stuff
-		HashSet<string> abilityModifierNames = new HashSet<string>();
-		HashSet<string> itemModifierNames = new HashSet<string>();
-		List<AbilityEntry> abilityEntries = new List<AbilityEntry>();
-		List<AbilityEntry> itemEntries = new List<AbilityEntry>();
-		List<UnitEntry> unitEntries = new List<UnitEntry>();
-		List<HeroEntry> heroEntries = new List<HeroEntry>();
-		HashSet<string> alreadyHasKeys = new HashSet<string>();
+        // tooltip generation stuff
+        internal HashSet<string> abilityModifierNames = new HashSet<string>();
+        internal HashSet<string> itemModifierNames = new HashSet<string>();
+        internal List<AbilityEntry> abilityEntries = new List<AbilityEntry>();
+        internal List<AbilityEntry> itemEntries = new List<AbilityEntry>();
+        internal List<UnitEntry> unitEntries = new List<UnitEntry>();
+        internal List<HeroEntry> heroEntries = new List<HeroEntry>();
+        internal HashSet<string> alreadyHasKeys = new HashSet<string>();
 
 		internal bool generateNote0,
             doesntHaveThumbnail,
@@ -60,60 +60,6 @@ namespace Dota2ModKit
 				} catch (Exception) {
 					Debug.WriteLine("Couldn't auto-create content path for " + name);
 					hasContentPath = false;
-				}
-			}
-		}
-
-		internal void generateAddonLangs(MainForm mainForm) {
-			abilityModifierNames.Clear();
-			itemModifierNames.Clear();
-			abilityEntries.Clear();
-			itemEntries.Clear();
-			unitEntries.Clear();
-			heroEntries.Clear();
-			alreadyHasKeys.Clear();
-
-			string curr = "";
-			try {
-				// these functions populate the data structures with the tooltips before writing to the addon_lang file.
-				// items
-				curr = "npc_items_custom.txt";
-				generateAbilityTooltips(true);
-				// abils
-				curr = "npc_abilities_custom.txt";
-				generateAbilityTooltips(false);
-				curr = "npc_units_custom.txt";
-				generateUnitTooltips();
-				curr = "npc_heroes_custom.txt";
-				generateHeroTooltips();
-				writeTooltips();
-				mainForm.text_notification("Tooltips successfully generated", MetroColorStyle.Green, 2500);
-			} catch (Exception ex) {
-				string msg = ex.Message;
-				if (ex.InnerException != null) {
-					msg = ex.InnerException.Message;
-				}
-
-				MetroMessageBox.Show(mainForm, msg,
-					"Parse error: " + curr,
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Error);
-
-			}
-
-			// utf8 code
-			if (generateUTF8) {
-				string[] files = Directory.GetFiles(Path.Combine(gamePath, "resource"));
-				foreach (string file in files) {
-					// skip the existing utf8 files.
-					if (file.Contains("utf8")) {
-						continue;
-					}
-					string name = file.Substring(file.LastIndexOf("\\") + 1);
-					name = name.Replace(".txt", "");
-					//string firstPart = file.Substring(0, file.LastIndexOf("\\"));
-					name += "_utf8.txt";
-					File.WriteAllText(Path.Combine(contentPath, name), File.ReadAllText(file), Encoding.UTF8);
 				}
 			}
 		}
@@ -151,20 +97,6 @@ namespace Dota2ModKit
 					File.Delete(binFilePath);
 				} catch (Exception) { }
 			}
-		}
-
-		private List<string> getAddonLangPaths() {
-			string[] resourceFiles = Directory.GetFiles(Path.Combine(gamePath, "resource"));
-			List<string> langFiles = new List<string>();
-
-			// only take the addon_language files
-			for (int i = 0; i < resourceFiles.Length; i++) {
-				string resourceFile = resourceFiles[i];
-				if (resourceFile.Contains("addon_") && resourceFile.EndsWith(".txt") && !resourceFile.EndsWith("utf8.txt")) {
-					langFiles.Add(resourceFile);
-				}
-			}
-			return langFiles;
 		}
 
         #region serializer/deserializer
@@ -279,223 +211,9 @@ namespace Dota2ModKit
 		}
         #endregion
 
-        #region generate tooltip functions
-        private void generateAbilityTooltips(bool item) {
-			string path = Path.Combine(gamePath, "scripts", "npc", "npc_abilities_custom.txt");
-
-			if (item) {
-				path = Path.Combine(gamePath, "scripts", "npc", "npc_items_custom.txt");
-			}
-
-			if (!File.Exists(path)) {
-				return;
-			}
-
-			KeyValue kvs = kvs = KVParser.KV1.ParseAll(File.ReadAllText(path))[0];
-
-			foreach (KeyValue kv in kvs.Children) {
-				if (kv.Key == "Version") {
-					continue;
-				}
-
-				string abilName = kv.Key;
-				List<string> abilitySpecialNames = new List<string>();
-
-				foreach (KeyValue kv2 in kv.Children) {
-					if (kv2.Key == "AbilitySpecial") {
-						foreach (KeyValue kv3 in kv2.Children) {
-							foreach (KeyValue kv4 in kv3.Children) {
-								if (kv4.Key != "var_type") {
-									string abilitySpecialName = kv4.Key;
-									abilitySpecialNames.Add(abilitySpecialName);
-								}
-							}
-
-						}
-					} else if (kv2.Key == "Modifiers") {
-						foreach (KeyValue kv3 in kv2.Children) {
-							string modifierName = kv3.Key;
-							bool hiddenModifier = false;
-							foreach (KeyValue kv4 in kv3.Children) {
-								if (kv4.Key == "IsHidden" && kv4.GetString() == "1") {
-									hiddenModifier = true;
-								}
-							}
-							if (!hiddenModifier) {
-								if (!item) {
-									abilityModifierNames.Add(modifierName);
-								} else {
-									itemModifierNames.Add(modifierName);
-								}
-							}
-
-						}
-					}
-				}
-				if (!item) {
-					abilityEntries.Add(new AbilityEntry(this, abilName, abilitySpecialNames));
-				} else {
-					itemEntries.Add(new AbilityEntry(this, abilName, abilitySpecialNames));
-				}
-			}
-		}
-
-        private void generateHeroTooltips() {
-            string path = Path.Combine(gamePath, "scripts", "npc", "npc_heroes_custom.txt");
-
-            if (!File.Exists(path)) {
-                return;
-            }
-
-            KeyValue kvs = kvs = KVParser.KV1.ParseAll(File.ReadAllText(path))[0];
-
-            foreach (KeyValue kv in kvs.Children) {
-                if (kv.Key == "Version") {
-                    continue;
-                }
-
-                string name = kv.Key;
-
-                foreach (KeyValue kv2 in kv.Children) {
-                    if (kv2.Key == "override_hero") {
-                        heroEntries.Add(new HeroEntry(this, kv2.GetString(), name));
-                        break;
-                    }
-
-                }
-
-                unitEntries.Add(new UnitEntry(this, kv.Key));
-            }
+        internal void generateTooltips(MainForm mainForm) {
+            mainForm.kvFeatures.generateTooltips(this);
         }
-
-        private void generateUnitTooltips() {
-            string path = Path.Combine(gamePath, "scripts", "npc", "npc_units_custom.txt");
-
-            if (!File.Exists(path)) {
-                return;
-            }
-
-            KeyValue kvs = kvs = KVParser.KV1.ParseAll(File.ReadAllText(path))[0];
-
-            foreach (KeyValue kv in kvs.Children) {
-                if (kv.Key == "Version") {
-                    continue;
-                }
-                unitEntries.Add(new UnitEntry(this, kv.Key));
-            }
-        }
-
-        private void writeTooltips() {
-            foreach (string path in getAddonLangPaths()) {
-
-                alreadyHasKeys.Clear();
-
-                string thisLang = path.Substring(path.LastIndexOf('\\') + 1);
-
-                string thisLangCopy = thisLang;
-                thisLang = thisLang.Substring(thisLang.LastIndexOf('_') + 1);
-
-                string outputPath = Path.Combine(contentPath, "tooltips_" + thisLang);
-
-                KeyValue kv = KVParser.KV1.ParseAll(File.ReadAllText(path, Encoding.Unicode))[0];
-
-                foreach (KeyValue kv2 in kv.Children) {
-                    if (kv2.Key == "Tokens") {
-                        foreach (KeyValue kv3 in kv2.Children) {
-                            alreadyHasKeys.Add(kv3.Key.ToLowerInvariant());
-                        }
-                    }
-                }
-
-                StringBuilder content = new StringBuilder();
-
-                string head0 =
-                "\t\t// DOTA 2 MODKIT GENERATED TOOLTIPS FOR: " + this.name + "\n" +
-                "\t\t// Keys already defined in " + thisLangCopy + " are not listed, nor are Modifiers with the property \"IsHidden\" \"1\".\n";
-                content.Append(head0);
-
-                string head1 = "\n\t\t// ******************** HEROES ********************\n";
-                content.Append(head1);
-                foreach (HeroEntry he in heroEntries) {
-                    if (!alreadyHasKeys.Contains(he.name.key.ToLowerInvariant())) {
-                        content.Append(he);
-                    }
-                }
-
-                string head2 = "\n\t\t// ******************** UNITS ********************\n";
-                content.Append(head2);
-                foreach (UnitEntry ue in unitEntries) {
-                    if (!alreadyHasKeys.Contains(ue.name.key.ToLowerInvariant())) {
-                        content.Append(ue);
-                    }
-                }
-
-                string head3 = "\n\t\t// ******************** ABILITY MODIFIERS ********************\n";
-                content.Append(head3);
-                foreach (string amn in abilityModifierNames) {
-                    ModifierEntry me = new ModifierEntry(this, amn);
-                    if (!alreadyHasKeys.Contains(me.name.key.ToLowerInvariant())) {
-                        content.Append(me + "\n");
-                    }
-                }
-
-                string head4 = "\n\t\t// ******************** ITEM MODIFIERS ********************\n";
-                content.Append(head4);
-                foreach (string imn in itemModifierNames) {
-                    ModifierEntry me = new ModifierEntry(this, imn);
-                    if (!alreadyHasKeys.Contains(me.name.key.ToLowerInvariant())) {
-                        content.Append(me + "\n");
-                    }
-                }
-
-                string head5 = "\n\t\t// ******************** ABILITIES ********************\n";
-                content.Append(head5);
-                foreach (AbilityEntry ae in abilityEntries) {
-                    if (!alreadyHasKeys.Contains(ae.name.key.ToLowerInvariant())) {
-                        content.Append(ae + "\n");
-                    } else {
-                        // the addon_language already has this ability. but let's check
-                        // if there are any new AbilitySpecials.
-                        bool missingAbilSpecials = false;
-                        foreach (Pair p in ae.abilitySpecials) {
-                            if (!alreadyHasKeys.Contains(p.key.ToLowerInvariant())) {
-                                // the addon_language doesn't contain this abil special.
-                                content.Append(p.ToString());
-                                missingAbilSpecials = true;
-                            }
-                        }
-                        if (missingAbilSpecials) {
-                            content.Append("\n");
-                        }
-                    }
-                }
-
-                string head6 = "\n\t\t// ******************** ITEMS ********************\n";
-                content.Append(head6);
-                foreach (AbilityEntry ae in itemEntries) {
-                    if (!alreadyHasKeys.Contains(ae.name.key.ToLowerInvariant())) {
-                        content.Append(ae + "\n");
-                    } else {
-                        // the addon_language already has this ability. but let's check
-                        // if there are any new AbilitySpecials.
-                        bool missingAbilSpecials = false;
-                        foreach (Pair p in ae.abilitySpecials) {
-                            if (!alreadyHasKeys.Contains(p.key.ToLowerInvariant())) {
-                                // the addon_language doesn't contain this abil special.
-                                content.Append(p.ToString());
-                                missingAbilSpecials = true;
-                            }
-                        }
-                        if (missingAbilSpecials) {
-                            content.Append("\n");
-                        }
-                    }
-                }
-                File.WriteAllText(outputPath, content.ToString(), Encoding.Unicode);
-                Process.Start(outputPath);
-            }
-        }
-        #endregion
 
         internal void onChangedTo(MainForm mainForm) {
 			this.mainForm = mainForm;
@@ -516,8 +234,8 @@ namespace Dota2ModKit
                     contentSizeStr = contentSize.ToString();
                 };
 				addonSizeWorker.RunWorkerCompleted += (s,e) => {
-                    mainForm.MetroToolTip1.SetToolTip(mainForm.GameTile, "(" + gameSizeStr + " MB)." + " Opens the game directory of this addon.");
-                    mainForm.MetroToolTip1.SetToolTip(mainForm.ContentTile, "(" + contentSizeStr + " MB)." + " Opens the content directory of this addon.");
+                   // mainForm.MetroToolTip1.SetToolTip(mainForm.GameTile, "(" + gameSizeStr + " MB)." + " Opens the game directory of this addon.");
+                   // mainForm.MetroToolTip1.SetToolTip(mainForm.ContentTile, "(" + contentSizeStr + " MB)." + " Opens the content directory of this addon.");
                 };
 				addonSizeWorker.RunWorkerAsync();
 			}

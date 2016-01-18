@@ -42,7 +42,7 @@ namespace Dota2ModKit {
 
 		public void setPath(string path) {
 			this.path = path;
-			mainForm.MetroToolTip1.SetToolTip(tile, path + ". Right-click to edit tile.");
+			//mainForm.MetroToolTip1.SetToolTip(tile, path + ". Right-click to edit tile.");
 		}
 
 		internal void serialize() {

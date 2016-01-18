@@ -102,11 +102,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Addon.cs" />
-    <Compile Include="AddonLangEntry.cs" />
+    <Compile Include="TooltipsEntry.cs" />
     <Compile Include="CustomTile.cs" />
     <Compile Include="Features\SoundFeatures.cs" />
     <Compile Include="Features\KVFeatures.cs" />
     <Compile Include="Features\ParticleFeatures.cs" />
+    <Compile Include="Features\SpellLibraryFeatures.cs" />
     <Compile Include="Features\VTEXFeatures.cs" />
     <Compile Include="Forms\CustomTileForm.cs">
       <SubType>Form</SubType>
@@ -132,19 +133,12 @@
     <Compile Include="Forms\MasterToolboxForm.Designer.cs">
       <DependentUpon>MasterToolboxForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SpellLibraryForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\SpellLibraryForm.Designer.cs">
-      <DependentUpon>SpellLibraryForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\UpdateInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\UpdateInfoForm.Designer.cs">
       <DependentUpon>UpdateInfoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Initializer.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -195,9 +189,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MasterToolboxForm.resx">
       <DependentUpon>MasterToolboxForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SpellLibraryForm.resx">
-      <DependentUpon>SpellLibraryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UpdateInfoForm.resx">
       <DependentUpon>UpdateInfoForm.cs</DependentUpon>

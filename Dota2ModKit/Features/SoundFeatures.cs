@@ -36,13 +36,13 @@ namespace Dota2ModKit.Features {
 
 				using (WebClient SoundMapFileWC = new WebClient()) {
 					SoundMapFileWC.DownloadFileCompleted += SoundMapFileWC_DownloadFileCompleted;
-					mainForm.ProgressSpinner1.Visible = true;
-					mainForm.FindSoundNameBtn.Enabled = false;
+					//mainForm.ProgressSpinner1.Visible = true;
+					//mainForm.FindSoundNameBtn.Enabled = false;
 					try {
 						SoundMapFileWC.DownloadFileAsync(new Uri("https://github.com/stephenfournier/Dota-2-ModKit/raw/326ebd10a117c5f58c20b412a6e2f5e221800330/Dota2ModKit/Libs/vsnd_to_soundname_v2.txt"), "vsnd_to_soundname_v2.txt");
 					} catch (Exception) {
-						mainForm.ProgressSpinner1.Visible = false;
-						mainForm.FindSoundNameBtn.Enabled = true;
+						//mainForm.ProgressSpinner1.Visible = false;
+						//mainForm.FindSoundNameBtn.Enabled = true;
 					}
                 }
 				return;
@@ -59,8 +59,8 @@ namespace Dota2ModKit.Features {
 		}
 
 		private void SoundMapFileWC_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
-			mainForm.ProgressSpinner1.Visible = false;
-			mainForm.FindSoundNameBtn.Enabled = true;
+			//mainForm.ProgressSpinner1.Visible = false;
+			//mainForm.FindSoundNameBtn.Enabled = true;
 			findSoundName();
 		}
 

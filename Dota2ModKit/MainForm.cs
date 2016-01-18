@@ -37,16 +37,11 @@ namespace Dota2ModKit {
         Updater updater;
 
         // Features of modkit
-        KVFeatures kvFeatures;
-        VTEXFeatures vtexFeatures;
-        ParticleFeatures particleFeatures;
-        SoundFeatures soundFeatures;
-
-        // helpers to make things accessible in other forms.
-        public MetroTile GameTile, ContentTile;
-        public MetroButton SpellLibBtn, FindSoundNameBtn;
-        public MetroProgressSpinner ProgressSpinner1;
-        public MetroToolTip MetroToolTip1;
+        internal KVFeatures kvFeatures;
+        internal VTEXFeatures vtexFeatures;
+        internal ParticleFeatures particleFeatures;
+        internal SoundFeatures soundFeatures;
+        internal SpellLibraryFeatures spellLibraryFeatures;
 
         public CustomTile[] customTiles = new CustomTile[5];
         public CoffeeSharp.CoffeeScriptEngine cse = null;
@@ -136,20 +131,15 @@ namespace Dota2ModKit {
                 vtexFeatures = new VTEXFeatures(this);
                 particleFeatures = new ParticleFeatures(this);
                 soundFeatures = new SoundFeatures(this);
+                spellLibraryFeatures = new SpellLibraryFeatures(this);
             });
         }
 
         private void initMainFormControls() {
-            // allow some MainForm controls to be publicly accessibile
-            ProgressSpinner1 = progressSpinner1;
-            //SpellLibBtn = spellLibraryBtn;
-            MetroToolTip1 = mainFormToolTip;
-            GameTile = gameTile;
-            ContentTile = contentTile;
-            FindSoundNameBtn = findSoundNameBtn;
 
-            Size size = new Size(steamTile.Width, steamTile.Height);
-            steamTile.TileImage = (Image)new Bitmap(Resources.steam_icon, size);
+            //Size size = new Size(steamTile.Width, steamTile.Height);
+            //steamTile.TileImage = (Image)new Bitmap(Resources.steam_icon, size);
+
             luaRadioBtn.Checked = true;
             tabControl.SelectedIndex = 0;
             notificationLabel.Text = "";
@@ -486,9 +476,11 @@ namespace Dota2ModKit {
             int y_padding = 6;
             var bar = (MetroScrollBar)addonsPanel.Controls[0];
             bar.Theme = MetroThemeStyle.Dark;
+            bar.Width = 9;
             int scrollbar_width = bar.Width+4;
             bar = (MetroScrollBar)addonsPanel.Controls[1];
             bar.Theme = MetroThemeStyle.Dark;
+            bar.Width = 9;
 
             int addon_width = addonsPanel.Size.Width - scrollbar_width;
             addonTile.Width = addon_width+scrollbar_width-y_padding;
@@ -526,9 +518,9 @@ namespace Dota2ModKit {
             }
         }
 
-        private void generateAddonLangsBtn_Click(object sender, EventArgs e) {
+        private void generateTooltipsBtn_Click(object sender, EventArgs e) {
             fixButton();
-            currAddon.generateAddonLangs(this);
+            currAddon.generateTooltips(this);
         }
 
         private void workshopPageBtn_Click(object sender, EventArgs e) {
@@ -790,18 +782,6 @@ namespace Dota2ModKit {
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
-        }
-
-        private void spellLibraryBtn_Click(object sender, EventArgs e) {
-            fixButton();
-
-            if (Application.OpenForms["SpellLibraryForm"] != null) {
-                Application.OpenForms["SpellLibraryForm"].BringToFront();
-                Application.OpenForms["SpellLibraryForm"].WindowState = FormWindowState.Normal;
-                return;
-            }
-
-            SpellLibraryForm slf = new SpellLibraryForm(this);
         }
 
         private void versionLabel_Click(object sender, EventArgs e) {
