@@ -40,7 +40,7 @@ namespace Dota2ModKit
             generateUTF8 = true,
             hasContentPath = true;
 		private string gameSizeStr = "", contentSizeStr = "";
-		private MainForm mainForm;
+		private MainForm mf;
 
         public MetroTile panelTile { get; internal set; }
 
@@ -215,8 +215,8 @@ namespace Dota2ModKit
             mainForm.kvFeatures.generateTooltips(this);
         }
 
-        internal void onChangedTo(MainForm mainForm) {
-			this.mainForm = mainForm;
+        internal void onChangedTo(MainForm mf) {
+			this.mf = mf;
 
 			// delete .bin files if the option is checked.
 			if (autoDeleteBin) {
@@ -239,23 +239,22 @@ namespace Dota2ModKit
                 };
 				addonSizeWorker.RunWorkerAsync();
 			}
-            mainForm.atAGlanceLabel.Text = name + " at a glance...";
             createTree();
 		}
 
         public void createTree() {
             string bannedExtensionsStr = "";
-            if (mainForm.hideCompiledFilesCheckBox1.Checked) {
+            if (mf.hideCompiledFilesCheckBox1.Checked) {
                 bannedExtensionsStr += ".vpcf_c;.vjs_c;.vcss_c;.vxml_c;.vtex_c;.vmat_c;.vsndevts_c;";
             }
-            if (mainForm.imagesCheckBox1.Checked) {
+            if (mf.imagesCheckBox1.Checked) {
                 bannedExtensionsStr += ".png;.jpg;.jpeg;.bmp;.gif;.psd;.tga;";
             }
 
             var bannedExtensions = bannedExtensionsStr.Split(';').ToDictionary(v => v, v => true);
 
-            var scriptsTree = mainForm.scriptsTree;
-            var panoramaTree = mainForm.panoramaTree;
+            var scriptsTree = mf.scriptsTree;
+            var panoramaTree = mf.panoramaTree;
             var scriptsNode = scriptsTree.Nodes[0];
             var panoramaNode = panoramaTree.Nodes[0];
             scriptsNode.Nodes.Clear();
@@ -271,6 +270,7 @@ namespace Dota2ModKit
                 foreach (var dir in Directory.GetDirectories(node.Name)) {
                     var text = dir.Substring(dir.LastIndexOf('\\')+1);
                     TreeNode node2 = new TreeNode(text);
+                    node2.ForeColor = Color.SandyBrown;
                     node2.Name = dir;
                     node.Nodes.Add(node2);
                     stack.Push(node2);
@@ -281,6 +281,9 @@ namespace Dota2ModKit
                         continue;
                     }
                     TreeNode node2 = new TreeNode(text);
+                    if (file.EndsWith(".lua")) {
+                        node2.ForeColor = Color.Yellow;
+                    }
                     node2.Name = file;
                     node.Nodes.Add(node2);
                 }
@@ -292,6 +295,7 @@ namespace Dota2ModKit
                 foreach (var dir in Directory.GetDirectories(node.Name)) {
                     var text = dir.Substring(dir.LastIndexOf('\\') + 1);
                     TreeNode node2 = new TreeNode(text);
+                    node2.ForeColor = Color.SandyBrown;
                     node2.Name = dir;
                     node.Nodes.Add(node2);
                     stack.Push(node2);
@@ -302,12 +306,21 @@ namespace Dota2ModKit
                         continue;
                     }
                     TreeNode node2 = new TreeNode(text);
+                    if (file.EndsWith(".js")) {
+                        node2.ForeColor = Color.GreenYellow;
+                    } else if (file.EndsWith(".css")) {
+                        node2.ForeColor = Color.LightPink;
+                    } else if (file.EndsWith(".xml")) {
+                        node2.ForeColor = Color.SkyBlue;
+                    }
                     node2.Name = file;
                     node.Nodes.Add(node2);
                 }
             }
             scriptsNode.ExpandAll();
             panoramaNode.ExpandAll();
+            scriptsTree.SelectedNode = scriptsNode;
+            panoramaTree.SelectedNode = panoramaNode;
         }
     }
 }

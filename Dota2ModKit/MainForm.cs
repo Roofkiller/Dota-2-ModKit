@@ -140,7 +140,7 @@ namespace Dota2ModKit {
             //Size size = new Size(steamTile.Width, steamTile.Height);
             //steamTile.TileImage = (Image)new Bitmap(Resources.steam_icon, size);
 
-            luaRadioBtn.Checked = true;
+            //luaRadioBtn.Checked = true;
             tabControl.SelectedIndex = 0;
             notificationLabel.Text = "";
             versionLabel.Text = "v" + version;
@@ -159,23 +159,32 @@ namespace Dota2ModKit {
                 serializeSettings();
             };
 
-            githubTextBox.KeyDown += (s, e) => {
+            tabControl.SelectedIndexChanged += (s, e) => {
+
+            };
+
+            /*githubTextBox.KeyDown += (s, e) => {
                 if (e.KeyCode == Keys.Enter) {
                     doGithubSearch();
                 }
+            };*/
+
+            addonTile.Click += (s, e) => {
+                this.tabControl.SelectedTab = tabControl.TabPages[0];
             };
 
             Load += (s, e) => {
 
             };
-            scriptsTree.AfterSelect += (s, e) => {
+            scriptsTree.NodeMouseDoubleClick += (s, e) => {
                 Debug.WriteLine("scriptsTree afterSelect");
                 var node = scriptsTree.SelectedNode;
                 try {
                     Process.Start(node.Name);
                 } catch (Exception) { }
             };
-            panoramaTree.AfterSelect += (s, e) => {
+
+            panoramaTree.NodeMouseDoubleClick += (s, e) => {
                 Debug.WriteLine("panoramaTree afterSelect");
                 var node = panoramaTree.SelectedNode;
                 try {
@@ -581,11 +590,6 @@ namespace Dota2ModKit {
             metroRadioButton1.Select();
         }
 
-        private void particleDesignBtn_Click(object sender, EventArgs e) {
-            fixButton();
-            particleFeatures.design();
-        }
-
         private void deleteAddonBtn_Click(object sender, EventArgs e) {
             fixButton();
 
@@ -655,7 +659,7 @@ namespace Dota2ModKit {
             }
         }
 
-        private void goBtn_Click(object sender, EventArgs e) {
+        /*private void goBtn_Click(object sender, EventArgs e) {
             fixButton();
             doGithubSearch();
         }
@@ -680,7 +684,7 @@ namespace Dota2ModKit {
             string url = "https://github.com/search?l=" + lang + "&q=%22" + query + "%22&ref=searchresults&type=Code&utf8=%E2%9C%93";
             //string url = "https://github.com/search?l=" + lang + "&q=" + query + "&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93";
             Process.Start(url);
-        }
+        }*/
 
         private void shortcutTile_Click(object sender, EventArgs e) {
             try {

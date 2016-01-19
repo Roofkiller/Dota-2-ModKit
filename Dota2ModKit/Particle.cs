@@ -11,16 +11,13 @@ namespace Dota2ModKit {
 	class Particle {
 		public string path;
 		public string[] lines;
-		private ParticleDesignForm pdf;
 
 		public Particle(string path) {
 			this.path = path;
 			lines = File.ReadAllLines(path);
 		}
 
-		internal bool alterParticle(ParticleDesignForm pdf, string[] rgb, int sizeValue) {
-			this.pdf = pdf;
-
+		internal bool alterParticle(MainForm mf, string[] rgb, int sizeValue) {
 			List<string> newLines = new List<string>();
 			bool changeColor = false, changeSize = false;
 			int newR = 0, newG = 0, newB = 0;
@@ -48,7 +45,7 @@ namespace Dota2ModKit {
 				if (i == 0) {
 					// Check if particle is in KV3 format.
 					if (!l.Contains("<!-- kv3")) {
-						MetroMessageBox.Show(pdf, path + " is not in KV3 format!",
+						MetroMessageBox.Show(mf, path + " is not in KV3 format!",
 						"Error parsing .vpcf",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Error);

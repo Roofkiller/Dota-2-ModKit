@@ -104,6 +104,14 @@ namespace Dota2ModKit {
 			return totalBytes;
 		}
 
+        public static Color GetRandomColor() {
+            Random randomGen = new Random();
+            KnownColor[] names = (KnownColor[])Enum.GetValues(typeof(KnownColor));
+            KnownColor randomColorName = names[randomGen.Next(names.Length)];
+            Color randomColor = Color.FromKnownColor(randomColorName);
+            return randomColor;
+        }
+
 		public static string findCommonBeginning(string[] strs) {
 			string commonBeginning = "";
 			int maxLength = Int32.MaxValue;
