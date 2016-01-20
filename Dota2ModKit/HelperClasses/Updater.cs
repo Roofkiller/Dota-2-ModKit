@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Dota2ModKit {
 	class Updater {
-		MainForm mainForm;
+		MainForm mf;
 		string version;
 		string url = "";
 		string newVers = "";
@@ -19,9 +19,10 @@ namespace Dota2ModKit {
 		string barebonesPath = Path.Combine(Environment.CurrentDirectory, "barebones");
 		string releases_page_source;
 
-		public Updater(MainForm mainForm) {
-			this.mainForm = mainForm;
-			version = mainForm.version;
+		public Updater(MainForm mf) {
+			this.mf = mf;
+			version = mf.version;
+            checkForUpdates();
         }
 
 		public void checkForUpdates() {
@@ -38,11 +39,11 @@ namespace Dota2ModKit {
 				return;
 			}
 
-			mainForm.newVers = newVers;
-			mainForm.newVersUrl = url;
-			mainForm.releases_page_source = releases_page_source;
+			mf.newVers = newVers;
+			mf.newVersUrl = url;
+			mf.releases_page_source = releases_page_source;
 
-			UpdateInfoForm uif = new UpdateInfoForm(mainForm);
+			UpdateInfoForm uif = new UpdateInfoForm(mf);
 			uif.ShowDialog();
 		}
 
@@ -87,9 +88,9 @@ namespace Dota2ModKit {
 			//mainForm.ProgressSpinner1.Visible = true;
 
 			if (!Directory.Exists(barebonesPath)) {
-				mainForm.text_notification("Cloning Barebones...", MetroColorStyle.Blue, 999999);
+				mf.text_notification("Cloning Barebones...", MetroColorStyle.Blue, 999999);
 			} else {
-				mainForm.text_notification("Pulling Barebones...", MetroColorStyle.Blue, 999999);
+				mf.text_notification("Pulling Barebones...", MetroColorStyle.Blue, 999999);
 			}
 
 			using (var barebonesCloneWorker = new BackgroundWorker()) {
@@ -101,10 +102,10 @@ namespace Dota2ModKit {
 		}
 
 		private void BarebonesCloneWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
-			mainForm.text_notification("", MetroColorStyle.Blue, 500);
+			mf.text_notification("", MetroColorStyle.Blue, 500);
 			//mainForm.ProgressSpinner1.Visible = false;
 
-			if (mainForm.currAddon != null && mainForm.currAddon.barebonesLibUpdates) {
+			if (mf.currAddon != null && mf.currAddon.barebonesLibUpdates) {
 			}
 
 		}

@@ -11,10 +11,10 @@ using System.Windows.Forms;
 
 namespace Dota2ModKit.Features {
 	class KVFeatures {
-		MainForm mainForm;
+		MainForm mf;
 
-		public KVFeatures(MainForm mainForm) {
-			this.mainForm = mainForm;
+		public KVFeatures(MainForm mf) {
+			this.mf = mf;
 		}
 
         #region breakup/combine
@@ -22,7 +22,7 @@ namespace Dota2ModKit.Features {
 			string[] items = { "heroes", "units", "items", "abilities" };
 			for (int i = 0; i < items.Length; i++) {
 				string item = items[i];
-				string foldPath = Path.Combine(mainForm.currAddon.gamePath, "scripts", "npc", item);
+				string foldPath = Path.Combine(mf.currAddon.gamePath, "scripts", "npc", item);
 				string foldName = foldPath.Substring(foldPath.LastIndexOf('\\') + 1);
 				string foldParent = foldPath.Substring(0, foldPath.LastIndexOf('\\'));
 				string bigKVPath = Path.Combine(foldParent, "npc_" + foldName + "_custom.txt");
@@ -34,7 +34,7 @@ namespace Dota2ModKit.Features {
 				bool doBreakUp = false;
 				if (File.Exists(bigKVPath)) {
 					if (!Directory.Exists(foldPath)) {
-						DialogResult dr = MetroMessageBox.Show(mainForm, "npc_" + item + "_custom.txt has not been broken up. Break it up now?",
+						DialogResult dr = MetroMessageBox.Show(mf, "npc_" + item + "_custom.txt has not been broken up. Break it up now?",
 							"Break Up KV File",
 							MessageBoxButtons.OKCancel,
 							MessageBoxIcon.Information);
@@ -46,8 +46,8 @@ namespace Dota2ModKit.Features {
 							doBreakUp = true;
 						}
 					} else {
-						if (mainForm.currAddon.askToBreakUp) {
-							DialogResult dr = MetroMessageBox.Show(mainForm, "Do you want to break up npc_" + item + "_custom.txt?",
+						if (mf.currAddon.askToBreakUp) {
+							DialogResult dr = MetroMessageBox.Show(mf, "Do you want to break up npc_" + item + "_custom.txt?",
 								"Break Up KV File",
 								MessageBoxButtons.YesNo,
 								MessageBoxIcon.Information);
@@ -101,12 +101,12 @@ namespace Dota2ModKit.Features {
 				}
 			}
 
-			mainForm.text_notification("Combine success", MetroColorStyle.Green, 1500);
+			mf.text_notification("Combine success", MetroColorStyle.Green, 1500);
 		}
 
 		public void breakUp(string itemStr) {
-			string file = Path.Combine(mainForm.currAddon.gamePath, "scripts", "npc", "npc_" + itemStr + "_custom.txt");
-			string foldPath = Path.Combine(mainForm.currAddon.gamePath, "scripts", "npc", itemStr);
+			string file = Path.Combine(mf.currAddon.gamePath, "scripts", "npc", "npc_" + itemStr + "_custom.txt");
+			string foldPath = Path.Combine(mf.currAddon.gamePath, "scripts", "npc", itemStr);
 
 			// Ensure the npc_ file exists.
 			if (!File.Exists(file)) {
@@ -235,14 +235,14 @@ namespace Dota2ModKit.Features {
                 curr = "npc_heroes_custom.txt";
                 generateHeroTooltips(a);
                 writeTooltips(a);
-                mainForm.text_notification("Tooltips successfully generated", MetroColorStyle.Green, 2500);
+                mf.text_notification("Tooltips successfully generated", MetroColorStyle.Green, 2500);
             } catch (Exception ex) {
                 string msg = ex.Message;
                 if (ex.InnerException != null) {
                     msg = ex.InnerException.Message;
                 }
 
-                MetroMessageBox.Show(mainForm, msg,
+                MetroMessageBox.Show(mf, msg,
                     "Parse error: " + curr,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);

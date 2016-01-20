@@ -42,6 +42,8 @@ namespace Dota2ModKit {
         internal ParticleFeatures particleFeatures;
         internal SoundFeatures soundFeatures;
         internal SpellLibraryFeatures spellLibraryFeatures;
+        internal AboutFeatures aboutFeatures;
+        internal ChatFeatures chatFeatures;
 
         public CustomTile[] customTiles = new CustomTile[5];
         public CoffeeSharp.CoffeeScriptEngine cse = null;
@@ -54,17 +56,17 @@ namespace Dota2ModKit {
             updateSettings();
 
             // setup hooks
-            hookupEvents();
+            setupHooks();
 
             // check for new modkit version
             updater = new Updater(this);
-            updater.checkForUpdates();
 
             // init mainform controls stuff
             initMainFormControls();
 
             // get the dota directory
             retrieveDotaDir();
+
             // ** at this point assume valid dota dir. **
             Debug.WriteLine("Directory: " + dotaDir);
             Settings.Default.DotaDir = dotaDir;
@@ -74,12 +76,8 @@ namespace Dota2ModKit {
             contentPath = Path.Combine(dotaDir, "content", "dota_addons");
 
             // create these dirs if they don't exist.
-            if (!Directory.Exists(gamePath)) {
-                Directory.CreateDirectory(gamePath);
-            }
-            if (!Directory.Exists(contentPath)) {
-                Directory.CreateDirectory(contentPath);
-            }
+            if (!Directory.Exists(gamePath)) { Directory.CreateDirectory(gamePath); }
+            if (!Directory.Exists(contentPath)) { Directory.CreateDirectory(contentPath); }
 
             // get all the addons in the 'game' dir.
             addons = getAddons();
@@ -127,16 +125,21 @@ namespace Dota2ModKit {
                 setupAddonsPanel();
 
                 // init our features of Modkit
-                kvFeatures = new KVFeatures(this);
-                vtexFeatures = new VTEXFeatures(this);
-                particleFeatures = new ParticleFeatures(this);
-                soundFeatures = new SoundFeatures(this);
-                spellLibraryFeatures = new SpellLibraryFeatures(this);
+                initModKitFeatures();
             });
         }
 
-        private void initMainFormControls() {
+        private void initModKitFeatures() {
+            kvFeatures = new KVFeatures(this);
+            vtexFeatures = new VTEXFeatures(this);
+            particleFeatures = new ParticleFeatures(this);
+            soundFeatures = new SoundFeatures(this);
+            spellLibraryFeatures = new SpellLibraryFeatures(this);
+            aboutFeatures = new AboutFeatures(this);
+            chatFeatures = new ChatFeatures(this);
+        }
 
+        private void initMainFormControls() {
             //Size size = new Size(steamTile.Width, steamTile.Height);
             //steamTile.TileImage = (Image)new Bitmap(Resources.steam_icon, size);
 
@@ -146,13 +149,10 @@ namespace Dota2ModKit {
             versionLabel.Text = "v" + version;
             Style = Util.getRandomStyle();
         }
-        private void hookupEvents() {
+
+        private void setupHooks() {
             tabControl.Selected += (s, e) => {
                 //PlaySound(Properties.Resources.browser_click_navigate);
-            };
-
-            tabControl.SelectedIndexChanged += (s, e) => {
-
             };
 
             FormClosing += (s, e) => {
@@ -160,7 +160,11 @@ namespace Dota2ModKit {
             };
 
             tabControl.SelectedIndexChanged += (s, e) => {
-
+                if (tabControl.SelectedTab == homeTab) {
+                    if (currAddon != null) {
+                        currAddon.createTree();
+                    }
+                }
             };
 
             /*githubTextBox.KeyDown += (s, e) => {
@@ -170,12 +174,9 @@ namespace Dota2ModKit {
             };*/
 
             addonTile.Click += (s, e) => {
-                this.tabControl.SelectedTab = tabControl.TabPages[0];
+                tabControl.SelectedTab = homeTab;
             };
 
-            Load += (s, e) => {
-
-            };
             scriptsTree.NodeMouseDoubleClick += (s, e) => {
                 Debug.WriteLine("scriptsTree afterSelect");
                 var node = scriptsTree.SelectedNode;
@@ -752,10 +753,6 @@ namespace Dota2ModKit {
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e) {
             onOptionsClick();
-        }
-
-        private void filterExtensionsBtn_Click(object sender, EventArgs e) {
-            currAddon.createTree();
         }
 
         private void hideExtensionsCheckbox_Click(object sender, EventArgs e) {

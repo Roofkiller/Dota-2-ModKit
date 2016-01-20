@@ -52,6 +52,10 @@
     </StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ChatSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ChatSharp.dll</HintPath>
+    </Reference>
     <Reference Include="CoffeeScriptHttpHandler, Version=0.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CoffeeSharp.0.6\lib\CoffeeScriptHttpHandler.dll</HintPath>
       <Private>True</Private>
@@ -101,10 +105,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Addon.cs" />
-    <Compile Include="Forms\LinkFeatures.cs" />
-    <Compile Include="TooltipsEntry.cs" />
-    <Compile Include="CustomTile.cs" />
+    <Compile Include="Features\ChatFeatures.cs" />
+    <Compile Include="HelperClasses\Addon.cs" />
+    <Compile Include="Features\AboutFeatures.cs" />
+    <Compile Include="Features\LinkFeatures.cs" />
+    <Compile Include="HelperClasses\TooltipsEntry.cs" />
+    <Compile Include="HelperClasses\CustomTile.cs" />
     <Compile Include="Features\SoundFeatures.cs" />
     <Compile Include="Features\KVFeatures.cs" />
     <Compile Include="Features\ParticleFeatures.cs" />
@@ -152,7 +158,7 @@
     <Compile Include="Forms\OptionsForm.Designer.cs">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Particle.cs" />
+    <Compile Include="HelperClasses\Particle.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -167,8 +173,8 @@
     <Compile Include="Forms\SingleTextboxForm.Designer.cs">
       <DependentUpon>SingleTextboxForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Updater.cs" />
-    <Compile Include="Util.cs" />
+    <Compile Include="HelperClasses\Updater.cs" />
+    <Compile Include="HelperClasses\Util.cs" />
     <Compile Include="VPKExtract\VpkFile.cs" />
     <Compile Include="VPKExtract\VpkNode.cs" />
     <Compile Include="VPKExtract\VPKProgram.cs" />

@@ -319,8 +319,8 @@ namespace Dota2ModKit
             }
             scriptsNode.ExpandAll();
             panoramaNode.ExpandAll();
-            scriptsTree.SelectedNode = scriptsNode;
-            panoramaTree.SelectedNode = panoramaNode;
+            scriptsNode.EnsureVisible();
+            panoramaNode.EnsureVisible();
         }
     }
 }

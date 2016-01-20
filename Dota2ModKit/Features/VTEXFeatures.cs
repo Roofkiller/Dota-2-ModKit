@@ -10,12 +10,12 @@ using System.Windows.Forms;
 
 namespace Dota2ModKit.Features {
 	class VTEXFeatures {
-		public MainForm mainForm;
+		public MainForm mf;
 		string dotaDir;
 
-		public VTEXFeatures(MainForm mainForm) {
-			this.mainForm = mainForm;
-			dotaDir = mainForm.dotaDir;
+		public VTEXFeatures(MainForm mf) {
+			this.mf = mf;
+			dotaDir = mf.dotaDir;
 
 		}
 
@@ -27,7 +27,7 @@ namespace Dota2ModKit.Features {
 			ofd.Filter = "|*.tga;*.mks";
 			ofd.Title = "Select .tga Files To Compile";
 
-			string materialsPath = Path.Combine(mainForm.currAddon.contentPath, "materials");
+			string materialsPath = Path.Combine(mf.currAddon.contentPath, "materials");
 			if (!Directory.Exists(materialsPath)) {
 				Directory.CreateDirectory(materialsPath);
 			}
@@ -47,8 +47,8 @@ namespace Dota2ModKit.Features {
 				string f = file;
 				// ensure it's inside content path
 				if (!(f.Contains(Path.Combine("content", "dota_addons")))) {
-					MetroMessageBox.Show(mainForm,
-						f + " must be inside the content directory of " + mainForm.currAddon.name,
+					MetroMessageBox.Show(mf,
+						f + " must be inside the content directory of " + mf.currAddon.name,
 						"Error",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Error);
@@ -118,7 +118,7 @@ namespace Dota2ModKit.Features {
 				proc.Start();
 			}
 
-			mainForm.text_notification(filePaths.Length + " .tga files successfully compiled.", MetroFramework.MetroColorStyle.Green, 2500);
+			mf.text_notification(filePaths.Length + " .tga files successfully compiled.", MetroFramework.MetroColorStyle.Green, 2500);
 		}
 
 		public void decompileVTEX() {
@@ -133,7 +133,7 @@ namespace Dota2ModKit.Features {
 
 			if (Directory.GetFiles(extract, "*.vtex_c").Length == 0) {
 				Process.Start(extract);
-				MetroMessageBox.Show(mainForm, ".vtex_c files must be present in " + extract + " for this to work. Use GCFScape to extract .vtex_c files into this folder.",
+				MetroMessageBox.Show(mf, ".vtex_c files must be present in " + extract + " for this to work. Use GCFScape to extract .vtex_c files into this folder.",
 					"Note",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Information);
@@ -179,7 +179,7 @@ namespace Dota2ModKit.Features {
 				// Prepare to move the tga files 
 				string vtexcName = path.Substring(path.LastIndexOf('\\') + 1);
 
-				string fold = Path.Combine(mainForm.currAddon.contentPath, "materials", vtexcName);
+				string fold = Path.Combine(mf.currAddon.contentPath, "materials", vtexcName);
 				if (!Directory.Exists(fold)) {
 					Directory.CreateDirectory(fold);
 				}
@@ -196,7 +196,7 @@ namespace Dota2ModKit.Features {
 				}
 			}
 
-			Process.Start(Path.Combine(mainForm.currAddon.contentPath, "materials"));
+			Process.Start(Path.Combine(mf.currAddon.contentPath, "materials"));
 		}
 
 		public void decompileAllVTEX() {
@@ -245,10 +245,7 @@ namespace Dota2ModKit.Features {
 						File.Move(tgaFile, dest);
 					}
 				}
-
-			}
-			
+			}	
 		}
-
 	}
 }

@@ -24,60 +24,61 @@ namespace Dota2ModKit.Features {
         MainForm mf;
         string currLuaPath = "";
         string spellLibPath = "SpellLibrary";
-        public SpellLibraryFeatures(MainForm mainForm) {
-            this.mf = mainForm;
+        public SpellLibraryFeatures(MainForm mf) {
+            this.mf = mf;
             cloneOrPull();
-            mf.abilitiesTreeView.AfterSelect += (s, e) => {
+            
+            // setup hooks:
+            this.mf.abilitiesTreeView.AfterSelect += (s, e) => {
                 changeToKV();
             };
-            mf.fastColoredTextBox1.KeyDown += (s, e) => {
+            this.mf.fastColoredTextBox.KeyDown += (s, e) => {
                 if (e.Control && (e.KeyCode == Keys.A)) {
-                    mf.fastColoredTextBox1.SelectAll();
+                    this.mf.fastColoredTextBox.SelectAll();
                 }
             };
-            mf.abilitiesRadioButton.CheckedChanged += (s, e) => {
-                mf.fixButton();
+            this.mf.abilitiesRadioButton.CheckedChanged += (s, e) => {
+                this.mf.fixButton();
                 initTree("abilities");
             };
-            mf.itemsRadioButton.CheckedChanged += (s, e) => {
-                mf.fixButton();
+            this.mf.itemsRadioButton.CheckedChanged += (s, e) => {
+                this.mf.fixButton();
                 initTree("items");
             };
-            mf.luaKVBtn.Click += (s, e) => {
-                mf.fixButton();
-                if (mf.luaKVBtn.Text.Contains("Lua")) {
+            this.mf.luaKVBtn.Click += (s, e) => {
+                this.mf.fixButton();
+                if (this.mf.luaKVBtn.Text.Contains("Lua")) {
                     changeToLua();
                 } else {
                     changeToKV();
                 }
             };
-            mf.spellOpenFileBtn.Click += (s, e) => {
-                mf.fixButton();
-                var node = mf.abilitiesTreeView.SelectedNode;
-                if (mf.luaKVBtn.Text.Contains("KV") && File.Exists(currLuaPath)) {
+            this.mf.spellOpenFileBtn.Click += (s, e) => {
+                this.mf.fixButton();
+                var node = this.mf.abilitiesTreeView.SelectedNode;
+                if (this.mf.luaKVBtn.Text.Contains("KV") && File.Exists(currLuaPath)) {
                     Process.Start(currLuaPath);
                     return;
                 }
-                if (node != null && mf.luaKVBtn.Text.Contains("Lua") && File.Exists(node.Name)) {
+                if (node != null && this.mf.luaKVBtn.Text.Contains("Lua") && File.Exists(node.Name)) {
                     Process.Start(node.Name);
                 }
             };
-            mf.spellCopyBtn.Click += (s, e) => {
-                mf.fixButton();
-                Clipboard.SetText(mf.fastColoredTextBox1.Text);
+            this.mf.spellCopyBtn.Click += (s, e) => {
+                this.mf.fixButton();
+                Clipboard.SetText(this.mf.fastColoredTextBox.Text);
             };
-            mf.spellOpenFolderBtn.Click += (s, e) => {
-                mf.fixButton();
-                var node = mf.abilitiesTreeView.SelectedNode;
-                if (mf.luaKVBtn.Text.Contains("KV") && File.Exists(currLuaPath)) {
+            this.mf.spellOpenFolderBtn.Click += (s, e) => {
+                this.mf.fixButton();
+                var node = this.mf.abilitiesTreeView.SelectedNode;
+                if (this.mf.luaKVBtn.Text.Contains("KV") && File.Exists(currLuaPath)) {
                     Process.Start(Path.GetDirectoryName(currLuaPath));
                     return;
                 }
-                if (node != null && mf.luaKVBtn.Text.Contains("Lua") && File.Exists(node.Name)) {
+                if (node != null && this.mf.luaKVBtn.Text.Contains("Lua") && File.Exists(node.Name)) {
                     Process.Start(Path.GetDirectoryName(node.Name));
                 }
             };
-
         }
 
         void cloneOrPull() {
@@ -171,23 +172,23 @@ namespace Dota2ModKit.Features {
         }
 
         internal void changeToLua() {
-            mf.fastColoredTextBox1.Language = Language.Lua;
+            mf.fastColoredTextBox.Language = Language.Lua;
             mf.luaKVBtn.Text = "KV";
             mf.mainFormToolTip.SetToolTip(mf.luaKVBtn, "Open the KeyValues entry");
 
             if (currLuaPath != "" && File.Exists(currLuaPath)) {
-                mf.fastColoredTextBox1.Text = File.ReadAllText(currLuaPath);
+                mf.fastColoredTextBox.Text = File.ReadAllText(currLuaPath);
             }
         }
 
         internal void changeToKV() {
-            mf.fastColoredTextBox1.Language = Language.JS;
+            mf.fastColoredTextBox.Language = Language.JS;
             mf.luaKVBtn.Text = "Lua";
             mf.mainFormToolTip.SetToolTip(mf.luaKVBtn, "Open the Lua script");
 
             var node = mf.abilitiesTreeView.SelectedNode;
             if (node != null && File.Exists(node.Name)) {
-                mf.fastColoredTextBox1.Text = File.ReadAllText(node.Name);
+                mf.fastColoredTextBox.Text = File.ReadAllText(node.Name);
                 checkIfHasLuaScript(node);
                 if (currLuaPath == "") {
                     mf.luaKVBtn.Enabled = false;
