@@ -688,6 +688,7 @@ namespace Dota2ModKit {
         }*/
 
         private void shortcutTile_Click(object sender, EventArgs e) {
+            fixButton();
             try {
                 string text = sender.ToString();
                 Debug.WriteLine(text);
@@ -708,7 +709,6 @@ namespace Dota2ModKit {
                 } else if (text.EndsWith("E")) {
                     //dota_english.txt
                 }
-                fixButton();
             } catch (Exception ex) {
                 // likely directoryNotFound exceptions.
                 MetroMessageBox.Show(this, ex.Message,
