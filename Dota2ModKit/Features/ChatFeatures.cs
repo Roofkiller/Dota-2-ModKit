@@ -14,14 +14,14 @@ namespace Dota2ModKit.Features {
         IrcUser user;
         public StringBuilder currChat = new StringBuilder();
         string lastChat = "";
+        string lastUserList = "";
         string lastSpokenUser = "";
-        string spaces = "    ";
         public ChatFeatures(MainForm mf) {
             this.mf = mf;
             getUserAndClient();
             setupHooks();
             client.ConnectAsync();
-            Util.CreateTimer(100, (timer) => {
+            Util.CreateTimer(200, (timer) => {
                 var chat = currChat.ToString();
                 if (currChat.Length > 11000) {
                     chat = chat.Substring(chat.IndexOf("\n") + 1);
@@ -33,6 +33,23 @@ namespace Dota2ModKit.Features {
                     mf.chatViewRichTB.Text = chat;
                     var lines = mf.chatViewRichTB.Lines;
                 }
+
+                // do the user list textbox
+                StringBuilder sb = new StringBuilder();
+                foreach (var channel in client.Channels) {
+                    if (channel.Name == "#dotacoders") {
+                        foreach (var user in channel.Users) {
+                            var nick = user.Nick;
+                            sb.AppendLine(nick);
+                        }
+                        var userList = sb.ToString();
+                        if (userList != lastUserList) {
+                            mf.usernamesRichTB.Clear();
+                            lastUserList = userList;
+                            mf.usernamesRichTB.Text = userList;
+                        }
+                    }
+                }
             });
         }
 
@@ -42,42 +59,51 @@ namespace Dota2ModKit.Features {
                 Debug.WriteLine("ConnectionComplete, joined channel");
             };
             client.ChannelMessageRecieved += (s, e) => {
-                var pm = e.PrivateMessage;
-                var sender = pm.User.Nick;
-                int nickBuffer = 16;
-                int spacesToAdd = nickBuffer - sender.Length-2; // 1 is for colon, 1 for |
-                // for names that are too long:
-                if (spacesToAdd < 0) {
-                    sender = sender.Substring(0, sender.Length + spacesToAdd);
-                }
-                StringBuilder sb = currChat;
-                if (sb.Length > 0) {
-                    sb.Append("\n");
-                }
-                sb.Append(">");
-                for (int i = 0; i < spacesToAdd; i++) {
-                    sb.Append(" ");
-                }
-                sb.Append(sender + ": ");
-                sb.Append(pm.Message);
-                lastSpokenUser = sender;
-                currChat = sb;
-
+                var msg = e.PrivateMessage.Message;
+                var sender = e.PrivateMessage.User.Nick;
+                displayMsg(sender, msg);
             };
             client.NetworkError += (s, e) => {
                 Debug.WriteLine("Network error.");
             };
             mf.chatReconnectBtn.Click += (s, e) => {
+                mf.fixButton();
                 getUserAndClient();
                 client.ConnectAsync();
 
             };
             mf.chatMsgTextBox.KeyDown += (s, e) => {
                 if (e.KeyCode == Keys.Enter) {
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
                     var msg = mf.chatMsgTextBox.Text;
                     mf.chatMsgTextBox.Text = "";
+                    displayMsg(client.User.Nick, msg);
+                    client.SendMessage(msg, "#dotacoders");
+
                 }
             };
+        }
+
+        private void displayMsg(string sender, string msg) {
+            int nickBuffer = 16;
+            int spacesToAdd = nickBuffer - sender.Length - 2; // 1 is for colon, 1 for |
+                                                              // for names that are too long:
+            if (spacesToAdd < 0) {
+                sender = sender.Substring(0, sender.Length + spacesToAdd);
+            }
+            StringBuilder sb = currChat;
+            if (sb.Length > 0) {
+                sb.Append("\n");
+            }
+            sb.Append(">");
+            for (int i = 0; i < spacesToAdd; i++) {
+                sb.Append(" ");
+            }
+            sb.Append(sender + ": ");
+            sb.Append(msg);
+            lastSpokenUser = sender;
+            currChat = sb;
         }
 
         private void getUserAndClient() {
@@ -90,12 +116,11 @@ namespace Dota2ModKit.Features {
                 user = new IrcUser(mf.chatUsernameTextBox1.Text, mf.chatUsernameTextBox1.Text);
             }
             client = new IrcClient("irc.globalgamers.net", user);
-            //client.
         }
 
         private string getRandomUsername() {
-            Random rand = new Random(Int16.MaxValue);
-            return "developer" + rand.Next();
+            Random rand = new Random();
+            return "developer" + rand.Next(100,6000);
         }
     }
 }

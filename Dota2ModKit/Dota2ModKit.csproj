@@ -115,7 +115,6 @@
     <Compile Include="Features\KVFeatures.cs" />
     <Compile Include="Features\ParticleFeatures.cs" />
     <Compile Include="Features\SpellLibraryFeatures.cs" />
-    <Compile Include="Features\VTEXFeatures.cs" />
     <Compile Include="Forms\CustomTileForm.cs">
       <SubType>Form</SubType>
     </Compile>

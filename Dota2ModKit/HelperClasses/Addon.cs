@@ -261,12 +261,13 @@ namespace Dota2ModKit
             panoramaNode.Nodes.Clear();
             scriptsNode.Name = Path.Combine(gamePath, "scripts");
             panoramaNode.Name = Path.Combine(contentPath, "panorama");
-            if (!Directory.Exists(scriptsNode.Name) || !Directory.Exists(panoramaNode.Name)) { return; }
+            if (!Directory.Exists(scriptsNode.Name)) { return; }
 
             var stack = new Stack<TreeNode>();
             stack.Push(scriptsNode);
             while (stack.Count > 0) {
                 var node = stack.Pop();
+                node.ToolTipText = "Double-click a node to open the file or directory";
                 foreach (var dir in Directory.GetDirectories(node.Name)) {
                     var text = dir.Substring(dir.LastIndexOf('\\')+1);
                     TreeNode node2 = new TreeNode(text);
@@ -288,10 +289,16 @@ namespace Dota2ModKit
                     node.Nodes.Add(node2);
                 }
             }
+            scriptsNode.ExpandAll();
+            scriptsNode.EnsureVisible();
             stack.Clear();
+
+            // do panorama tree
+            if (!Directory.Exists(panoramaNode.Name)) { return; }
             stack.Push(panoramaNode);
             while (stack.Count > 0) {
                 var node = stack.Pop();
+                node.ToolTipText = "Double-click a node to open the file or directory";
                 foreach (var dir in Directory.GetDirectories(node.Name)) {
                     var text = dir.Substring(dir.LastIndexOf('\\') + 1);
                     TreeNode node2 = new TreeNode(text);
@@ -317,9 +324,7 @@ namespace Dota2ModKit
                     node.Nodes.Add(node2);
                 }
             }
-            scriptsNode.ExpandAll();
             panoramaNode.ExpandAll();
-            scriptsNode.EnsureVisible();
             panoramaNode.EnsureVisible();
         }
     }

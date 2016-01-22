@@ -35,6 +35,7 @@
             this.deleteAddonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl = new MetroFramework.Controls.MetroTabControl();
             this.homeTab = new MetroFramework.Controls.MetroTabPage();
+            this.homeRefreshBtn = new MetroFramework.Controls.MetroButton();
             this.addonsPanel = new MetroFramework.Controls.MetroPanel();
             this.imagesCheckBox1 = new MetroFramework.Controls.MetroCheckBox();
             this.panoramaTree = new System.Windows.Forms.TreeView();
@@ -73,17 +74,15 @@
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
-            this.decompilerTab = new MetroFramework.Controls.MetroTabPage();
-            this.decompileVtexButton = new MetroFramework.Controls.MetroButton();
-            this.compileVtexButton = new MetroFramework.Controls.MetroButton();
             this.chatTab = new MetroFramework.Controls.MetroTabPage();
+            this.chatMsgTextBox = new System.Windows.Forms.RichTextBox();
             this.usernamesRichTB = new System.Windows.Forms.RichTextBox();
             this.chatViewRichTB = new System.Windows.Forms.RichTextBox();
-            this.chatMsgTextBox = new MetroFramework.Controls.MetroTextBox();
             this.linksTab = new MetroFramework.Controls.MetroTabPage();
             this.linksPanel = new MetroFramework.Controls.MetroPanel();
             this.linksTreeView1 = new System.Windows.Forms.TreeView();
             this.optionsTab = new MetroFramework.Controls.MetroTabPage();
+            this.enableChatCheckBox1 = new MetroFramework.Controls.MetroCheckBox();
             this.chatReconnectBtn = new MetroFramework.Controls.MetroButton();
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.chatPasswordTextBox1 = new MetroFramework.Controls.MetroTextBox();
@@ -112,7 +111,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBox)).BeginInit();
             this.metroPanel1.SuspendLayout();
             this.particlesTab.SuspendLayout();
-            this.decompilerTab.SuspendLayout();
             this.chatTab.SuspendLayout();
             this.linksTab.SuspendLayout();
             this.optionsTab.SuspendLayout();
@@ -185,11 +183,10 @@
             // tabControl
             // 
             this.tabControl.Controls.Add(this.homeTab);
+            this.tabControl.Controls.Add(this.chatTab);
             this.tabControl.Controls.Add(this.toolsTab);
             this.tabControl.Controls.Add(this.spellLibraryTab);
             this.tabControl.Controls.Add(this.particlesTab);
-            this.tabControl.Controls.Add(this.decompilerTab);
-            this.tabControl.Controls.Add(this.chatTab);
             this.tabControl.Controls.Add(this.linksTab);
             this.tabControl.Controls.Add(this.optionsTab);
             this.tabControl.Controls.Add(this.versionTab);
@@ -198,7 +195,7 @@
             this.tabControl.ItemSize = new System.Drawing.Size(40, 25);
             this.tabControl.Location = new System.Drawing.Point(188, 54);
             this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 2;
+            this.tabControl.SelectedIndex = 6;
             this.tabControl.ShowToolTips = true;
             this.tabControl.Size = new System.Drawing.Size(1084, 656);
             this.tabControl.TabIndex = 2;
@@ -207,6 +204,7 @@
             // 
             // homeTab
             // 
+            this.homeTab.Controls.Add(this.homeRefreshBtn);
             this.homeTab.Controls.Add(this.addonsPanel);
             this.homeTab.Controls.Add(this.imagesCheckBox1);
             this.homeTab.Controls.Add(this.panoramaTree);
@@ -222,7 +220,20 @@
             this.homeTab.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.homeTab.VerticalScrollbarBarColor = true;
             this.homeTab.VerticalScrollbarHighlightOnWheel = false;
-            this.homeTab.VerticalScrollbarSize = 2;
+            this.homeTab.VerticalScrollbarSize = 1;
+            // 
+            // homeRefreshBtn
+            // 
+            this.homeRefreshBtn.Location = new System.Drawing.Point(350, 4);
+            this.homeRefreshBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.homeRefreshBtn.Name = "homeRefreshBtn";
+            this.homeRefreshBtn.Size = new System.Drawing.Size(86, 20);
+            this.homeRefreshBtn.TabIndex = 36;
+            this.homeRefreshBtn.TabStop = false;
+            this.homeRefreshBtn.Text = "Refresh";
+            this.homeRefreshBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.homeRefreshBtn.UseSelectable = true;
+            this.homeRefreshBtn.Click += new System.EventHandler(this.homeRefreshBtn_Click);
             // 
             // addonsPanel
             // 
@@ -240,13 +251,13 @@
             this.addonsPanel.VerticalScrollbar = true;
             this.addonsPanel.VerticalScrollbarBarColor = true;
             this.addonsPanel.VerticalScrollbarHighlightOnWheel = false;
-            this.addonsPanel.VerticalScrollbarSize = 2;
+            this.addonsPanel.VerticalScrollbarSize = 1;
             // 
             // imagesCheckBox1
             // 
             this.imagesCheckBox1.AutoSize = true;
             this.imagesCheckBox1.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
-            this.imagesCheckBox1.Location = new System.Drawing.Point(422, 8);
+            this.imagesCheckBox1.Location = new System.Drawing.Point(452, 8);
             this.imagesCheckBox1.Name = "imagesCheckBox1";
             this.imagesCheckBox1.Size = new System.Drawing.Size(162, 19);
             this.imagesCheckBox1.TabIndex = 34;
@@ -258,6 +269,7 @@
             // panoramaTree
             // 
             this.panoramaTree.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.panoramaTree.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panoramaTree.ForeColor = System.Drawing.Color.White;
             this.panoramaTree.LineColor = System.Drawing.Color.White;
             this.panoramaTree.Location = new System.Drawing.Point(394, 28);
@@ -274,6 +286,7 @@
             // scriptsTree
             // 
             this.scriptsTree.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.scriptsTree.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.scriptsTree.ForeColor = System.Drawing.Color.White;
             this.scriptsTree.LineColor = System.Drawing.Color.White;
             this.scriptsTree.Location = new System.Drawing.Point(0, 28);
@@ -304,7 +317,7 @@
             this.toolsTab.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.toolsTab.VerticalScrollbarBarColor = true;
             this.toolsTab.VerticalScrollbarHighlightOnWheel = false;
-            this.toolsTab.VerticalScrollbarSize = 2;
+            this.toolsTab.VerticalScrollbarSize = 1;
             // 
             // compileCoffeeBtn
             // 
@@ -373,7 +386,7 @@
             this.spellLibraryTab.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.spellLibraryTab.VerticalScrollbarBarColor = true;
             this.spellLibraryTab.VerticalScrollbarHighlightOnWheel = false;
-            this.spellLibraryTab.VerticalScrollbarSize = 2;
+            this.spellLibraryTab.VerticalScrollbarSize = 1;
             // 
             // spellOpenFolderBtn
             // 
@@ -445,6 +458,7 @@
             this.fastColoredTextBox.CharWidth = 8;
             this.fastColoredTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.fastColoredTextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.fastColoredTextBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.fastColoredTextBox.IsReplaceMode = false;
             this.fastColoredTextBox.Location = new System.Drawing.Point(224, 30);
             this.fastColoredTextBox.Name = "fastColoredTextBox";
@@ -471,13 +485,13 @@
             this.metroPanel1.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.metroPanel1.VerticalScrollbarBarColor = true;
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel1.VerticalScrollbarSize = 2;
+            this.metroPanel1.VerticalScrollbarSize = 1;
             // 
             // itemsRadioButton
             // 
             this.itemsRadioButton.AutoSize = true;
             this.itemsRadioButton.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
-            this.itemsRadioButton.Location = new System.Drawing.Point(86, 5);
+            this.itemsRadioButton.Location = new System.Drawing.Point(88, 2);
             this.itemsRadioButton.Name = "itemsRadioButton";
             this.itemsRadioButton.Size = new System.Drawing.Size(59, 19);
             this.itemsRadioButton.TabIndex = 4;
@@ -490,7 +504,7 @@
             this.abilitiesRadioButton.AutoSize = true;
             this.abilitiesRadioButton.Checked = true;
             this.abilitiesRadioButton.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
-            this.abilitiesRadioButton.Location = new System.Drawing.Point(6, 5);
+            this.abilitiesRadioButton.Location = new System.Drawing.Point(8, 2);
             this.abilitiesRadioButton.Name = "abilitiesRadioButton";
             this.abilitiesRadioButton.Size = new System.Drawing.Size(72, 19);
             this.abilitiesRadioButton.TabIndex = 3;
@@ -512,6 +526,7 @@
             // abilitiesTreeView
             // 
             this.abilitiesTreeView.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.abilitiesTreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.abilitiesTreeView.ForeColor = System.Drawing.Color.White;
             this.abilitiesTreeView.LineColor = System.Drawing.Color.White;
             this.abilitiesTreeView.Location = new System.Drawing.Point(2, 30);
@@ -551,13 +566,13 @@
             this.particlesTab.ToolTipText = "Tools page 2";
             this.particlesTab.VerticalScrollbarBarColor = true;
             this.particlesTab.VerticalScrollbarHighlightOnWheel = false;
-            this.particlesTab.VerticalScrollbarSize = 2;
+            this.particlesTab.VerticalScrollbarSize = 1;
             // 
             // metroLabel10
             // 
             this.metroLabel10.AutoSize = true;
             this.metroLabel10.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.metroLabel10.Location = new System.Drawing.Point(322, 96);
+            this.metroLabel10.Location = new System.Drawing.Point(318, 94);
             this.metroLabel10.Name = "metroLabel10";
             this.metroLabel10.Size = new System.Drawing.Size(116, 19);
             this.metroLabel10.TabIndex = 21;
@@ -570,17 +585,17 @@
             // 
             // 
             this.particlesTextBox1.CustomButton.Image = null;
-            this.particlesTextBox1.CustomButton.Location = new System.Drawing.Point(165, 1);
-            this.particlesTextBox1.CustomButton.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            this.particlesTextBox1.CustomButton.Location = new System.Drawing.Point(106, 1);
+            this.particlesTextBox1.CustomButton.Margin = new System.Windows.Forms.Padding(1);
             this.particlesTextBox1.CustomButton.Name = "";
-            this.particlesTextBox1.CustomButton.Size = new System.Drawing.Size(166, 115);
+            this.particlesTextBox1.CustomButton.Size = new System.Drawing.Size(106, 115);
             this.particlesTextBox1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.particlesTextBox1.CustomButton.TabIndex = 1;
             this.particlesTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.particlesTextBox1.CustomButton.UseSelectable = true;
             this.particlesTextBox1.CustomButton.Visible = false;
             this.particlesTextBox1.Lines = new string[0];
-            this.particlesTextBox1.Location = new System.Drawing.Point(326, 118);
+            this.particlesTextBox1.Location = new System.Drawing.Point(322, 116);
             this.particlesTextBox1.MaxLength = 32767;
             this.particlesTextBox1.Multiline = true;
             this.particlesTextBox1.Name = "particlesTextBox1";
@@ -747,9 +762,9 @@
             // selectParticlesBtn
             // 
             this.selectParticlesBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-            this.selectParticlesBtn.Location = new System.Drawing.Point(70, 94);
+            this.selectParticlesBtn.Location = new System.Drawing.Point(70, 92);
             this.selectParticlesBtn.Name = "selectParticlesBtn";
-            this.selectParticlesBtn.Size = new System.Drawing.Size(168, 36);
+            this.selectParticlesBtn.Size = new System.Drawing.Size(168, 40);
             this.selectParticlesBtn.TabIndex = 6;
             this.selectParticlesBtn.Text = "Select the particle files";
             this.selectParticlesBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -772,7 +787,7 @@
             this.metroLabel5.FontWeight = MetroFramework.MetroLabelWeight.Regular;
             this.metroLabel5.Location = new System.Drawing.Point(12, 62);
             this.metroLabel5.Name = "metroLabel5";
-            this.metroLabel5.Size = new System.Drawing.Size(490, 19);
+            this.metroLabel5.Size = new System.Drawing.Size(489, 19);
             this.metroLabel5.TabIndex = 4;
             this.metroLabel5.Text = "Step 1. Use the Particle Copy Tool to copy particles over to your custom game.";
             this.metroLabel5.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -789,57 +804,14 @@
     "having to go through the Particle Editor.";
             this.metroLabel4.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
-            // decompilerTab
-            // 
-            this.decompilerTab.Controls.Add(this.decompileVtexButton);
-            this.decompilerTab.Controls.Add(this.compileVtexButton);
-            this.decompilerTab.HorizontalScrollbarBarColor = true;
-            this.decompilerTab.HorizontalScrollbarHighlightOnWheel = false;
-            this.decompilerTab.HorizontalScrollbarSize = 1;
-            this.decompilerTab.Location = new System.Drawing.Point(4, 29);
-            this.decompilerTab.Name = "decompilerTab";
-            this.decompilerTab.Size = new System.Drawing.Size(1076, 623);
-            this.decompilerTab.TabIndex = 6;
-            this.decompilerTab.Text = "Decompiler";
-            this.decompilerTab.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.decompilerTab.VerticalScrollbarBarColor = true;
-            this.decompilerTab.VerticalScrollbarHighlightOnWheel = false;
-            this.decompilerTab.VerticalScrollbarSize = 2;
-            // 
-            // decompileVtexButton
-            // 
-            this.decompileVtexButton.FontSize = MetroFramework.MetroButtonSize.Medium;
-            this.decompileVtexButton.Location = new System.Drawing.Point(224, 211);
-            this.decompileVtexButton.Margin = new System.Windows.Forms.Padding(4);
-            this.decompileVtexButton.Name = "decompileVtexButton";
-            this.decompileVtexButton.Size = new System.Drawing.Size(125, 33);
-            this.decompileVtexButton.TabIndex = 8;
-            this.decompileVtexButton.TabStop = false;
-            this.decompileVtexButton.Text = ".vtex_c -> .tga";
-            this.decompileVtexButton.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.decompileVtexButton.UseSelectable = true;
-            // 
-            // compileVtexButton
-            // 
-            this.compileVtexButton.FontSize = MetroFramework.MetroButtonSize.Medium;
-            this.compileVtexButton.Location = new System.Drawing.Point(146, 62);
-            this.compileVtexButton.Margin = new System.Windows.Forms.Padding(4);
-            this.compileVtexButton.Name = "compileVtexButton";
-            this.compileVtexButton.Size = new System.Drawing.Size(125, 33);
-            this.compileVtexButton.TabIndex = 7;
-            this.compileVtexButton.TabStop = false;
-            this.compileVtexButton.Text = ".tga -> .vtex_c";
-            this.compileVtexButton.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.compileVtexButton.UseSelectable = true;
-            // 
             // chatTab
             // 
+            this.chatTab.Controls.Add(this.chatMsgTextBox);
             this.chatTab.Controls.Add(this.usernamesRichTB);
             this.chatTab.Controls.Add(this.chatViewRichTB);
-            this.chatTab.Controls.Add(this.chatMsgTextBox);
             this.chatTab.HorizontalScrollbarBarColor = true;
             this.chatTab.HorizontalScrollbarHighlightOnWheel = false;
-            this.chatTab.HorizontalScrollbarSize = 4;
+            this.chatTab.HorizontalScrollbarSize = 1;
             this.chatTab.Location = new System.Drawing.Point(4, 29);
             this.chatTab.Name = "chatTab";
             this.chatTab.Size = new System.Drawing.Size(1076, 623);
@@ -848,11 +820,24 @@
             this.chatTab.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.chatTab.VerticalScrollbarBarColor = true;
             this.chatTab.VerticalScrollbarHighlightOnWheel = false;
-            this.chatTab.VerticalScrollbarSize = 8;
+            this.chatTab.VerticalScrollbarSize = 2;
+            // 
+            // chatMsgTextBox
+            // 
+            this.chatMsgTextBox.BackColor = System.Drawing.SystemColors.ControlText;
+            this.chatMsgTextBox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chatMsgTextBox.ForeColor = System.Drawing.SystemColors.Window;
+            this.chatMsgTextBox.Location = new System.Drawing.Point(0, 566);
+            this.chatMsgTextBox.Multiline = false;
+            this.chatMsgTextBox.Name = "chatMsgTextBox";
+            this.chatMsgTextBox.Size = new System.Drawing.Size(936, 26);
+            this.chatMsgTextBox.TabIndex = 22;
+            this.chatMsgTextBox.Text = "";
             // 
             // usernamesRichTB
             // 
             this.usernamesRichTB.BackColor = System.Drawing.SystemColors.ControlText;
+            this.usernamesRichTB.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.usernamesRichTB.ForeColor = System.Drawing.SystemColors.Window;
             this.usernamesRichTB.Location = new System.Drawing.Point(938, 4);
             this.usernamesRichTB.Name = "usernamesRichTB";
@@ -873,38 +858,6 @@
             this.chatViewRichTB.TabIndex = 20;
             this.chatViewRichTB.Text = "";
             // 
-            // chatMsgTextBox
-            // 
-            // 
-            // 
-            // 
-            this.chatMsgTextBox.CustomButton.Image = null;
-            this.chatMsgTextBox.CustomButton.Location = new System.Drawing.Point(754, 1);
-            this.chatMsgTextBox.CustomButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.chatMsgTextBox.CustomButton.Name = "";
-            this.chatMsgTextBox.CustomButton.Size = new System.Drawing.Size(21, 15);
-            this.chatMsgTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.chatMsgTextBox.CustomButton.TabIndex = 1;
-            this.chatMsgTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.chatMsgTextBox.CustomButton.UseSelectable = true;
-            this.chatMsgTextBox.CustomButton.Visible = false;
-            this.chatMsgTextBox.Lines = new string[0];
-            this.chatMsgTextBox.Location = new System.Drawing.Point(0, 566);
-            this.chatMsgTextBox.MaxLength = 32767;
-            this.chatMsgTextBox.Multiline = true;
-            this.chatMsgTextBox.Name = "chatMsgTextBox";
-            this.chatMsgTextBox.PasswordChar = '\0';
-            this.chatMsgTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.chatMsgTextBox.SelectedText = "";
-            this.chatMsgTextBox.SelectionLength = 0;
-            this.chatMsgTextBox.SelectionStart = 0;
-            this.chatMsgTextBox.Size = new System.Drawing.Size(830, 28);
-            this.chatMsgTextBox.TabIndex = 18;
-            this.chatMsgTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.chatMsgTextBox.UseSelectable = true;
-            this.chatMsgTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.chatMsgTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
             // linksTab
             // 
             this.linksTab.Controls.Add(this.linksPanel);
@@ -921,7 +874,7 @@
             this.linksTab.ToolTipText = "Help related tools";
             this.linksTab.VerticalScrollbarBarColor = true;
             this.linksTab.VerticalScrollbarHighlightOnWheel = false;
-            this.linksTab.VerticalScrollbarSize = 2;
+            this.linksTab.VerticalScrollbarSize = 1;
             // 
             // linksPanel
             // 
@@ -939,7 +892,7 @@
             this.linksPanel.VerticalScrollbar = true;
             this.linksPanel.VerticalScrollbarBarColor = true;
             this.linksPanel.VerticalScrollbarHighlightOnWheel = false;
-            this.linksPanel.VerticalScrollbarSize = 2;
+            this.linksPanel.VerticalScrollbarSize = 1;
             // 
             // linksTreeView1
             // 
@@ -953,6 +906,7 @@
             // 
             // optionsTab
             // 
+            this.optionsTab.Controls.Add(this.enableChatCheckBox1);
             this.optionsTab.Controls.Add(this.chatReconnectBtn);
             this.optionsTab.Controls.Add(this.metroLabel3);
             this.optionsTab.Controls.Add(this.chatPasswordTextBox1);
@@ -970,11 +924,25 @@
             this.optionsTab.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.optionsTab.VerticalScrollbarBarColor = true;
             this.optionsTab.VerticalScrollbarHighlightOnWheel = false;
-            this.optionsTab.VerticalScrollbarSize = 2;
+            this.optionsTab.VerticalScrollbarSize = 1;
+            // 
+            // enableChatCheckBox1
+            // 
+            this.enableChatCheckBox1.AutoSize = true;
+            this.enableChatCheckBox1.Checked = true;
+            this.enableChatCheckBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.enableChatCheckBox1.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
+            this.enableChatCheckBox1.Location = new System.Drawing.Point(8, 8);
+            this.enableChatCheckBox1.Name = "enableChatCheckBox1";
+            this.enableChatCheckBox1.Size = new System.Drawing.Size(95, 19);
+            this.enableChatCheckBox1.TabIndex = 37;
+            this.enableChatCheckBox1.Text = "Enable chat";
+            this.enableChatCheckBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.enableChatCheckBox1.UseSelectable = true;
             // 
             // chatReconnectBtn
             // 
-            this.chatReconnectBtn.Location = new System.Drawing.Point(199, 12);
+            this.chatReconnectBtn.Location = new System.Drawing.Point(200, 32);
             this.chatReconnectBtn.Margin = new System.Windows.Forms.Padding(4);
             this.chatReconnectBtn.Name = "chatReconnectBtn";
             this.chatReconnectBtn.Size = new System.Drawing.Size(86, 22);
@@ -988,7 +956,7 @@
             // 
             this.metroLabel3.AutoSize = true;
             this.metroLabel3.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.metroLabel3.Location = new System.Drawing.Point(4, 7);
+            this.metroLabel3.Location = new System.Drawing.Point(4, 30);
             this.metroLabel3.Name = "metroLabel3";
             this.metroLabel3.Size = new System.Drawing.Size(190, 38);
             this.metroLabel3.TabIndex = 18;
@@ -1001,17 +969,17 @@
             // 
             // 
             this.chatPasswordTextBox1.CustomButton.Image = null;
-            this.chatPasswordTextBox1.CustomButton.Location = new System.Drawing.Point(109, 1);
-            this.chatPasswordTextBox1.CustomButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chatPasswordTextBox1.CustomButton.Location = new System.Drawing.Point(70, 1);
+            this.chatPasswordTextBox1.CustomButton.Margin = new System.Windows.Forms.Padding(1);
             this.chatPasswordTextBox1.CustomButton.Name = "";
-            this.chatPasswordTextBox1.CustomButton.Size = new System.Drawing.Size(20, 14);
+            this.chatPasswordTextBox1.CustomButton.Size = new System.Drawing.Size(13, 14);
             this.chatPasswordTextBox1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.chatPasswordTextBox1.CustomButton.TabIndex = 1;
             this.chatPasswordTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.chatPasswordTextBox1.CustomButton.UseSelectable = true;
             this.chatPasswordTextBox1.CustomButton.Visible = false;
             this.chatPasswordTextBox1.Lines = new string[0];
-            this.chatPasswordTextBox1.Location = new System.Drawing.Point(171, 77);
+            this.chatPasswordTextBox1.Location = new System.Drawing.Point(171, 100);
             this.chatPasswordTextBox1.MaxLength = 32767;
             this.chatPasswordTextBox1.Name = "chatPasswordTextBox1";
             this.chatPasswordTextBox1.PasswordChar = '\0';
@@ -1030,7 +998,7 @@
             // 
             this.metroLabel11.AutoSize = true;
             this.metroLabel11.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.metroLabel11.Location = new System.Drawing.Point(3, 77);
+            this.metroLabel11.Location = new System.Drawing.Point(3, 100);
             this.metroLabel11.Name = "metroLabel11";
             this.metroLabel11.Size = new System.Drawing.Size(165, 19);
             this.metroLabel11.TabIndex = 16;
@@ -1041,7 +1009,7 @@
             // 
             this.metroLabel2.AutoSize = true;
             this.metroLabel2.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.metroLabel2.Location = new System.Drawing.Point(65, 51);
+            this.metroLabel2.Location = new System.Drawing.Point(65, 74);
             this.metroLabel2.Name = "metroLabel2";
             this.metroLabel2.Size = new System.Drawing.Size(103, 19);
             this.metroLabel2.TabIndex = 14;
@@ -1054,18 +1022,17 @@
             // 
             // 
             this.chatUsernameTextBox1.CustomButton.Image = null;
-            this.chatUsernameTextBox1.CustomButton.Location = new System.Drawing.Point(109, 1);
-            this.chatUsernameTextBox1.CustomButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chatUsernameTextBox1.CustomButton.Location = new System.Drawing.Point(70, 1);
+            this.chatUsernameTextBox1.CustomButton.Margin = new System.Windows.Forms.Padding(1);
             this.chatUsernameTextBox1.CustomButton.Name = "";
-            this.chatUsernameTextBox1.CustomButton.Size = new System.Drawing.Size(20, 14);
+            this.chatUsernameTextBox1.CustomButton.Size = new System.Drawing.Size(13, 14);
             this.chatUsernameTextBox1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.chatUsernameTextBox1.CustomButton.TabIndex = 1;
             this.chatUsernameTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.chatUsernameTextBox1.CustomButton.UseSelectable = true;
             this.chatUsernameTextBox1.CustomButton.Visible = false;
-            this.chatUsernameTextBox1.Lines = new string[] {
-        "developer2342"};
-            this.chatUsernameTextBox1.Location = new System.Drawing.Point(171, 49);
+            this.chatUsernameTextBox1.Lines = new string[0];
+            this.chatUsernameTextBox1.Location = new System.Drawing.Point(171, 72);
             this.chatUsernameTextBox1.MaxLength = 32767;
             this.chatUsernameTextBox1.Name = "chatUsernameTextBox1";
             this.chatUsernameTextBox1.PasswordChar = '\0';
@@ -1075,7 +1042,6 @@
             this.chatUsernameTextBox1.SelectionStart = 0;
             this.chatUsernameTextBox1.Size = new System.Drawing.Size(138, 23);
             this.chatUsernameTextBox1.TabIndex = 2;
-            this.chatUsernameTextBox1.Text = "developer2342";
             this.chatUsernameTextBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.chatUsernameTextBox1.UseSelectable = true;
             this.chatUsernameTextBox1.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
@@ -1094,7 +1060,7 @@
             this.versionTab.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.versionTab.VerticalScrollbarBarColor = true;
             this.versionTab.VerticalScrollbarHighlightOnWheel = false;
-            this.versionTab.VerticalScrollbarSize = 2;
+            this.versionTab.VerticalScrollbarSize = 1;
             // 
             // tileContextMenu
             // 
@@ -1289,7 +1255,7 @@
             this.Resizable = false;
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "Dota 2 ModKit Pro";
+            this.Text = "Dota 2 ModKit";
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.addonTileContextMenu.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
@@ -1302,7 +1268,6 @@
             this.metroPanel1.PerformLayout();
             this.particlesTab.ResumeLayout(false);
             this.particlesTab.PerformLayout();
-            this.decompilerTab.ResumeLayout(false);
             this.chatTab.ResumeLayout(false);
             this.linksTab.ResumeLayout(false);
             this.optionsTab.ResumeLayout(false);
@@ -1335,10 +1300,7 @@
 		private System.Windows.Forms.PictureBox pictureBox2;
         public MetroFramework.Controls.MetroTile addonTile;
         private MetroFramework.Controls.MetroTabPage spellLibraryTab;
-        private MetroFramework.Controls.MetroTabPage decompilerTab;
         private MetroFramework.Controls.MetroTabPage optionsTab;
-        private MetroFramework.Controls.MetroButton decompileVtexButton;
-        private MetroFramework.Controls.MetroButton compileVtexButton;
         private MetroFramework.Controls.MetroTabPage homeTab;
         public System.Windows.Forms.TreeView scriptsTree;
         public System.Windows.Forms.TreeView panoramaTree;
@@ -1386,12 +1348,14 @@
         private MetroFramework.Controls.MetroTabPage chatTab;
         private MetroFramework.Controls.MetroLabel metroLabel11;
         private MetroFramework.Controls.MetroLabel metroLabel2;
-        public MetroFramework.Controls.MetroTextBox chatMsgTextBox;
         private MetroFramework.Controls.MetroLabel metroLabel3;
         public MetroFramework.Controls.MetroButton chatReconnectBtn;
         public MetroFramework.Controls.MetroTextBox chatPasswordTextBox1;
         public MetroFramework.Controls.MetroTextBox chatUsernameTextBox1;
         public System.Windows.Forms.RichTextBox chatViewRichTB;
         public System.Windows.Forms.RichTextBox usernamesRichTB;
+        public System.Windows.Forms.RichTextBox chatMsgTextBox;
+        public MetroFramework.Controls.MetroButton homeRefreshBtn;
+        public MetroFramework.Controls.MetroCheckBox enableChatCheckBox1;
     }
 }

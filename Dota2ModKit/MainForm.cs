@@ -38,7 +38,6 @@ namespace Dota2ModKit {
 
         // Features of modkit
         internal KVFeatures kvFeatures;
-        internal VTEXFeatures vtexFeatures;
         internal ParticleFeatures particleFeatures;
         internal SoundFeatures soundFeatures;
         internal SpellLibraryFeatures spellLibraryFeatures;
@@ -131,7 +130,6 @@ namespace Dota2ModKit {
 
         private void initModKitFeatures() {
             kvFeatures = new KVFeatures(this);
-            vtexFeatures = new VTEXFeatures(this);
             particleFeatures = new ParticleFeatures(this);
             soundFeatures = new SoundFeatures(this);
             spellLibraryFeatures = new SpellLibraryFeatures(this);
@@ -161,9 +159,6 @@ namespace Dota2ModKit {
 
             tabControl.SelectedIndexChanged += (s, e) => {
                 if (tabControl.SelectedTab == homeTab) {
-                    if (currAddon != null) {
-                        currAddon.createTree();
-                    }
                 }
             };
 
@@ -718,30 +713,6 @@ namespace Dota2ModKit {
             }
         }
 
-        private void compileVtexButton_Click(object sender, EventArgs e) {
-            fixButton();
-            try {
-                vtexFeatures.compileVTEX();
-            } catch (Exception ex) {
-                MetroMessageBox.Show(this, ex.Message,
-                    ex.ToString(),
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-        }
-
-        private void decompileVtexButton_Click(object sender, EventArgs e) {
-            fixButton();
-            try {
-                vtexFeatures.decompileVTEX();
-            } catch (Exception ex) {
-                MetroMessageBox.Show(this, ex.Message,
-                    ex.ToString(),
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-        }
-
         private void reportBugBtn_Click(object sender, EventArgs e) {
             Process.Start("https://github.com/stephenfournier/Dota-2-ModKit/issues");
         }
@@ -771,6 +742,13 @@ namespace Dota2ModKit {
             text_notification("Options saved!", MetroColorStyle.Green, 2500);
         }
         #endregion
+
+        private void homeRefreshBtn_Click(object sender, EventArgs e) {
+            fixButton();
+            if (currAddon != null) {
+                currAddon.createTree();
+            }
+        }
 
         private void findSoundNameBtn_Click(object sender, EventArgs e) {
             fixButton();

@@ -246,7 +246,6 @@ namespace Dota2ModKit.Features {
                     "Parse error: " + curr,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-
             }
 
             // utf8 code
@@ -340,7 +339,6 @@ namespace Dota2ModKit.Features {
                 }
 
                 string name = kv.Key;
-
                 foreach (KeyValue kv2 in kv.Children) {
                     if (kv2.Key == "override_hero") {
                         a.heroEntries.Add(new HeroEntry(a, kv2.GetString(), name));
@@ -348,7 +346,6 @@ namespace Dota2ModKit.Features {
                     }
 
                 }
-
                 a.unitEntries.Add(new UnitEntry(a, kv.Key));
             }
         }
@@ -372,18 +369,15 @@ namespace Dota2ModKit.Features {
 
         private void writeTooltips(Addon a) {
             foreach (string path in getAddonLangPaths(a)) {
-
                 a.alreadyHasKeys.Clear();
 
-                string thisLang = path.Substring(path.LastIndexOf('\\') + 1);
-
+                string thisLang = Path.GetFileName(path);
                 string thisLangCopy = thisLang;
                 thisLang = thisLang.Substring(thisLang.LastIndexOf('_') + 1);
 
                 string outputPath = Path.Combine(a.contentPath, "tooltips_" + thisLang);
 
                 KeyValue kv = KVParser.KV1.ParseAll(File.ReadAllText(path, Encoding.Unicode))[0];
-
                 foreach (KeyValue kv2 in kv.Children) {
                     if (kv2.Key == "Tokens") {
                         foreach (KeyValue kv3 in kv2.Children) {
@@ -392,52 +386,51 @@ namespace Dota2ModKit.Features {
                     }
                 }
 
-                StringBuilder content = new StringBuilder();
-
+                StringBuilder sb = new StringBuilder();
                 string head0 =
                 "\t\t// DOTA 2 MODKIT GENERATED TOOLTIPS FOR: " + a.name + "\n" +
                 "\t\t// Keys already defined in " + thisLangCopy + " are not listed, nor are Modifiers with the property \"IsHidden\" \"1\".\n";
-                content.Append(head0);
+                sb.Append(head0);
 
                 string head1 = "\n\t\t// ******************** HEROES ********************\n";
-                content.Append(head1);
+                sb.Append(head1);
                 foreach (HeroEntry he in a.heroEntries) {
                     if (!a.alreadyHasKeys.Contains(he.name.key.ToLowerInvariant())) {
-                        content.Append(he);
+                        sb.Append(he);
                     }
                 }
 
                 string head2 = "\n\t\t// ******************** UNITS ********************\n";
-                content.Append(head2);
+                sb.Append(head2);
                 foreach (UnitEntry ue in a.unitEntries) {
                     if (!a.alreadyHasKeys.Contains(ue.name.key.ToLowerInvariant())) {
-                        content.Append(ue);
+                        sb.Append(ue);
                     }
                 }
 
                 string head3 = "\n\t\t// ******************** ABILITY MODIFIERS ********************\n";
-                content.Append(head3);
+                sb.Append(head3);
                 foreach (string amn in a.abilityModifierNames) {
                     ModifierEntry me = new ModifierEntry(a, amn);
                     if (!a.alreadyHasKeys.Contains(me.name.key.ToLowerInvariant())) {
-                        content.Append(me + "\n");
+                        sb.Append(me + "\n");
                     }
                 }
 
                 string head4 = "\n\t\t// ******************** ITEM MODIFIERS ********************\n";
-                content.Append(head4);
+                sb.Append(head4);
                 foreach (string imn in a.itemModifierNames) {
                     ModifierEntry me = new ModifierEntry(a, imn);
                     if (!a.alreadyHasKeys.Contains(me.name.key.ToLowerInvariant())) {
-                        content.Append(me + "\n");
+                        sb.Append(me + "\n");
                     }
                 }
 
                 string head5 = "\n\t\t// ******************** ABILITIES ********************\n";
-                content.Append(head5);
+                sb.Append(head5);
                 foreach (AbilityEntry ae in a.abilityEntries) {
                     if (!a.alreadyHasKeys.Contains(ae.name.key.ToLowerInvariant())) {
-                        content.Append(ae + "\n");
+                        sb.Append(ae + "\n");
                     } else {
                         // the addon_language already has this ability. but let's check
                         // if there are any new AbilitySpecials.
@@ -445,21 +438,21 @@ namespace Dota2ModKit.Features {
                         foreach (Pair p in ae.abilitySpecials) {
                             if (!a.alreadyHasKeys.Contains(p.key.ToLowerInvariant())) {
                                 // the addon_language doesn't contain this abil special.
-                                content.Append(p.ToString());
+                                sb.Append(p.ToString());
                                 missingAbilSpecials = true;
                             }
                         }
                         if (missingAbilSpecials) {
-                            content.Append("\n");
+                            sb.Append("\n");
                         }
                     }
                 }
 
                 string head6 = "\n\t\t// ******************** ITEMS ********************\n";
-                content.Append(head6);
+                sb.Append(head6);
                 foreach (AbilityEntry ae in a.itemEntries) {
                     if (!a.alreadyHasKeys.Contains(ae.name.key.ToLowerInvariant())) {
-                        content.Append(ae + "\n");
+                        sb.Append(ae + "\n");
                     } else {
                         // the addon_language already has this ability. but let's check
                         // if there are any new AbilitySpecials.
@@ -467,16 +460,16 @@ namespace Dota2ModKit.Features {
                         foreach (Pair p in ae.abilitySpecials) {
                             if (!a.alreadyHasKeys.Contains(p.key.ToLowerInvariant())) {
                                 // the addon_language doesn't contain this abil special.
-                                content.Append(p.ToString());
+                                sb.Append(p.ToString());
                                 missingAbilSpecials = true;
                             }
                         }
                         if (missingAbilSpecials) {
-                            content.Append("\n");
+                            sb.Append("\n");
                         }
                     }
                 }
-                File.WriteAllText(outputPath, content.ToString(), Encoding.Unicode);
+                File.WriteAllText(outputPath, sb.ToString(), Encoding.Unicode);
                 Process.Start(outputPath);
             }
         }
