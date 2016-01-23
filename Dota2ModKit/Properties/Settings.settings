@@ -26,5 +26,8 @@
     <Setting Name="CustomTileInfo" Type="System.String" Scope="User">
       <Value Profile="(Default)">""</Value>
     </Setting>
+    <Setting Name="ChatEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

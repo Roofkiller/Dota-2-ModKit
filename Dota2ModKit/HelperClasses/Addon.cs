@@ -35,7 +35,6 @@ namespace Dota2ModKit
             generateLore, 
             askToBreakUp, 
             autoDeleteBin, 
-            barebonesLibUpdates,
             autoCompileCoffeeScript,
             generateUTF8 = true,
             hasContentPath = true;
@@ -99,118 +98,6 @@ namespace Dota2ModKit
 			}
 		}
 
-        #region serializer/deserializer
-        internal void deserializeSettings(KeyValue kv) {
-			foreach (KeyValue kv2 in kv.Children) {
-				if (kv2.Key == "workshopID") {
-					Debug.WriteLine("#Children: " + kv2.Children.Count());
-					if (kv2.HasChildren) {
-						if (!Int32.TryParse(kv2.Children.ElementAt(0).Key, out this.workshopID)) {
-							Debug.WriteLine("Couldn't parse workshopID for " + this.name);
-						}
-					}
-				} else if (kv2.Key == "generateNote0") {
-					if (kv2.HasChildren) {
-						string value = kv2.Children.ElementAt(0).Key;
-						if (value == "True") {
-							this.generateNote0 = true;
-						} else {
-							this.generateNote0 = false;
-						}
-					}
-				} else if (kv2.Key == "generateLore") {
-					if (kv2.HasChildren) {
-						string value = kv2.Children.ElementAt(0).Key;
-						if (value == "True") {
-							this.generateLore = true;
-						} else {
-							this.generateLore = false;
-						}
-					}
-				} else if (kv2.Key == "askToBreakUp") {
-					if (kv2.HasChildren) {
-						string value = kv2.Children.ElementAt(0).Key;
-						if (value == "True") {
-							this.askToBreakUp = true;
-						} else {
-							this.askToBreakUp = false;
-						}
-					}
-				} else if (kv2.Key == "autoDeleteBin") {
-					if (kv2.HasChildren) {
-						string value = kv2.Children.ElementAt(0).Key;
-						if (value == "True") {
-							this.autoDeleteBin = true;
-						} else {
-							this.autoDeleteBin = false;
-						}
-					}
-				} else if (kv2.Key == "barebonesLibUpdates") {
-					if (kv2.HasChildren) {
-						string value = kv2.Children.ElementAt(0).Key;
-						if (value == "True") {
-							this.barebonesLibUpdates = true;
-						} else {
-							this.barebonesLibUpdates = false;
-						}
-					}
-				} else if (kv2.Key == "autoCompileCoffeeScript") {
-					if (kv2.HasChildren) {
-						string value = kv2.Children.ElementAt(0).Key;
-						if (value == "True") {
-							this.autoCompileCoffeeScript = true;
-						} else {
-							this.autoCompileCoffeeScript = false;
-						}
-					}
-				} else if (kv2.Key == "generateUTF8") {
-					if (kv2.HasChildren) {
-						string value = kv2.Children.ElementAt(0).Key;
-						if (value == "True") {
-							this.generateUTF8 = true;
-						} else {
-							this.generateUTF8 = false;
-						}
-					}
-				}
-			}
-		}
-
-		internal void serializeSettings(KeyValue addonKV) {
-			KeyValue workshopIDKV = new KeyValue("workshopID");
-			workshopIDKV.AddChild(new KeyValue(this.workshopID.ToString()));
-			addonKV.AddChild(workshopIDKV);
-
-			KeyValue generateNote0KV = new KeyValue("generateNote0");
-			generateNote0KV.AddChild(new KeyValue(this.generateNote0.ToString()));
-			addonKV.AddChild(generateNote0KV);
-
-			KeyValue generateLoreKV = new KeyValue("generateLore");
-			generateLoreKV.AddChild(new KeyValue(this.generateLore.ToString()));
-			addonKV.AddChild(generateLoreKV);
-
-			KeyValue askToBreakUp = new KeyValue("askToBreakUp");
-			askToBreakUp.AddChild(new KeyValue(this.askToBreakUp.ToString()));
-			addonKV.AddChild(askToBreakUp);
-
-			KeyValue autoDeleteBin = new KeyValue("autoDeleteBin");
-			autoDeleteBin.AddChild(new KeyValue(this.autoDeleteBin.ToString()));
-			addonKV.AddChild(autoDeleteBin);
-
-			KeyValue barebonesLibUpdates = new KeyValue("barebonesLibUpdates");
-			barebonesLibUpdates.AddChild(new KeyValue(this.barebonesLibUpdates.ToString()));
-			addonKV.AddChild(barebonesLibUpdates);
-
-			KeyValue generateUTF8 = new KeyValue("generateUTF8");
-			generateUTF8.AddChild(new KeyValue(this.generateUTF8.ToString()));
-			addonKV.AddChild(generateUTF8);
-
-			KeyValue autoCompileCoffeeScript = new KeyValue("autoCompileCoffeeScript");
-			autoCompileCoffeeScript.AddChild(new KeyValue(this.autoCompileCoffeeScript.ToString()));
-			addonKV.AddChild(autoCompileCoffeeScript);
-		}
-        #endregion
-
         internal void generateTooltips(MainForm mainForm) {
             mainForm.kvFeatures.generateTooltips(this);
         }
@@ -222,6 +109,9 @@ namespace Dota2ModKit
 			if (autoDeleteBin) {
 				deleteBinFiles();
 			}
+
+            // get the addon-specific settings
+            mf.serializer.initOptionControlsForAddon(this);
 
 			using (var addonSizeWorker = new BackgroundWorker()) {
 				addonSizeWorker.DoWork += (s,e) => {
@@ -239,6 +129,8 @@ namespace Dota2ModKit
                 };
 				addonSizeWorker.RunWorkerAsync();
 			}
+            mf.optionsForLabel.Text = name + ":";
+            mf.optionsForLabel.Style = mf.addonTile.Style;
             createTree();
 		}
 

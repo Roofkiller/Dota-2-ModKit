@@ -118,5 +118,17 @@ namespace Dota2ModKit.Properties {
                 this["CustomTileInfo"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ChatEnabled {
+            get {
+                return ((bool)(this["ChatEnabled"]));
+            }
+            set {
+                this["ChatEnabled"] = value;
+            }
+        }
     }
 }

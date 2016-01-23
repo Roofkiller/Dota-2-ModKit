@@ -109,6 +109,7 @@
     <Compile Include="HelperClasses\Addon.cs" />
     <Compile Include="Features\AboutFeatures.cs" />
     <Compile Include="Features\LinkFeatures.cs" />
+    <Compile Include="HelperClasses\Serializer.cs" />
     <Compile Include="HelperClasses\TooltipsEntry.cs" />
     <Compile Include="HelperClasses\CustomTile.cs" />
     <Compile Include="Features\SoundFeatures.cs" />
@@ -151,12 +152,6 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\OptionsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\OptionsForm.Designer.cs">
-      <DependentUpon>OptionsForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="HelperClasses\Particle.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -195,9 +190,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OptionsForm.resx">
-      <DependentUpon>OptionsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

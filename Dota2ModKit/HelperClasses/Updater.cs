@@ -105,9 +105,6 @@ namespace Dota2ModKit {
 			mf.text_notification("", MetroColorStyle.Blue, 500);
 			//mainForm.ProgressSpinner1.Visible = false;
 
-			if (mf.currAddon != null && mf.currAddon.barebonesLibUpdates) {
-			}
-
 		}
 
 		private void BarebonesCloneWorker_DoWork(object sender, DoWorkEventArgs e) {

@@ -24,13 +24,12 @@
 		/// </summary>
 		private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("panorama");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("scripts");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("panorama");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("scripts");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.generateTooltipsBtn = new MetroFramework.Controls.MetroButton();
             this.addonTile = new MetroFramework.Controls.MetroTile();
             this.addonTileContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
-            this.changePictureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteAddonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl = new MetroFramework.Controls.MetroTabControl();
@@ -40,6 +39,10 @@
             this.imagesCheckBox1 = new MetroFramework.Controls.MetroCheckBox();
             this.panoramaTree = new System.Windows.Forms.TreeView();
             this.scriptsTree = new System.Windows.Forms.TreeView();
+            this.chatTab = new MetroFramework.Controls.MetroTabPage();
+            this.chatMsgTextBox = new System.Windows.Forms.RichTextBox();
+            this.usernamesRichTB = new System.Windows.Forms.RichTextBox();
+            this.chatViewRichTB = new System.Windows.Forms.RichTextBox();
             this.toolsTab = new MetroFramework.Controls.MetroTabPage();
             this.compileCoffeeBtn = new MetroFramework.Controls.MetroButton();
             this.findSoundNameBtn = new MetroFramework.Controls.MetroButton();
@@ -74,14 +77,19 @@
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
-            this.chatTab = new MetroFramework.Controls.MetroTabPage();
-            this.chatMsgTextBox = new System.Windows.Forms.RichTextBox();
-            this.usernamesRichTB = new System.Windows.Forms.RichTextBox();
-            this.chatViewRichTB = new System.Windows.Forms.RichTextBox();
             this.linksTab = new MetroFramework.Controls.MetroTabPage();
+            this.linksTreeView = new System.Windows.Forms.TreeView();
             this.linksPanel = new MetroFramework.Controls.MetroPanel();
-            this.linksTreeView1 = new System.Windows.Forms.TreeView();
             this.optionsTab = new MetroFramework.Controls.MetroTabPage();
+            this.saveBtn = new MetroFramework.Controls.MetroButton();
+            this.optionsForLabel = new MetroFramework.Controls.MetroLabel();
+            this.openChangelogCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.autoCompileCoffeeCheckbox = new MetroFramework.Controls.MetroCheckBox();
+            this.utf8CheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.autoDeleteBinCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.askToBreakUpCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.loreCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.note0CheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.enableChatCheckBox1 = new MetroFramework.Controls.MetroCheckBox();
             this.chatReconnectBtn = new MetroFramework.Controls.MetroButton();
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
@@ -103,15 +111,16 @@
             this.hideCompiledFilesCheckBox1 = new MetroFramework.Controls.MetroCheckBox();
             this.notificationLabel = new MetroFramework.Controls.MetroLabel();
             this.progressSpinner = new MetroFramework.Controls.MetroProgressSpinner();
+            this.linkHttp = new MetroFramework.Controls.MetroLink();
             this.addonTileContextMenu.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.homeTab.SuspendLayout();
+            this.chatTab.SuspendLayout();
             this.toolsTab.SuspendLayout();
             this.spellLibraryTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBox)).BeginInit();
             this.metroPanel1.SuspendLayout();
             this.particlesTab.SuspendLayout();
-            this.chatTab.SuspendLayout();
             this.linksTab.SuspendLayout();
             this.optionsTab.SuspendLayout();
             this.tileContextMenu.SuspendLayout();
@@ -152,31 +161,23 @@
             // addonTileContextMenu
             // 
             this.addonTileContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.changePictureToolStripMenuItem,
             this.optionsToolStripMenuItem,
             this.deleteAddonToolStripMenuItem});
             this.addonTileContextMenu.Name = "metroContextMenu1";
-            this.addonTileContextMenu.Size = new System.Drawing.Size(156, 70);
+            this.addonTileContextMenu.Size = new System.Drawing.Size(147, 48);
             this.addonTileContextMenu.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
-            // changePictureToolStripMenuItem
-            // 
-            this.changePictureToolStripMenuItem.Enabled = false;
-            this.changePictureToolStripMenuItem.Name = "changePictureToolStripMenuItem";
-            this.changePictureToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.changePictureToolStripMenuItem.Text = "Change Picture";
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // deleteAddonToolStripMenuItem
             // 
             this.deleteAddonToolStripMenuItem.Name = "deleteAddonToolStripMenuItem";
-            this.deleteAddonToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.deleteAddonToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.deleteAddonToolStripMenuItem.Text = "Delete Addon";
             this.deleteAddonToolStripMenuItem.Click += new System.EventHandler(this.deleteAddonBtn_Click);
             // 
@@ -195,7 +196,7 @@
             this.tabControl.ItemSize = new System.Drawing.Size(40, 25);
             this.tabControl.Location = new System.Drawing.Point(188, 54);
             this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 6;
+            this.tabControl.SelectedIndex = 5;
             this.tabControl.ShowToolTips = true;
             this.tabControl.Size = new System.Drawing.Size(1084, 656);
             this.tabControl.TabIndex = 2;
@@ -274,11 +275,11 @@
             this.panoramaTree.LineColor = System.Drawing.Color.White;
             this.panoramaTree.Location = new System.Drawing.Point(394, 28);
             this.panoramaTree.Name = "panoramaTree";
-            treeNode1.Name = "panoramaNode";
-            treeNode1.Text = "panorama";
-            treeNode1.ToolTipText = "Double-click a node to open the file or directory";
+            treeNode7.Name = "panoramaNode";
+            treeNode7.Text = "panorama";
+            treeNode7.ToolTipText = "Double-click a node to open the file or directory";
             this.panoramaTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            treeNode7});
             this.panoramaTree.ShowNodeToolTips = true;
             this.panoramaTree.Size = new System.Drawing.Size(392, 592);
             this.panoramaTree.TabIndex = 4;
@@ -291,14 +292,68 @@
             this.scriptsTree.LineColor = System.Drawing.Color.White;
             this.scriptsTree.Location = new System.Drawing.Point(0, 28);
             this.scriptsTree.Name = "scriptsTree";
-            treeNode2.Name = "scriptsNode";
-            treeNode2.Text = "scripts";
-            treeNode2.ToolTipText = "Double-click a node to open the file or directory";
+            treeNode8.Name = "scriptsNode";
+            treeNode8.Text = "scripts";
+            treeNode8.ToolTipText = "Double-click a node to open the file or directory";
             this.scriptsTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
+            treeNode8});
             this.scriptsTree.ShowNodeToolTips = true;
             this.scriptsTree.Size = new System.Drawing.Size(392, 592);
             this.scriptsTree.TabIndex = 2;
+            // 
+            // chatTab
+            // 
+            this.chatTab.Controls.Add(this.chatMsgTextBox);
+            this.chatTab.Controls.Add(this.usernamesRichTB);
+            this.chatTab.Controls.Add(this.chatViewRichTB);
+            this.chatTab.HorizontalScrollbarBarColor = true;
+            this.chatTab.HorizontalScrollbarHighlightOnWheel = false;
+            this.chatTab.HorizontalScrollbarSize = 1;
+            this.chatTab.Location = new System.Drawing.Point(4, 29);
+            this.chatTab.Name = "chatTab";
+            this.chatTab.Size = new System.Drawing.Size(1076, 623);
+            this.chatTab.TabIndex = 10;
+            this.chatTab.Text = "Chat";
+            this.chatTab.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.chatTab.VerticalScrollbarBarColor = true;
+            this.chatTab.VerticalScrollbarHighlightOnWheel = false;
+            this.chatTab.VerticalScrollbarSize = 1;
+            // 
+            // chatMsgTextBox
+            // 
+            this.chatMsgTextBox.BackColor = System.Drawing.SystemColors.ControlText;
+            this.chatMsgTextBox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chatMsgTextBox.ForeColor = System.Drawing.SystemColors.Window;
+            this.chatMsgTextBox.Location = new System.Drawing.Point(0, 566);
+            this.chatMsgTextBox.Multiline = false;
+            this.chatMsgTextBox.Name = "chatMsgTextBox";
+            this.chatMsgTextBox.Size = new System.Drawing.Size(936, 26);
+            this.chatMsgTextBox.TabIndex = 22;
+            this.chatMsgTextBox.Text = "";
+            // 
+            // usernamesRichTB
+            // 
+            this.usernamesRichTB.BackColor = System.Drawing.SystemColors.ControlText;
+            this.usernamesRichTB.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.usernamesRichTB.ForeColor = System.Drawing.SystemColors.Window;
+            this.usernamesRichTB.Location = new System.Drawing.Point(938, 4);
+            this.usernamesRichTB.Name = "usernamesRichTB";
+            this.usernamesRichTB.ReadOnly = true;
+            this.usernamesRichTB.Size = new System.Drawing.Size(136, 560);
+            this.usernamesRichTB.TabIndex = 21;
+            this.usernamesRichTB.Text = "";
+            // 
+            // chatViewRichTB
+            // 
+            this.chatViewRichTB.BackColor = System.Drawing.SystemColors.ControlText;
+            this.chatViewRichTB.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chatViewRichTB.ForeColor = System.Drawing.SystemColors.Window;
+            this.chatViewRichTB.Location = new System.Drawing.Point(0, 4);
+            this.chatViewRichTB.Name = "chatViewRichTB";
+            this.chatViewRichTB.ReadOnly = true;
+            this.chatViewRichTB.Size = new System.Drawing.Size(936, 560);
+            this.chatViewRichTB.TabIndex = 20;
+            this.chatViewRichTB.Text = "";
             // 
             // toolsTab
             // 
@@ -458,7 +513,6 @@
             this.fastColoredTextBox.CharWidth = 8;
             this.fastColoredTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.fastColoredTextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.fastColoredTextBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.fastColoredTextBox.IsReplaceMode = false;
             this.fastColoredTextBox.Location = new System.Drawing.Point(224, 30);
             this.fastColoredTextBox.Name = "fastColoredTextBox";
@@ -753,11 +807,13 @@
             this.particleCopyTutorial.Location = new System.Drawing.Point(503, 61);
             this.particleCopyTutorial.Name = "particleCopyTutorial";
             this.particleCopyTutorial.Size = new System.Drawing.Size(58, 22);
+            this.particleCopyTutorial.Style = MetroFramework.MetroColorStyle.Teal;
             this.particleCopyTutorial.TabIndex = 7;
             this.particleCopyTutorial.Text = "Tutorial";
             this.particleCopyTutorial.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.particleCopyTutorial.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.particleCopyTutorial.UseSelectable = true;
+            this.particleCopyTutorial.UseStyleColors = true;
             // 
             // selectParticlesBtn
             // 
@@ -804,64 +860,11 @@
     "having to go through the Particle Editor.";
             this.metroLabel4.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
-            // chatTab
-            // 
-            this.chatTab.Controls.Add(this.chatMsgTextBox);
-            this.chatTab.Controls.Add(this.usernamesRichTB);
-            this.chatTab.Controls.Add(this.chatViewRichTB);
-            this.chatTab.HorizontalScrollbarBarColor = true;
-            this.chatTab.HorizontalScrollbarHighlightOnWheel = false;
-            this.chatTab.HorizontalScrollbarSize = 1;
-            this.chatTab.Location = new System.Drawing.Point(4, 29);
-            this.chatTab.Name = "chatTab";
-            this.chatTab.Size = new System.Drawing.Size(1076, 623);
-            this.chatTab.TabIndex = 10;
-            this.chatTab.Text = "Chat";
-            this.chatTab.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.chatTab.VerticalScrollbarBarColor = true;
-            this.chatTab.VerticalScrollbarHighlightOnWheel = false;
-            this.chatTab.VerticalScrollbarSize = 2;
-            // 
-            // chatMsgTextBox
-            // 
-            this.chatMsgTextBox.BackColor = System.Drawing.SystemColors.ControlText;
-            this.chatMsgTextBox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chatMsgTextBox.ForeColor = System.Drawing.SystemColors.Window;
-            this.chatMsgTextBox.Location = new System.Drawing.Point(0, 566);
-            this.chatMsgTextBox.Multiline = false;
-            this.chatMsgTextBox.Name = "chatMsgTextBox";
-            this.chatMsgTextBox.Size = new System.Drawing.Size(936, 26);
-            this.chatMsgTextBox.TabIndex = 22;
-            this.chatMsgTextBox.Text = "";
-            // 
-            // usernamesRichTB
-            // 
-            this.usernamesRichTB.BackColor = System.Drawing.SystemColors.ControlText;
-            this.usernamesRichTB.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.usernamesRichTB.ForeColor = System.Drawing.SystemColors.Window;
-            this.usernamesRichTB.Location = new System.Drawing.Point(938, 4);
-            this.usernamesRichTB.Name = "usernamesRichTB";
-            this.usernamesRichTB.ReadOnly = true;
-            this.usernamesRichTB.Size = new System.Drawing.Size(136, 560);
-            this.usernamesRichTB.TabIndex = 21;
-            this.usernamesRichTB.Text = "";
-            // 
-            // chatViewRichTB
-            // 
-            this.chatViewRichTB.BackColor = System.Drawing.SystemColors.ControlText;
-            this.chatViewRichTB.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chatViewRichTB.ForeColor = System.Drawing.SystemColors.Window;
-            this.chatViewRichTB.Location = new System.Drawing.Point(0, 4);
-            this.chatViewRichTB.Name = "chatViewRichTB";
-            this.chatViewRichTB.ReadOnly = true;
-            this.chatViewRichTB.Size = new System.Drawing.Size(936, 560);
-            this.chatViewRichTB.TabIndex = 20;
-            this.chatViewRichTB.Text = "";
-            // 
             // linksTab
             // 
+            this.linksTab.Controls.Add(this.linkHttp);
+            this.linksTab.Controls.Add(this.linksTreeView);
             this.linksTab.Controls.Add(this.linksPanel);
-            this.linksTab.Controls.Add(this.linksTreeView1);
             this.linksTab.HorizontalScrollbarBarColor = true;
             this.linksTab.HorizontalScrollbarHighlightOnWheel = false;
             this.linksTab.HorizontalScrollbarSize = 1;
@@ -876,6 +879,17 @@
             this.linksTab.VerticalScrollbarHighlightOnWheel = false;
             this.linksTab.VerticalScrollbarSize = 1;
             // 
+            // linksTreeView
+            // 
+            this.linksTreeView.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.linksTreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linksTreeView.ForeColor = System.Drawing.Color.White;
+            this.linksTreeView.LineColor = System.Drawing.Color.White;
+            this.linksTreeView.Location = new System.Drawing.Point(4, 8);
+            this.linksTreeView.Name = "linksTreeView";
+            this.linksTreeView.Size = new System.Drawing.Size(500, 612);
+            this.linksTreeView.TabIndex = 34;
+            // 
             // linksPanel
             // 
             this.linksPanel.AutoScroll = true;
@@ -883,7 +897,7 @@
             this.linksPanel.HorizontalScrollbarBarColor = true;
             this.linksPanel.HorizontalScrollbarHighlightOnWheel = true;
             this.linksPanel.HorizontalScrollbarSize = 1;
-            this.linksPanel.Location = new System.Drawing.Point(434, 92);
+            this.linksPanel.Location = new System.Drawing.Point(658, 232);
             this.linksPanel.Name = "linksPanel";
             this.linksPanel.Size = new System.Drawing.Size(190, 242);
             this.linksPanel.TabIndex = 33;
@@ -894,18 +908,17 @@
             this.linksPanel.VerticalScrollbarHighlightOnWheel = false;
             this.linksPanel.VerticalScrollbarSize = 1;
             // 
-            // linksTreeView1
-            // 
-            this.linksTreeView1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.linksTreeView1.ForeColor = System.Drawing.Color.White;
-            this.linksTreeView1.LineColor = System.Drawing.Color.White;
-            this.linksTreeView1.Location = new System.Drawing.Point(2, 6);
-            this.linksTreeView1.Name = "linksTreeView1";
-            this.linksTreeView1.Size = new System.Drawing.Size(346, 610);
-            this.linksTreeView1.TabIndex = 6;
-            // 
             // optionsTab
             // 
+            this.optionsTab.Controls.Add(this.saveBtn);
+            this.optionsTab.Controls.Add(this.optionsForLabel);
+            this.optionsTab.Controls.Add(this.openChangelogCheckBox);
+            this.optionsTab.Controls.Add(this.autoCompileCoffeeCheckbox);
+            this.optionsTab.Controls.Add(this.utf8CheckBox);
+            this.optionsTab.Controls.Add(this.autoDeleteBinCheckBox);
+            this.optionsTab.Controls.Add(this.askToBreakUpCheckBox);
+            this.optionsTab.Controls.Add(this.loreCheckBox);
+            this.optionsTab.Controls.Add(this.note0CheckBox);
             this.optionsTab.Controls.Add(this.enableChatCheckBox1);
             this.optionsTab.Controls.Add(this.chatReconnectBtn);
             this.optionsTab.Controls.Add(this.metroLabel3);
@@ -925,6 +938,112 @@
             this.optionsTab.VerticalScrollbarBarColor = true;
             this.optionsTab.VerticalScrollbarHighlightOnWheel = false;
             this.optionsTab.VerticalScrollbarSize = 1;
+            // 
+            // saveBtn
+            // 
+            this.saveBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
+            this.saveBtn.Location = new System.Drawing.Point(470, 578);
+            this.saveBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.saveBtn.Name = "saveBtn";
+            this.saveBtn.Size = new System.Drawing.Size(138, 38);
+            this.saveBtn.Style = MetroFramework.MetroColorStyle.Lime;
+            this.saveBtn.TabIndex = 47;
+            this.saveBtn.TabStop = false;
+            this.saveBtn.Text = "Save Settings";
+            this.saveBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.saveBtn.UseSelectable = true;
+            this.saveBtn.UseStyleColors = true;
+            // 
+            // optionsForLabel
+            // 
+            this.optionsForLabel.AutoSize = true;
+            this.optionsForLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.optionsForLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+            this.optionsForLabel.Location = new System.Drawing.Point(590, 12);
+            this.optionsForLabel.Name = "optionsForLabel";
+            this.optionsForLabel.Size = new System.Drawing.Size(112, 25);
+            this.optionsForLabel.Style = MetroFramework.MetroColorStyle.Green;
+            this.optionsForLabel.TabIndex = 46;
+            this.optionsForLabel.Text = "addonname:";
+            this.optionsForLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.optionsForLabel.UseStyleColors = true;
+            // 
+            // openChangelogCheckBox
+            // 
+            this.openChangelogCheckBox.AutoSize = true;
+            this.openChangelogCheckBox.Location = new System.Drawing.Point(8, 136);
+            this.openChangelogCheckBox.Name = "openChangelogCheckBox";
+            this.openChangelogCheckBox.Size = new System.Drawing.Size(229, 15);
+            this.openChangelogCheckBox.TabIndex = 45;
+            this.openChangelogCheckBox.Text = "Open changelog webpage after update";
+            this.openChangelogCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.openChangelogCheckBox.UseSelectable = true;
+            // 
+            // autoCompileCoffeeCheckbox
+            // 
+            this.autoCompileCoffeeCheckbox.AutoSize = true;
+            this.autoCompileCoffeeCheckbox.Location = new System.Drawing.Point(594, 160);
+            this.autoCompileCoffeeCheckbox.Name = "autoCompileCoffeeCheckbox";
+            this.autoCompileCoffeeCheckbox.Size = new System.Drawing.Size(336, 15);
+            this.autoCompileCoffeeCheckbox.TabIndex = 44;
+            this.autoCompileCoffeeCheckbox.Text = "Auto-compile CoffeeScript files when changes are detected";
+            this.autoCompileCoffeeCheckbox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.autoCompileCoffeeCheckbox.UseSelectable = true;
+            // 
+            // utf8CheckBox
+            // 
+            this.utf8CheckBox.AutoSize = true;
+            this.utf8CheckBox.Location = new System.Drawing.Point(594, 138);
+            this.utf8CheckBox.Name = "utf8CheckBox";
+            this.utf8CheckBox.Size = new System.Drawing.Size(391, 15);
+            this.utf8CheckBox.TabIndex = 43;
+            this.utf8CheckBox.Text = "Auto-generate UTF-8 addon_language files during tooltips generation";
+            this.utf8CheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.utf8CheckBox.UseSelectable = true;
+            // 
+            // autoDeleteBinCheckBox
+            // 
+            this.autoDeleteBinCheckBox.AutoSize = true;
+            this.autoDeleteBinCheckBox.Location = new System.Drawing.Point(594, 114);
+            this.autoDeleteBinCheckBox.Name = "autoDeleteBinCheckBox";
+            this.autoDeleteBinCheckBox.Size = new System.Drawing.Size(348, 15);
+            this.autoDeleteBinCheckBox.TabIndex = 41;
+            this.autoDeleteBinCheckBox.Text = "Auto-delete the .bin files in the \'game\' directory of this addon";
+            this.autoDeleteBinCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.autoDeleteBinCheckBox.UseSelectable = true;
+            // 
+            // askToBreakUpCheckBox
+            // 
+            this.askToBreakUpCheckBox.AutoSize = true;
+            this.askToBreakUpCheckBox.Location = new System.Drawing.Point(594, 92);
+            this.askToBreakUpCheckBox.Name = "askToBreakUpCheckBox";
+            this.askToBreakUpCheckBox.Size = new System.Drawing.Size(282, 15);
+            this.askToBreakUpCheckBox.TabIndex = 40;
+            this.askToBreakUpCheckBox.Text = "Always ask to break up before combining KV files";
+            this.askToBreakUpCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.askToBreakUpCheckBox.UseSelectable = true;
+            // 
+            // loreCheckBox
+            // 
+            this.loreCheckBox.AutoSize = true;
+            this.loreCheckBox.Location = new System.Drawing.Point(594, 68);
+            this.loreCheckBox.Name = "loreCheckBox";
+            this.loreCheckBox.Size = new System.Drawing.Size(147, 15);
+            this.loreCheckBox.TabIndex = 39;
+            this.loreCheckBox.Text = "Generate \'Lore\' Tooltips";
+            this.loreCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.loreCheckBox.UseSelectable = true;
+            // 
+            // note0CheckBox
+            // 
+            this.note0CheckBox.AutoSize = true;
+            this.note0CheckBox.Location = new System.Drawing.Point(594, 46);
+            this.note0CheckBox.Name = "note0CheckBox";
+            this.note0CheckBox.Size = new System.Drawing.Size(156, 15);
+            this.note0CheckBox.TabIndex = 38;
+            this.note0CheckBox.Text = "Generate \'Note0\' Tooltips";
+            this.note0CheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.note0CheckBox.UseSelectable = true;
             // 
             // enableChatCheckBox1
             // 
@@ -1229,6 +1348,20 @@
             this.progressSpinner.Value = 70;
             this.progressSpinner.Visible = false;
             // 
+            // linkHttp
+            // 
+            this.linkHttp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.linkHttp.Location = new System.Drawing.Point(514, 40);
+            this.linkHttp.Name = "linkHttp";
+            this.linkHttp.Size = new System.Drawing.Size(550, 22);
+            this.linkHttp.Style = MetroFramework.MetroColorStyle.Blue;
+            this.linkHttp.TabIndex = 35;
+            this.linkHttp.Text = "moddota.com";
+            this.linkHttp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.linkHttp.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.linkHttp.UseSelectable = true;
+            this.linkHttp.UseStyleColors = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
@@ -1261,6 +1394,7 @@
             this.tabControl.ResumeLayout(false);
             this.homeTab.ResumeLayout(false);
             this.homeTab.PerformLayout();
+            this.chatTab.ResumeLayout(false);
             this.toolsTab.ResumeLayout(false);
             this.spellLibraryTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBox)).EndInit();
@@ -1268,7 +1402,6 @@
             this.metroPanel1.PerformLayout();
             this.particlesTab.ResumeLayout(false);
             this.particlesTab.PerformLayout();
-            this.chatTab.ResumeLayout(false);
             this.linksTab.ResumeLayout(false);
             this.optionsTab.ResumeLayout(false);
             this.optionsTab.PerformLayout();
@@ -1287,7 +1420,6 @@
 		private MetroFramework.Controls.MetroRadioButton metroRadioButton1;
 		private MetroFramework.Controls.MetroTabPage linksTab;
 		private MetroFramework.Controls.MetroContextMenu addonTileContextMenu;
-		private System.Windows.Forms.ToolStripMenuItem changePictureToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem deleteAddonToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
 		private MetroFramework.Controls.MetroButton findSoundNameBtn;
@@ -1341,7 +1473,6 @@
         public MetroFramework.Controls.MetroTextBox particlesTextBox1;
         private MetroFramework.Controls.MetroLabel metroLabel10;
         public MetroFramework.Controls.MetroTabControl tabControl;
-        public System.Windows.Forms.TreeView linksTreeView1;
         public MetroFramework.Controls.MetroPanel linksPanel;
         public MetroFramework.Controls.MetroPanel addonsPanel;
         public MetroFramework.Controls.MetroTabPage versionTab;
@@ -1357,5 +1488,16 @@
         public System.Windows.Forms.RichTextBox chatMsgTextBox;
         public MetroFramework.Controls.MetroButton homeRefreshBtn;
         public MetroFramework.Controls.MetroCheckBox enableChatCheckBox1;
+        public MetroFramework.Controls.MetroCheckBox autoCompileCoffeeCheckbox;
+        public MetroFramework.Controls.MetroCheckBox utf8CheckBox;
+        public MetroFramework.Controls.MetroCheckBox autoDeleteBinCheckBox;
+        public MetroFramework.Controls.MetroCheckBox askToBreakUpCheckBox;
+        public MetroFramework.Controls.MetroCheckBox loreCheckBox;
+        public MetroFramework.Controls.MetroCheckBox note0CheckBox;
+        public MetroFramework.Controls.MetroLabel optionsForLabel;
+        public MetroFramework.Controls.MetroCheckBox openChangelogCheckBox;
+        public MetroFramework.Controls.MetroButton saveBtn;
+        public System.Windows.Forms.TreeView linksTreeView;
+        public MetroFramework.Controls.MetroLink linkHttp;
     }
 }

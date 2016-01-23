@@ -15,6 +15,7 @@ using System.Text;
 using Dota2ModKit.Features;
 using Dota2ModKit.Forms;
 using MetroFramework.Components;
+using Dota2ModKit.HelperClasses;
 
 namespace Dota2ModKit {
     public partial class MainForm : MetroForm {
@@ -36,6 +37,9 @@ namespace Dota2ModKit {
         // for updating modkit
         Updater updater;
 
+        // for serializing/deserializing settings
+        public Serializer serializer;
+
         // Features of modkit
         internal KVFeatures kvFeatures;
         internal ParticleFeatures particleFeatures;
@@ -43,6 +47,7 @@ namespace Dota2ModKit {
         internal SpellLibraryFeatures spellLibraryFeatures;
         internal AboutFeatures aboutFeatures;
         internal ChatFeatures chatFeatures;
+        internal LinkFeatures linkFeatures;
 
         public CustomTile[] customTiles = new CustomTile[5];
         public CoffeeSharp.CoffeeScriptEngine cse = null;
@@ -56,6 +61,8 @@ namespace Dota2ModKit {
 
             // setup hooks
             setupHooks();
+
+            serializer = new Serializer(this);
 
             // check for new modkit version
             updater = new Updater(this);
@@ -102,7 +109,7 @@ namespace Dota2ModKit {
                 updater.clonePullBarebones();
 
                 // deserialize settings
-                deserializeSettings();
+                serializer.deserializeSettings();
 
                 // auto-retrieve the workshop IDs for published addons if there are any.
                 getPublishedAddonWorkshopIDs();
@@ -135,6 +142,7 @@ namespace Dota2ModKit {
             spellLibraryFeatures = new SpellLibraryFeatures(this);
             aboutFeatures = new AboutFeatures(this);
             chatFeatures = new ChatFeatures(this);
+            linkFeatures = new LinkFeatures(this);
         }
 
         private void initMainFormControls() {
@@ -146,6 +154,7 @@ namespace Dota2ModKit {
             notificationLabel.Text = "";
             versionLabel.Text = "v" + version;
             Style = Util.getRandomStyle();
+            //tabControl.TabPages.Remove(linksTab);
         }
 
         private void setupHooks() {
@@ -154,7 +163,7 @@ namespace Dota2ModKit {
             };
 
             FormClosing += (s, e) => {
-                serializeSettings();
+                serializer.serializeSettings();
             };
 
             tabControl.SelectedIndexChanged += (s, e) => {
@@ -187,6 +196,8 @@ namespace Dota2ModKit {
                     Process.Start(node.Name);
                 } catch (Exception) { }
             };
+
+
 
         }
 
@@ -339,50 +350,6 @@ namespace Dota2ModKit {
                     }
                 }
             }
-        }
-
-        private void deserializeSettings() {
-            string addonSettings = Settings.Default.AddonsKV;
-            if (addonSettings == "") {
-                // no addon settings to deserialize.
-                return;
-            }
-
-            KeyValue rootKV = KVParser.KV1.ParseAll(addonSettings)[0];
-
-            foreach (KeyValue kv in rootKV.Children) {
-                string addonName = kv.Key;
-                Addon addon = getAddonFromName(addonName);
-
-                // this can occur if addon is deleted and program doesn't exit correctly.
-                if (addon == null) {
-                    continue;
-                }
-
-                addon.deserializeSettings(kv);
-            }
-        }
-
-        public void serializeSettings() {
-            KeyValue rootKV = new KeyValue("Addons");
-            foreach (KeyValuePair<string, Addon> a in addons) {
-                string addonName = a.Key;
-                Addon addon = a.Value;
-                KeyValue addonKV = new KeyValue(addonName);
-                addon.serializeSettings(addonKV);
-                rootKV.AddChild(addonKV);
-            }
-
-            Settings.Default.AddonsKV = rootKV.ToString();
-
-            // serialize the customTiles
-            /*
-            string customTilesSerialized = "";
-            for (int i = 0; i < customTiles.Length; i++) {
-                customTilesSerialized += customTiles[i].serializedTileInfo + "|";
-            }
-            Settings.Default.CustomTileInfo = customTilesSerialized;*/
-            Settings.Default.Save();
         }
 
         // String -> Addon object conversion
@@ -717,37 +684,20 @@ namespace Dota2ModKit {
             Process.Start("https://github.com/stephenfournier/Dota-2-ModKit/issues");
         }
 
-        #region Options
-        private void optionsBtn_Click(object sender, EventArgs e) {
-            onOptionsClick();
-        }
-
-        private void optionsToolStripMenuItem_Click(object sender, EventArgs e) {
-            onOptionsClick();
-        }
-
         private void hideExtensionsCheckbox_Click(object sender, EventArgs e) {
             fixButton();
             currAddon.createTree();
         }
-
-        void onOptionsClick() {
-            OptionsForm of = new OptionsForm(this);
-            DialogResult dr = of.ShowDialog();
-
-            if (dr != DialogResult.OK) {
-                return;
-            }
-
-            text_notification("Options saved!", MetroColorStyle.Green, 2500);
-        }
-        #endregion
 
         private void homeRefreshBtn_Click(object sender, EventArgs e) {
             fixButton();
             if (currAddon != null) {
                 currAddon.createTree();
             }
+        }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e) {
+            tabControl.SelectedTab = optionsTab;
         }
 
         private void findSoundNameBtn_Click(object sender, EventArgs e) {
