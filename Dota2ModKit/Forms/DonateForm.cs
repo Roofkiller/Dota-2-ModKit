@@ -20,9 +20,7 @@ namespace Dota2ModKit.Forms {
 			InitializeComponent();
 
 			metroTextBox1.Text =
-				"Hi! I’m Stephen \"Myll\" Fournier, the creator of Dota 2 ModKit. I created D2ModKit to 1) Learn C# and GUI development, and 2) To ease several otherwise time-consuming tasks related to Dota 2 custom game development. I know that D2ModKit has greatly helped hundreds of modders to this date. Many have expressed their gratitude towards me over the past year for creating this program. The reactions of some people when I first showed off the tooltips generator were priceless! This has always been a completely self-motivated project of mine, and I really love developing it!" +
-
-				"\r\n\r\nThough donations are not necessary to me, they do help greatly in motivating me and re-assuring me that all the time spent creating D2ModKit was time well spent. I’m just a poor college student that spent a lot of free-time, not at college parties, but creating this program… FOR YOU! The Dota modder! If this program greatly helped you in your custom game development endeavors, please consider a donation!" +
+				"If Dota 2 ModKit greatly helped you in your custom game development endeavors, please consider a donation:" +
 
 				"\r\n\r\nThank you so much!\r\n- Myll";
 

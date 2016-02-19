@@ -106,9 +106,6 @@ namespace Dota2ModKit {
             Util.CreateTimer(200, (timer) => {
                 timer.Dispose();
 
-                // clone a barebones repo if we don't have one, pull if we do
-                updater.clonePullBarebones();
-
                 // deserialize settings
                 serializer.deserializeSettings();
 
@@ -153,7 +150,7 @@ namespace Dota2ModKit {
 
             //luaRadioBtn.Checked = true;
             tabControl.SelectedIndex = 0;
-            notificationLabel.Text = "";
+            text_notification("");
             versionLabel.Text = "v" + version;
             Style = Util.getRandomStyle();
             //tabControl.TabPages.Remove(linksTab);
@@ -533,7 +530,7 @@ namespace Dota2ModKit {
             }
         }
 
-        public void text_notification(string text, MetroColorStyle color, int duration) {
+        public void text_notification(string text, MetroColorStyle color = MetroColorStyle.Blue, int duration = 10000) {
             System.Timers.Timer notificationLabelTimer = new System.Timers.Timer(duration);
             notificationLabelTimer.SynchronizingObject = this;
             notificationLabelTimer.AutoReset = false;
@@ -702,17 +699,22 @@ namespace Dota2ModKit {
             tabControl.SelectedTab = optionsTab;
         }
 
+        private void contributeToLinks_Click(object sender, EventArgs e) {
+            Process.Start("https://github.com/stephenfournier/Dota2ModdingLinks/blob/master/dotamoddinglinks.kv");
+        }
+
         private void findSoundNameBtn_Click(object sender, EventArgs e) {
             fixButton();
-
-            try {
+            Process.Start("https://github.com/pingzing/sonic-scream");
+            // 2/19/16 todo: the kv for this gives an error with MyllParser.
+            /*try {
                 soundFeatures.findSoundName();
             } catch (Exception ex) {
                 MetroMessageBox.Show(this, ex.Message,
                     ex.ToString(),
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-            }
+            }*/
         }
 
         private void versionLabel_Click(object sender, EventArgs e) {

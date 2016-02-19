@@ -24,8 +24,8 @@
 		/// </summary>
 		private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("panorama");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("scripts");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("panorama");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("scripts");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.generateTooltipsBtn = new MetroFramework.Controls.MetroButton();
             this.addonTile = new MetroFramework.Controls.MetroTile();
@@ -39,10 +39,6 @@
             this.imagesCheckBox1 = new MetroFramework.Controls.MetroCheckBox();
             this.panoramaTree = new System.Windows.Forms.TreeView();
             this.scriptsTree = new System.Windows.Forms.TreeView();
-            this.chatTab = new MetroFramework.Controls.MetroTabPage();
-            this.chatMsgTextBox = new System.Windows.Forms.RichTextBox();
-            this.usernamesRichTB = new System.Windows.Forms.RichTextBox();
-            this.chatViewRichTB = new System.Windows.Forms.RichTextBox();
             this.toolsTab = new MetroFramework.Controls.MetroTabPage();
             this.compileCoffeeBtn = new MetroFramework.Controls.MetroButton();
             this.findSoundNameBtn = new MetroFramework.Controls.MetroButton();
@@ -77,7 +73,13 @@
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
+            this.chatTab = new MetroFramework.Controls.MetroTabPage();
+            this.metroLabel13 = new MetroFramework.Controls.MetroLabel();
+            this.chatMsgTextBox = new System.Windows.Forms.RichTextBox();
+            this.usernamesRichTB = new System.Windows.Forms.RichTextBox();
+            this.chatViewRichTB = new System.Windows.Forms.RichTextBox();
             this.linksTab = new MetroFramework.Controls.MetroTabPage();
+            this.metroLink1 = new MetroFramework.Controls.MetroLink();
             this.linkHttp = new MetroFramework.Controls.MetroLink();
             this.linksTreeView = new System.Windows.Forms.TreeView();
             this.linksPanel = new MetroFramework.Controls.MetroPanel();
@@ -99,6 +101,8 @@
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.chatUsernameTextBox1 = new MetroFramework.Controls.MetroTextBox();
             this.installedGamesTab = new MetroFramework.Controls.MetroTabPage();
+            this.installedGamesPanel = new MetroFramework.Controls.MetroPanel();
+            this.metroLabel12 = new MetroFramework.Controls.MetroLabel();
             this.versionTab = new MetroFramework.Controls.MetroTabPage();
             this.tileContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.editTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -112,19 +116,20 @@
             this.versionLabel = new MetroFramework.Controls.MetroLink();
             this.notificationLabel = new MetroFramework.Controls.MetroLabel();
             this.progressSpinner = new MetroFramework.Controls.MetroProgressSpinner();
-            this.installedGamesPanel = new MetroFramework.Controls.MetroPanel();
             this.addonTileContextMenu.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.homeTab.SuspendLayout();
-            this.chatTab.SuspendLayout();
             this.toolsTab.SuspendLayout();
             this.spellLibraryTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBox)).BeginInit();
             this.metroPanel1.SuspendLayout();
             this.particlesTab.SuspendLayout();
+            this.chatTab.SuspendLayout();
             this.linksTab.SuspendLayout();
             this.optionsTab.SuspendLayout();
             this.installedGamesTab.SuspendLayout();
+            this.installedGamesPanel.SuspendLayout();
+            this.versionTab.SuspendLayout();
             this.tileContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -186,10 +191,10 @@
             // tabControl
             // 
             this.tabControl.Controls.Add(this.homeTab);
-            this.tabControl.Controls.Add(this.chatTab);
             this.tabControl.Controls.Add(this.toolsTab);
             this.tabControl.Controls.Add(this.spellLibraryTab);
             this.tabControl.Controls.Add(this.particlesTab);
+            this.tabControl.Controls.Add(this.chatTab);
             this.tabControl.Controls.Add(this.linksTab);
             this.tabControl.Controls.Add(this.optionsTab);
             this.tabControl.Controls.Add(this.installedGamesTab);
@@ -199,7 +204,7 @@
             this.tabControl.ItemSize = new System.Drawing.Size(40, 25);
             this.tabControl.Location = new System.Drawing.Point(188, 54);
             this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 7;
+            this.tabControl.SelectedIndex = 2;
             this.tabControl.ShowToolTips = true;
             this.tabControl.Size = new System.Drawing.Size(1084, 656);
             this.tabControl.TabIndex = 2;
@@ -278,11 +283,11 @@
             this.panoramaTree.LineColor = System.Drawing.Color.White;
             this.panoramaTree.Location = new System.Drawing.Point(394, 28);
             this.panoramaTree.Name = "panoramaTree";
-            treeNode1.Name = "panoramaNode";
-            treeNode1.Text = "panorama";
-            treeNode1.ToolTipText = "Double-click a node to open the file or directory";
+            treeNode11.Name = "panoramaNode";
+            treeNode11.Text = "panorama";
+            treeNode11.ToolTipText = "Double-click a node to open the file or directory";
             this.panoramaTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            treeNode11});
             this.panoramaTree.ShowNodeToolTips = true;
             this.panoramaTree.Size = new System.Drawing.Size(392, 592);
             this.panoramaTree.TabIndex = 4;
@@ -295,68 +300,14 @@
             this.scriptsTree.LineColor = System.Drawing.Color.White;
             this.scriptsTree.Location = new System.Drawing.Point(0, 28);
             this.scriptsTree.Name = "scriptsTree";
-            treeNode2.Name = "scriptsNode";
-            treeNode2.Text = "scripts";
-            treeNode2.ToolTipText = "Double-click a node to open the file or directory";
+            treeNode12.Name = "scriptsNode";
+            treeNode12.Text = "scripts";
+            treeNode12.ToolTipText = "Double-click a node to open the file or directory";
             this.scriptsTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
+            treeNode12});
             this.scriptsTree.ShowNodeToolTips = true;
             this.scriptsTree.Size = new System.Drawing.Size(392, 592);
             this.scriptsTree.TabIndex = 2;
-            // 
-            // chatTab
-            // 
-            this.chatTab.Controls.Add(this.chatMsgTextBox);
-            this.chatTab.Controls.Add(this.usernamesRichTB);
-            this.chatTab.Controls.Add(this.chatViewRichTB);
-            this.chatTab.HorizontalScrollbarBarColor = true;
-            this.chatTab.HorizontalScrollbarHighlightOnWheel = false;
-            this.chatTab.HorizontalScrollbarSize = 1;
-            this.chatTab.Location = new System.Drawing.Point(4, 29);
-            this.chatTab.Name = "chatTab";
-            this.chatTab.Size = new System.Drawing.Size(1076, 623);
-            this.chatTab.TabIndex = 10;
-            this.chatTab.Text = "Chat";
-            this.chatTab.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.chatTab.VerticalScrollbarBarColor = true;
-            this.chatTab.VerticalScrollbarHighlightOnWheel = false;
-            this.chatTab.VerticalScrollbarSize = 1;
-            // 
-            // chatMsgTextBox
-            // 
-            this.chatMsgTextBox.BackColor = System.Drawing.SystemColors.ControlText;
-            this.chatMsgTextBox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chatMsgTextBox.ForeColor = System.Drawing.SystemColors.Window;
-            this.chatMsgTextBox.Location = new System.Drawing.Point(0, 566);
-            this.chatMsgTextBox.Multiline = false;
-            this.chatMsgTextBox.Name = "chatMsgTextBox";
-            this.chatMsgTextBox.Size = new System.Drawing.Size(936, 26);
-            this.chatMsgTextBox.TabIndex = 22;
-            this.chatMsgTextBox.Text = "";
-            // 
-            // usernamesRichTB
-            // 
-            this.usernamesRichTB.BackColor = System.Drawing.SystemColors.ControlText;
-            this.usernamesRichTB.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.usernamesRichTB.ForeColor = System.Drawing.SystemColors.Window;
-            this.usernamesRichTB.Location = new System.Drawing.Point(938, 4);
-            this.usernamesRichTB.Name = "usernamesRichTB";
-            this.usernamesRichTB.ReadOnly = true;
-            this.usernamesRichTB.Size = new System.Drawing.Size(136, 560);
-            this.usernamesRichTB.TabIndex = 21;
-            this.usernamesRichTB.Text = "";
-            // 
-            // chatViewRichTB
-            // 
-            this.chatViewRichTB.BackColor = System.Drawing.SystemColors.ControlText;
-            this.chatViewRichTB.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chatViewRichTB.ForeColor = System.Drawing.SystemColors.Window;
-            this.chatViewRichTB.Location = new System.Drawing.Point(0, 4);
-            this.chatViewRichTB.Name = "chatViewRichTB";
-            this.chatViewRichTB.ReadOnly = true;
-            this.chatViewRichTB.Size = new System.Drawing.Size(936, 560);
-            this.chatViewRichTB.TabIndex = 20;
-            this.chatViewRichTB.Text = "";
             // 
             // toolsTab
             // 
@@ -510,7 +461,7 @@
         '\"',
         '\'',
         '\''};
-            this.fastColoredTextBox.AutoScrollMinSize = new System.Drawing.Size(2, 14);
+            this.fastColoredTextBox.AutoScrollMinSize = new System.Drawing.Size(27, 14);
             this.fastColoredTextBox.BackBrush = null;
             this.fastColoredTextBox.CharHeight = 14;
             this.fastColoredTextBox.CharWidth = 8;
@@ -864,8 +815,75 @@
     "having to go through the Particle Editor.";
             this.metroLabel4.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
+            // chatTab
+            // 
+            this.chatTab.Controls.Add(this.metroLabel13);
+            this.chatTab.Controls.Add(this.chatMsgTextBox);
+            this.chatTab.Controls.Add(this.usernamesRichTB);
+            this.chatTab.Controls.Add(this.chatViewRichTB);
+            this.chatTab.HorizontalScrollbarBarColor = true;
+            this.chatTab.HorizontalScrollbarHighlightOnWheel = false;
+            this.chatTab.HorizontalScrollbarSize = 1;
+            this.chatTab.Location = new System.Drawing.Point(4, 29);
+            this.chatTab.Name = "chatTab";
+            this.chatTab.Size = new System.Drawing.Size(1076, 623);
+            this.chatTab.TabIndex = 10;
+            this.chatTab.Text = "Chat";
+            this.chatTab.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.chatTab.VerticalScrollbarBarColor = true;
+            this.chatTab.VerticalScrollbarHighlightOnWheel = false;
+            this.chatTab.VerticalScrollbarSize = 1;
+            // 
+            // metroLabel13
+            // 
+            this.metroLabel13.AutoSize = true;
+            this.metroLabel13.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+            this.metroLabel13.Location = new System.Drawing.Point(942, 570);
+            this.metroLabel13.Name = "metroLabel13";
+            this.metroLabel13.Size = new System.Drawing.Size(103, 19);
+            this.metroLabel13.TabIndex = 23;
+            this.metroLabel13.Text = "Chat is in alpha";
+            this.metroLabel13.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // chatMsgTextBox
+            // 
+            this.chatMsgTextBox.BackColor = System.Drawing.SystemColors.ControlText;
+            this.chatMsgTextBox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chatMsgTextBox.ForeColor = System.Drawing.SystemColors.Window;
+            this.chatMsgTextBox.Location = new System.Drawing.Point(0, 566);
+            this.chatMsgTextBox.Multiline = false;
+            this.chatMsgTextBox.Name = "chatMsgTextBox";
+            this.chatMsgTextBox.Size = new System.Drawing.Size(936, 26);
+            this.chatMsgTextBox.TabIndex = 22;
+            this.chatMsgTextBox.Text = "";
+            // 
+            // usernamesRichTB
+            // 
+            this.usernamesRichTB.BackColor = System.Drawing.SystemColors.ControlText;
+            this.usernamesRichTB.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.usernamesRichTB.ForeColor = System.Drawing.SystemColors.Window;
+            this.usernamesRichTB.Location = new System.Drawing.Point(938, 4);
+            this.usernamesRichTB.Name = "usernamesRichTB";
+            this.usernamesRichTB.ReadOnly = true;
+            this.usernamesRichTB.Size = new System.Drawing.Size(136, 560);
+            this.usernamesRichTB.TabIndex = 21;
+            this.usernamesRichTB.Text = "";
+            // 
+            // chatViewRichTB
+            // 
+            this.chatViewRichTB.BackColor = System.Drawing.SystemColors.ControlText;
+            this.chatViewRichTB.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chatViewRichTB.ForeColor = System.Drawing.SystemColors.Window;
+            this.chatViewRichTB.Location = new System.Drawing.Point(0, 4);
+            this.chatViewRichTB.Name = "chatViewRichTB";
+            this.chatViewRichTB.ReadOnly = true;
+            this.chatViewRichTB.Size = new System.Drawing.Size(936, 560);
+            this.chatViewRichTB.TabIndex = 20;
+            this.chatViewRichTB.Text = "";
+            // 
             // linksTab
             // 
+            this.linksTab.Controls.Add(this.metroLink1);
             this.linksTab.Controls.Add(this.linkHttp);
             this.linksTab.Controls.Add(this.linksTreeView);
             this.linksTab.Controls.Add(this.linksPanel);
@@ -883,10 +901,27 @@
             this.linksTab.VerticalScrollbarHighlightOnWheel = false;
             this.linksTab.VerticalScrollbarSize = 1;
             // 
+            // metroLink1
+            // 
+            this.metroLink1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.metroLink1.FontSize = MetroFramework.MetroLinkSize.Medium;
+            this.metroLink1.Location = new System.Drawing.Point(506, 110);
+            this.metroLink1.Name = "metroLink1";
+            this.metroLink1.Size = new System.Drawing.Size(260, 40);
+            this.metroLink1.Style = MetroFramework.MetroColorStyle.Orange;
+            this.metroLink1.TabIndex = 36;
+            this.metroLink1.Text = "Click here to contribute to this list";
+            this.metroLink1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.metroLink1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroLink1.UseSelectable = true;
+            this.metroLink1.UseStyleColors = true;
+            this.metroLink1.Click += new System.EventHandler(this.contributeToLinks_Click);
+            // 
             // linkHttp
             // 
             this.linkHttp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.linkHttp.Location = new System.Drawing.Point(514, 40);
+            this.linkHttp.FontSize = MetroFramework.MetroLinkSize.Medium;
+            this.linkHttp.Location = new System.Drawing.Point(506, 18);
             this.linkHttp.Name = "linkHttp";
             this.linkHttp.Size = new System.Drawing.Size(550, 22);
             this.linkHttp.Style = MetroFramework.MetroColorStyle.Blue;
@@ -915,9 +950,9 @@
             this.linksPanel.HorizontalScrollbarBarColor = true;
             this.linksPanel.HorizontalScrollbarHighlightOnWheel = true;
             this.linksPanel.HorizontalScrollbarSize = 1;
-            this.linksPanel.Location = new System.Drawing.Point(658, 232);
+            this.linksPanel.Location = new System.Drawing.Point(858, 178);
             this.linksPanel.Name = "linksPanel";
-            this.linksPanel.Size = new System.Drawing.Size(190, 242);
+            this.linksPanel.Size = new System.Drawing.Size(154, 114);
             this.linksPanel.TabIndex = 33;
             this.linksPanel.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.linksPanel.UseStyleColors = true;
@@ -1095,9 +1130,9 @@
             this.metroLabel3.FontWeight = MetroFramework.MetroLabelWeight.Regular;
             this.metroLabel3.Location = new System.Drawing.Point(4, 30);
             this.metroLabel3.Name = "metroLabel3";
-            this.metroLabel3.Size = new System.Drawing.Size(190, 38);
+            this.metroLabel3.Size = new System.Drawing.Size(162, 38);
             this.metroLabel3.TabIndex = 18;
-            this.metroLabel3.Text = "Network: irc.globalgamers.net\r\nChannel: #dotacoders";
+            this.metroLabel3.Text = "Network: irc.freenode.net\r\nChannel: #dotacoders";
             this.metroLabel3.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // chatPasswordTextBox1
@@ -1189,7 +1224,7 @@
             this.installedGamesTab.Controls.Add(this.installedGamesPanel);
             this.installedGamesTab.HorizontalScrollbarBarColor = true;
             this.installedGamesTab.HorizontalScrollbarHighlightOnWheel = false;
-            this.installedGamesTab.HorizontalScrollbarSize = 4;
+            this.installedGamesTab.HorizontalScrollbarSize = 2;
             this.installedGamesTab.Location = new System.Drawing.Point(4, 29);
             this.installedGamesTab.Name = "installedGamesTab";
             this.installedGamesTab.Size = new System.Drawing.Size(1076, 623);
@@ -1198,10 +1233,42 @@
             this.installedGamesTab.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.installedGamesTab.VerticalScrollbarBarColor = true;
             this.installedGamesTab.VerticalScrollbarHighlightOnWheel = false;
-            this.installedGamesTab.VerticalScrollbarSize = 4;
+            this.installedGamesTab.VerticalScrollbarSize = 1;
+            // 
+            // installedGamesPanel
+            // 
+            this.installedGamesPanel.AutoScroll = true;
+            this.installedGamesPanel.Controls.Add(this.metroLabel12);
+            this.installedGamesPanel.HorizontalScrollbar = true;
+            this.installedGamesPanel.HorizontalScrollbarBarColor = true;
+            this.installedGamesPanel.HorizontalScrollbarHighlightOnWheel = true;
+            this.installedGamesPanel.HorizontalScrollbarSize = 1;
+            this.installedGamesPanel.Location = new System.Drawing.Point(30, 24);
+            this.installedGamesPanel.Name = "installedGamesPanel";
+            this.installedGamesPanel.Size = new System.Drawing.Size(1010, 590);
+            this.installedGamesPanel.TabIndex = 33;
+            this.installedGamesPanel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.installedGamesPanel.UseStyleColors = true;
+            this.installedGamesPanel.VerticalScrollbar = true;
+            this.installedGamesPanel.VerticalScrollbarBarColor = true;
+            this.installedGamesPanel.VerticalScrollbarHighlightOnWheel = false;
+            this.installedGamesPanel.VerticalScrollbarSize = 1;
+            // 
+            // metroLabel12
+            // 
+            this.metroLabel12.AutoSize = true;
+            this.metroLabel12.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.metroLabel12.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+            this.metroLabel12.Location = new System.Drawing.Point(8, 12);
+            this.metroLabel12.Name = "metroLabel12";
+            this.metroLabel12.Size = new System.Drawing.Size(371, 25);
+            this.metroLabel12.TabIndex = 4;
+            this.metroLabel12.Text = "Installed custom games is coming soon(tm)...";
+            this.metroLabel12.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // versionTab
             // 
+            this.versionTab.Controls.Add(this.versionLabel);
             this.versionTab.HorizontalScrollbarBarColor = true;
             this.versionTab.HorizontalScrollbarHighlightOnWheel = false;
             this.versionTab.HorizontalScrollbarSize = 1;
@@ -1254,7 +1321,7 @@
             // 
             this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(758, 34);
+            this.pictureBox2.Location = new System.Drawing.Point(938, 26);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(16, 16);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1266,9 +1333,10 @@
             // donateBtn
             // 
             this.donateBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.donateBtn.Location = new System.Drawing.Point(516, 14);
+            this.donateBtn.FontSize = MetroFramework.MetroLinkSize.Medium;
+            this.donateBtn.Location = new System.Drawing.Point(870, 20);
             this.donateBtn.Name = "donateBtn";
-            this.donateBtn.Size = new System.Drawing.Size(56, 20);
+            this.donateBtn.Size = new System.Drawing.Size(66, 30);
             this.donateBtn.Style = MetroFramework.MetroColorStyle.Yellow;
             this.donateBtn.TabIndex = 28;
             this.donateBtn.Text = "Donate!";
@@ -1299,7 +1367,7 @@
             // metroButton1
             // 
             this.metroButton1.FontSize = MetroFramework.MetroButtonSize.Tall;
-            this.metroButton1.Location = new System.Drawing.Point(12, 192);
+            this.metroButton1.Location = new System.Drawing.Point(12, 194);
             this.metroButton1.Margin = new System.Windows.Forms.Padding(4);
             this.metroButton1.Name = "metroButton1";
             this.metroButton1.Size = new System.Drawing.Size(84, 57);
@@ -1316,7 +1384,7 @@
             // metroButton3
             // 
             this.metroButton3.FontSize = MetroFramework.MetroButtonSize.Tall;
-            this.metroButton3.Location = new System.Drawing.Point(12, 320);
+            this.metroButton3.Location = new System.Drawing.Point(12, 318);
             this.metroButton3.Margin = new System.Windows.Forms.Padding(4);
             this.metroButton3.Name = "metroButton3";
             this.metroButton3.Size = new System.Drawing.Size(84, 57);
@@ -1333,23 +1401,27 @@
             // versionLabel
             // 
             this.versionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.versionLabel.Location = new System.Drawing.Point(650, 34);
+            this.versionLabel.FontSize = MetroFramework.MetroLinkSize.Tall;
+            this.versionLabel.Location = new System.Drawing.Point(470, 10);
             this.versionLabel.Name = "versionLabel";
-            this.versionLabel.Size = new System.Drawing.Size(52, 20);
+            this.versionLabel.Size = new System.Drawing.Size(120, 40);
+            this.versionLabel.Style = MetroFramework.MetroColorStyle.Green;
             this.versionLabel.TabIndex = 21;
             this.versionLabel.Text = "v2.x.x.x";
             this.versionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.versionLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.versionLabel.UseSelectable = true;
+            this.versionLabel.UseStyleColors = true;
             this.versionLabel.Click += new System.EventHandler(this.versionLabel_Click);
             // 
             // notificationLabel
             // 
             this.notificationLabel.AutoSize = true;
+            this.notificationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.notificationLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.notificationLabel.Location = new System.Drawing.Point(10, 690);
+            this.notificationLabel.Location = new System.Drawing.Point(0, 688);
             this.notificationLabel.Name = "notificationLabel";
-            this.notificationLabel.Size = new System.Drawing.Size(124, 19);
+            this.notificationLabel.Size = new System.Drawing.Size(163, 25);
             this.notificationLabel.Style = MetroFramework.MetroColorStyle.Teal;
             this.notificationLabel.TabIndex = 37;
             this.notificationLabel.Text = "Doing something...";
@@ -1358,7 +1430,7 @@
             // 
             // progressSpinner
             // 
-            this.progressSpinner.Location = new System.Drawing.Point(10, 648);
+            this.progressSpinner.Location = new System.Drawing.Point(6, 652);
             this.progressSpinner.Maximum = 100;
             this.progressSpinner.Name = "progressSpinner";
             this.progressSpinner.Size = new System.Drawing.Size(36, 36);
@@ -1368,36 +1440,17 @@
             this.progressSpinner.Value = 70;
             this.progressSpinner.Visible = false;
             // 
-            // installedGamesPanel
-            // 
-            this.installedGamesPanel.AutoScroll = true;
-            this.installedGamesPanel.HorizontalScrollbar = true;
-            this.installedGamesPanel.HorizontalScrollbarBarColor = true;
-            this.installedGamesPanel.HorizontalScrollbarHighlightOnWheel = true;
-            this.installedGamesPanel.HorizontalScrollbarSize = 1;
-            this.installedGamesPanel.Location = new System.Drawing.Point(30, 24);
-            this.installedGamesPanel.Name = "installedGamesPanel";
-            this.installedGamesPanel.Size = new System.Drawing.Size(1010, 590);
-            this.installedGamesPanel.TabIndex = 33;
-            this.installedGamesPanel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.installedGamesPanel.UseStyleColors = true;
-            this.installedGamesPanel.VerticalScrollbar = true;
-            this.installedGamesPanel.VerticalScrollbarBarColor = true;
-            this.installedGamesPanel.VerticalScrollbarHighlightOnWheel = false;
-            this.installedGamesPanel.VerticalScrollbarSize = 1;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 720);
             this.Controls.Add(this.notificationLabel);
+            this.Controls.Add(this.donateBtn);
             this.Controls.Add(this.progressSpinner);
             this.Controls.Add(this.metroButton3);
             this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.donateBtn);
             this.Controls.Add(this.metroButton1);
-            this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.metroButton2);
             this.Controls.Add(this.metroRadioButton1);
             this.Controls.Add(this.tabControl);
@@ -1417,7 +1470,6 @@
             this.tabControl.ResumeLayout(false);
             this.homeTab.ResumeLayout(false);
             this.homeTab.PerformLayout();
-            this.chatTab.ResumeLayout(false);
             this.toolsTab.ResumeLayout(false);
             this.spellLibraryTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBox)).EndInit();
@@ -1425,10 +1477,15 @@
             this.metroPanel1.PerformLayout();
             this.particlesTab.ResumeLayout(false);
             this.particlesTab.PerformLayout();
+            this.chatTab.ResumeLayout(false);
+            this.chatTab.PerformLayout();
             this.linksTab.ResumeLayout(false);
             this.optionsTab.ResumeLayout(false);
             this.optionsTab.PerformLayout();
             this.installedGamesTab.ResumeLayout(false);
+            this.installedGamesPanel.ResumeLayout(false);
+            this.installedGamesPanel.PerformLayout();
+            this.versionTab.ResumeLayout(false);
             this.tileContextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
@@ -1524,5 +1581,8 @@
         public MetroFramework.Controls.MetroLink linkHttp;
         public MetroFramework.Controls.MetroTabPage installedGamesTab;
         public MetroFramework.Controls.MetroPanel installedGamesPanel;
+        private MetroFramework.Controls.MetroLabel metroLabel12;
+        private MetroFramework.Controls.MetroLabel metroLabel13;
+        public MetroFramework.Controls.MetroLink metroLink1;
     }
 }

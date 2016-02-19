@@ -115,7 +115,7 @@ namespace Dota2ModKit.Features {
             } else {
                 user = new IrcUser(mf.chatUsernameTextBox1.Text, mf.chatUsernameTextBox1.Text);
             }
-            client = new IrcClient("irc.globalgamers.net", user);
+            client = new IrcClient("irc.freenode.net", user);
         }
 
         private string getRandomUsername() {

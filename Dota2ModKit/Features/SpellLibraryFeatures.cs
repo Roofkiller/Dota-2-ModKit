@@ -83,7 +83,6 @@ namespace Dota2ModKit.Features {
 
         void cloneOrPull() {
             var gitWorker = new BackgroundWorker();
-            mf.progressSpinner.Visible = true;
             gitWorker.DoWork += (s, e) => {
                 if (!Directory.Exists(spellLibPath)) {
                     Repository.Clone("https://github.com/Pizzalol/SpellLibrary", spellLibPath);
@@ -101,11 +100,8 @@ namespace Dota2ModKit.Features {
             };
             gitWorker.RunWorkerCompleted += (s, e) => {
                 initTree("abilities");
-                mf.progressSpinner.Visible = false;
             };
             gitWorker.RunWorkerAsync();
-
-
         }
 
         public void initTree(string kind) {

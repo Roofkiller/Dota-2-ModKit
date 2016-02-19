@@ -82,52 +82,5 @@ namespace Dota2ModKit {
 			url = "https://github.com/stephenfournier/Dota-2-ModKit/releases/download/v";
 			url += newVers + "/D2ModKit.zip";
 		}
-
-		internal void clonePullBarebones() {
-			//mainForm.ProgressSpinner1.Value = 60;
-			//mainForm.ProgressSpinner1.Visible = true;
-
-			if (!Directory.Exists(barebonesPath)) {
-				mf.text_notification("Cloning Barebones...", MetroColorStyle.Blue, 999999);
-			} else {
-				mf.text_notification("Pulling Barebones...", MetroColorStyle.Blue, 999999);
-			}
-
-			using (var barebonesCloneWorker = new BackgroundWorker()) {
-				
-				barebonesCloneWorker.RunWorkerCompleted += BarebonesCloneWorker_RunWorkerCompleted;
-				barebonesCloneWorker.DoWork += BarebonesCloneWorker_DoWork;
-				barebonesCloneWorker.RunWorkerAsync();
-			}
-		}
-
-		private void BarebonesCloneWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
-			mf.text_notification("", MetroColorStyle.Blue, 500);
-			//mainForm.ProgressSpinner1.Visible = false;
-
-		}
-
-		private void BarebonesCloneWorker_DoWork(object sender, DoWorkEventArgs e) {
-			if (!Directory.Exists(barebonesPath)) {
-				try {
-					string gitPath = Repository.Clone("https://github.com/bmddota/barebones", barebonesPath);
-					Console.WriteLine("repo path:" + gitPath);
-				} catch (Exception) {
-
-				}
-				return;
-			}
-
-			// pull from the repo
-			using (var repo = new Repository(barebonesPath)) {
-				try {
-                    MergeResult mr = repo.Network.Pull(new Signature("myname", "myname@gmail.com", new DateTimeOffset()), new PullOptions());
-					MergeStatus ms = mr.Status;
-					Console.WriteLine("MergeStatus: " + ms.ToString());
-				} catch (Exception) {
-
-				}
-			}
-		}
 	}
 }
