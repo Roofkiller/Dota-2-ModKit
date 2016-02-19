@@ -136,9 +136,9 @@ namespace Dota2ModKit
 
         public void createTree() {
             string bannedExtensionsStr = "";
-            if (mf.hideCompiledFilesCheckBox1.Checked) {
-                bannedExtensionsStr += ".vpcf_c;.vjs_c;.vcss_c;.vxml_c;.vtex_c;.vmat_c;.vsndevts_c;";
-            }
+            //if (mf.hideCompiledFilesCheckBox1.Checked) {
+            //    bannedExtensionsStr += ".vpcf_c;.vjs_c;.vcss_c;.vxml_c;.vtex_c;.vmat_c;.vsndevts_c;";
+            //}
             if (mf.imagesCheckBox1.Checked) {
                 bannedExtensionsStr += ".png;.jpg;.jpeg;.bmp;.gif;.psd;.tga;";
             }

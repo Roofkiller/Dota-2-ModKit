@@ -21,6 +21,8 @@ namespace Dota2ModKit.HelperClasses {
                 // d2modkit options
                 Settings.Default.OpenChangelog = mf.openChangelogCheckBox.Checked;
                 Settings.Default.ChatEnabled = mf.enableChatCheckBox1.Checked;
+                Settings.Default.ChatUsername = mf.chatUsernameTextBox1.Text;
+                Settings.Default.ChatPassword = mf.chatPasswordTextBox1.Text;
 
                 var currAddon = mf.currAddon;
                 // addon options
@@ -40,6 +42,8 @@ namespace Dota2ModKit.HelperClasses {
             // general:
             mf.openChangelogCheckBox.Checked = Settings.Default.OpenChangelog;
             mf.enableChatCheckBox1.Checked = Settings.Default.ChatEnabled;
+            mf.chatUsernameTextBox1.Text = Settings.Default.ChatUsername;
+            mf.chatPasswordTextBox1.Text = Settings.Default.ChatPassword;
 
             // addon-specific:
             mf.note0CheckBox.Checked = a.generateNote0;

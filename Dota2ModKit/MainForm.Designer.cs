@@ -24,8 +24,8 @@
 		/// </summary>
 		private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("panorama");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("scripts");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("panorama");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("scripts");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.generateTooltipsBtn = new MetroFramework.Controls.MetroButton();
             this.addonTile = new MetroFramework.Controls.MetroTile();
@@ -78,6 +78,7 @@
             this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
             this.linksTab = new MetroFramework.Controls.MetroTabPage();
+            this.linkHttp = new MetroFramework.Controls.MetroLink();
             this.linksTreeView = new System.Windows.Forms.TreeView();
             this.linksPanel = new MetroFramework.Controls.MetroPanel();
             this.optionsTab = new MetroFramework.Controls.MetroTabPage();
@@ -97,6 +98,7 @@
             this.metroLabel11 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.chatUsernameTextBox1 = new MetroFramework.Controls.MetroTextBox();
+            this.installedGamesTab = new MetroFramework.Controls.MetroTabPage();
             this.versionTab = new MetroFramework.Controls.MetroTabPage();
             this.tileContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.editTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -108,10 +110,9 @@
             this.metroButton1 = new MetroFramework.Controls.MetroButton();
             this.metroButton3 = new MetroFramework.Controls.MetroButton();
             this.versionLabel = new MetroFramework.Controls.MetroLink();
-            this.hideCompiledFilesCheckBox1 = new MetroFramework.Controls.MetroCheckBox();
             this.notificationLabel = new MetroFramework.Controls.MetroLabel();
             this.progressSpinner = new MetroFramework.Controls.MetroProgressSpinner();
-            this.linkHttp = new MetroFramework.Controls.MetroLink();
+            this.installedGamesPanel = new MetroFramework.Controls.MetroPanel();
             this.addonTileContextMenu.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.homeTab.SuspendLayout();
@@ -123,6 +124,7 @@
             this.particlesTab.SuspendLayout();
             this.linksTab.SuspendLayout();
             this.optionsTab.SuspendLayout();
+            this.installedGamesTab.SuspendLayout();
             this.tileContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -190,13 +192,14 @@
             this.tabControl.Controls.Add(this.particlesTab);
             this.tabControl.Controls.Add(this.linksTab);
             this.tabControl.Controls.Add(this.optionsTab);
+            this.tabControl.Controls.Add(this.installedGamesTab);
             this.tabControl.Controls.Add(this.versionTab);
             this.tabControl.FontSize = MetroFramework.MetroTabControlSize.Tall;
             this.tabControl.FontWeight = MetroFramework.MetroTabControlWeight.Regular;
             this.tabControl.ItemSize = new System.Drawing.Size(40, 25);
             this.tabControl.Location = new System.Drawing.Point(188, 54);
             this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 5;
+            this.tabControl.SelectedIndex = 7;
             this.tabControl.ShowToolTips = true;
             this.tabControl.Size = new System.Drawing.Size(1084, 656);
             this.tabControl.TabIndex = 2;
@@ -275,11 +278,11 @@
             this.panoramaTree.LineColor = System.Drawing.Color.White;
             this.panoramaTree.Location = new System.Drawing.Point(394, 28);
             this.panoramaTree.Name = "panoramaTree";
-            treeNode7.Name = "panoramaNode";
-            treeNode7.Text = "panorama";
-            treeNode7.ToolTipText = "Double-click a node to open the file or directory";
+            treeNode1.Name = "panoramaNode";
+            treeNode1.Text = "panorama";
+            treeNode1.ToolTipText = "Double-click a node to open the file or directory";
             this.panoramaTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode7});
+            treeNode1});
             this.panoramaTree.ShowNodeToolTips = true;
             this.panoramaTree.Size = new System.Drawing.Size(392, 592);
             this.panoramaTree.TabIndex = 4;
@@ -292,11 +295,11 @@
             this.scriptsTree.LineColor = System.Drawing.Color.White;
             this.scriptsTree.Location = new System.Drawing.Point(0, 28);
             this.scriptsTree.Name = "scriptsTree";
-            treeNode8.Name = "scriptsNode";
-            treeNode8.Text = "scripts";
-            treeNode8.ToolTipText = "Double-click a node to open the file or directory";
+            treeNode2.Name = "scriptsNode";
+            treeNode2.Text = "scripts";
+            treeNode2.ToolTipText = "Double-click a node to open the file or directory";
             this.scriptsTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode8});
+            treeNode2});
             this.scriptsTree.ShowNodeToolTips = true;
             this.scriptsTree.Size = new System.Drawing.Size(392, 592);
             this.scriptsTree.TabIndex = 2;
@@ -507,12 +510,13 @@
         '\"',
         '\'',
         '\''};
-            this.fastColoredTextBox.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+            this.fastColoredTextBox.AutoScrollMinSize = new System.Drawing.Size(2, 14);
             this.fastColoredTextBox.BackBrush = null;
             this.fastColoredTextBox.CharHeight = 14;
             this.fastColoredTextBox.CharWidth = 8;
             this.fastColoredTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.fastColoredTextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.fastColoredTextBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.fastColoredTextBox.IsReplaceMode = false;
             this.fastColoredTextBox.Location = new System.Drawing.Point(224, 30);
             this.fastColoredTextBox.Name = "fastColoredTextBox";
@@ -879,6 +883,20 @@
             this.linksTab.VerticalScrollbarHighlightOnWheel = false;
             this.linksTab.VerticalScrollbarSize = 1;
             // 
+            // linkHttp
+            // 
+            this.linkHttp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.linkHttp.Location = new System.Drawing.Point(514, 40);
+            this.linkHttp.Name = "linkHttp";
+            this.linkHttp.Size = new System.Drawing.Size(550, 22);
+            this.linkHttp.Style = MetroFramework.MetroColorStyle.Blue;
+            this.linkHttp.TabIndex = 35;
+            this.linkHttp.Text = "moddota.com";
+            this.linkHttp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.linkHttp.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.linkHttp.UseSelectable = true;
+            this.linkHttp.UseStyleColors = true;
+            // 
             // linksTreeView
             // 
             this.linksTreeView.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -1166,6 +1184,22 @@
             this.chatUsernameTextBox1.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.chatUsernameTextBox1.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
+            // installedGamesTab
+            // 
+            this.installedGamesTab.Controls.Add(this.installedGamesPanel);
+            this.installedGamesTab.HorizontalScrollbarBarColor = true;
+            this.installedGamesTab.HorizontalScrollbarHighlightOnWheel = false;
+            this.installedGamesTab.HorizontalScrollbarSize = 4;
+            this.installedGamesTab.Location = new System.Drawing.Point(4, 29);
+            this.installedGamesTab.Name = "installedGamesTab";
+            this.installedGamesTab.Size = new System.Drawing.Size(1076, 623);
+            this.installedGamesTab.TabIndex = 11;
+            this.installedGamesTab.Text = "Games";
+            this.installedGamesTab.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.installedGamesTab.VerticalScrollbarBarColor = true;
+            this.installedGamesTab.VerticalScrollbarHighlightOnWheel = false;
+            this.installedGamesTab.VerticalScrollbarSize = 4;
+            // 
             // versionTab
             // 
             this.versionTab.HorizontalScrollbarBarColor = true;
@@ -1309,20 +1343,6 @@
             this.versionLabel.UseSelectable = true;
             this.versionLabel.Click += new System.EventHandler(this.versionLabel_Click);
             // 
-            // hideCompiledFilesCheckBox1
-            // 
-            this.hideCompiledFilesCheckBox1.AutoSize = true;
-            this.hideCompiledFilesCheckBox1.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
-            this.hideCompiledFilesCheckBox1.Location = new System.Drawing.Point(12, 492);
-            this.hideCompiledFilesCheckBox1.Name = "hideCompiledFilesCheckBox1";
-            this.hideCompiledFilesCheckBox1.Size = new System.Drawing.Size(139, 19);
-            this.hideCompiledFilesCheckBox1.TabIndex = 2;
-            this.hideCompiledFilesCheckBox1.Text = "Hide compiled files";
-            this.hideCompiledFilesCheckBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.hideCompiledFilesCheckBox1.UseSelectable = true;
-            this.hideCompiledFilesCheckBox1.Visible = false;
-            this.hideCompiledFilesCheckBox1.CheckedChanged += new System.EventHandler(this.hideExtensionsCheckbox_Click);
-            // 
             // notificationLabel
             // 
             this.notificationLabel.AutoSize = true;
@@ -1348,19 +1368,23 @@
             this.progressSpinner.Value = 70;
             this.progressSpinner.Visible = false;
             // 
-            // linkHttp
+            // installedGamesPanel
             // 
-            this.linkHttp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.linkHttp.Location = new System.Drawing.Point(514, 40);
-            this.linkHttp.Name = "linkHttp";
-            this.linkHttp.Size = new System.Drawing.Size(550, 22);
-            this.linkHttp.Style = MetroFramework.MetroColorStyle.Blue;
-            this.linkHttp.TabIndex = 35;
-            this.linkHttp.Text = "moddota.com";
-            this.linkHttp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.linkHttp.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.linkHttp.UseSelectable = true;
-            this.linkHttp.UseStyleColors = true;
+            this.installedGamesPanel.AutoScroll = true;
+            this.installedGamesPanel.HorizontalScrollbar = true;
+            this.installedGamesPanel.HorizontalScrollbarBarColor = true;
+            this.installedGamesPanel.HorizontalScrollbarHighlightOnWheel = true;
+            this.installedGamesPanel.HorizontalScrollbarSize = 1;
+            this.installedGamesPanel.Location = new System.Drawing.Point(30, 24);
+            this.installedGamesPanel.Name = "installedGamesPanel";
+            this.installedGamesPanel.Size = new System.Drawing.Size(1010, 590);
+            this.installedGamesPanel.TabIndex = 33;
+            this.installedGamesPanel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.installedGamesPanel.UseStyleColors = true;
+            this.installedGamesPanel.VerticalScrollbar = true;
+            this.installedGamesPanel.VerticalScrollbarBarColor = true;
+            this.installedGamesPanel.VerticalScrollbarHighlightOnWheel = false;
+            this.installedGamesPanel.VerticalScrollbarSize = 1;
             // 
             // MainForm
             // 
@@ -1373,7 +1397,6 @@
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.donateBtn);
             this.Controls.Add(this.metroButton1);
-            this.Controls.Add(this.hideCompiledFilesCheckBox1);
             this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.metroButton2);
             this.Controls.Add(this.metroRadioButton1);
@@ -1405,6 +1428,7 @@
             this.linksTab.ResumeLayout(false);
             this.optionsTab.ResumeLayout(false);
             this.optionsTab.PerformLayout();
+            this.installedGamesTab.ResumeLayout(false);
             this.tileContextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
@@ -1437,7 +1461,6 @@
         public System.Windows.Forms.TreeView scriptsTree;
         public System.Windows.Forms.TreeView panoramaTree;
         public MetroFramework.Controls.MetroCheckBox imagesCheckBox1;
-        public MetroFramework.Controls.MetroCheckBox hideCompiledFilesCheckBox1;
         private MetroFramework.Controls.MetroButton metroButton2;
         private MetroFramework.Controls.MetroButton metroButton1;
         private MetroFramework.Controls.MetroButton metroButton3;
@@ -1499,5 +1522,7 @@
         public MetroFramework.Controls.MetroButton saveBtn;
         public System.Windows.Forms.TreeView linksTreeView;
         public MetroFramework.Controls.MetroLink linkHttp;
+        public MetroFramework.Controls.MetroTabPage installedGamesTab;
+        public MetroFramework.Controls.MetroPanel installedGamesPanel;
     }
 }

@@ -130,5 +130,29 @@ namespace Dota2ModKit.Properties {
                 this["ChatEnabled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ChatUsername {
+            get {
+                return ((string)(this["ChatUsername"]));
+            }
+            set {
+                this["ChatUsername"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ChatPassword {
+            get {
+                return ((string)(this["ChatPassword"]));
+            }
+            set {
+                this["ChatPassword"] = value;
+            }
+        }
     }
 }

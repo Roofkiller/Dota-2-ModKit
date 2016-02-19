@@ -67,6 +67,17 @@ namespace Dota2ModKit {
             return timer;
         }
 
+        public static Exception TryDeleteFile(string filePath) {
+            try {
+                if (File.Exists(filePath)) {
+                    File.Delete(filePath);
+                }
+            } catch (Exception ex) {
+                return ex;
+            }
+            return null;
+        }
+
         public static string Relative(string str) {
 			if (str.Contains(Path.Combine("game", "dota_addons"))) {
 				return str.Substring(str.IndexOf(Path.Combine("game", "dota_addons")));

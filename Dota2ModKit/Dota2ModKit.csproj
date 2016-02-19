@@ -106,9 +106,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Features\ChatFeatures.cs" />
+    <Compile Include="Features\InstalledGameFeatures.cs" />
     <Compile Include="HelperClasses\Addon.cs" />
     <Compile Include="Features\AboutFeatures.cs" />
     <Compile Include="Features\LinkFeatures.cs" />
+    <Compile Include="HelperClasses\InstalledGame.cs" />
     <Compile Include="HelperClasses\Serializer.cs" />
     <Compile Include="HelperClasses\TooltipsEntry.cs" />
     <Compile Include="HelperClasses\CustomTile.cs" />

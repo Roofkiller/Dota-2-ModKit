@@ -48,6 +48,7 @@ namespace Dota2ModKit {
         internal AboutFeatures aboutFeatures;
         internal ChatFeatures chatFeatures;
         internal LinkFeatures linkFeatures;
+        internal InstalledGameFeatures installedGameFeatures;
 
         public CustomTile[] customTiles = new CustomTile[5];
         public CoffeeSharp.CoffeeScriptEngine cse = null;
@@ -143,6 +144,7 @@ namespace Dota2ModKit {
             aboutFeatures = new AboutFeatures(this);
             chatFeatures = new ChatFeatures(this);
             linkFeatures = new LinkFeatures(this);
+            installedGameFeatures = new InstalledGameFeatures(this);
         }
 
         private void initMainFormControls() {
