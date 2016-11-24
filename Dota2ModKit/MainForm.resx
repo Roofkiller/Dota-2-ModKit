@@ -150,27 +150,6 @@
   <metadata name="addonTileContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>149, 17</value>
   </metadata>
-  <data name="changePictureToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="changePictureToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
-  </data>
-  <data name="changePictureToolStripMenuItem.Text" xml:space="preserve">
-    <value>Change Picture</value>
-  </data>
-  <data name="optionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
-  </data>
-  <data name="optionsToolStripMenuItem.Text" xml:space="preserve">
-    <value>Options</value>
-  </data>
-  <data name="deleteAddonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
-  </data>
-  <data name="deleteAddonToolStripMenuItem.Text" xml:space="preserve">
-    <value>Delete Addon</value>
-  </data>
   <data name="addonTileContextMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>156, 70</value>
   </data>
@@ -207,6 +186,54 @@
   <data name="&gt;&gt;addonTile.ZOrder" xml:space="preserve">
     <value>20</value>
   </data>
+  <data name="changePictureToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="changePictureToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 22</value>
+  </data>
+  <data name="changePictureToolStripMenuItem.Text" xml:space="preserve">
+    <value>Change Picture</value>
+  </data>
+  <data name="optionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 22</value>
+  </data>
+  <data name="optionsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="deleteAddonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 22</value>
+  </data>
+  <data name="deleteAddonToolStripMenuItem.Text" xml:space="preserve">
+    <value>Delete Addon</value>
+  </data>
+  <data name="unitBrowserBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 112</value>
+  </data>
+  <data name="unitBrowserBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 4, 5, 4</value>
+  </data>
+  <data name="unitBrowserBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 32</value>
+  </data>
+  <data name="unitBrowserBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="unitBrowserBtn.Text" xml:space="preserve">
+    <value>Unit Browser</value>
+  </data>
+  <data name="&gt;&gt;unitBrowserBtn.Name" xml:space="preserve">
+    <value>unitBrowserBtn</value>
+  </data>
+  <data name="&gt;&gt;unitBrowserBtn.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;unitBrowserBtn.Parent" xml:space="preserve">
+    <value>toolsTab</value>
+  </data>
+  <data name="&gt;&gt;unitBrowserBtn.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="unitToAbility.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 76</value>
   </data>
@@ -232,7 +259,7 @@
     <value>toolsTab</value>
   </data>
   <data name="&gt;&gt;unitToAbility.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>3</value>
   </data>
   <data name="compileCoffeeBtn.Location" type="System.Drawing.Point, System.Drawing">
     <value>165, 112</value>
@@ -259,7 +286,7 @@
     <value>toolsTab</value>
   </data>
   <data name="&gt;&gt;compileCoffeeBtn.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="spellLibraryBtn.Location" type="System.Drawing.Point, System.Drawing">
     <value>165, 40</value>
@@ -286,7 +313,7 @@
     <value>toolsTab</value>
   </data>
   <data name="&gt;&gt;spellLibraryBtn.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="findSoundNameBtn.Location" type="System.Drawing.Point, System.Drawing">
     <value>165, 76</value>
@@ -313,7 +340,7 @@
     <value>toolsTab</value>
   </data>
   <data name="&gt;&gt;findSoundNameBtn.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="combineKVBtn.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 4</value>
@@ -340,30 +367,6 @@
     <value>toolsTab</value>
   </data>
   <data name="&gt;&gt;combineKVBtn.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="unitToAbilityBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="unitToAbilityBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 3, 4, 3</value>
-  </data>
-  <data name="unitToAbilityBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 23</value>
-  </data>
-  <data name="unitToAbilityBtn.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;unitToAbilityBtn.Name" xml:space="preserve">
-    <value>unitToAbilityBtn</value>
-  </data>
-  <data name="&gt;&gt;unitToAbilityBtn.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;unitToAbilityBtn.Parent" xml:space="preserve">
-    <value>toolsTab</value>
-  </data>
-  <data name="&gt;&gt;unitToAbilityBtn.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
   <data name="particleDesignBtn.Location" type="System.Drawing.Point, System.Drawing">
@@ -423,6 +426,336 @@
   <data name="&gt;&gt;toolsTab.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="&gt;&gt;decompileVtexButton.Name" xml:space="preserve">
+    <value>decompileVtexButton</value>
+  </data>
+  <data name="&gt;&gt;decompileVtexButton.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;decompileVtexButton.Parent" xml:space="preserve">
+    <value>tools2Tab</value>
+  </data>
+  <data name="&gt;&gt;decompileVtexButton.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;compileVtexButton.Name" xml:space="preserve">
+    <value>compileVtexButton</value>
+  </data>
+  <data name="&gt;&gt;compileVtexButton.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;compileVtexButton.Parent" xml:space="preserve">
+    <value>tools2Tab</value>
+  </data>
+  <data name="&gt;&gt;compileVtexButton.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="tools2Tab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 29</value>
+  </data>
+  <data name="tools2Tab.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="tools2Tab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>327, 163</value>
+  </data>
+  <data name="tools2Tab.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="tools2Tab.Text" xml:space="preserve">
+    <value>T2</value>
+  </data>
+  <data name="tools2Tab.ToolTipText" xml:space="preserve">
+    <value>Tools page 2</value>
+  </data>
+  <data name="&gt;&gt;tools2Tab.Name" xml:space="preserve">
+    <value>tools2Tab</value>
+  </data>
+  <data name="&gt;&gt;tools2Tab.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;tools2Tab.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;tools2Tab.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;metroLink12.Name" xml:space="preserve">
+    <value>metroLink12</value>
+  </data>
+  <data name="&gt;&gt;metroLink12.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLink, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLink12.Parent" xml:space="preserve">
+    <value>helpTab</value>
+  </data>
+  <data name="&gt;&gt;metroLink12.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;metroLink11.Name" xml:space="preserve">
+    <value>metroLink11</value>
+  </data>
+  <data name="&gt;&gt;metroLink11.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLink, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLink11.Parent" xml:space="preserve">
+    <value>helpTab</value>
+  </data>
+  <data name="&gt;&gt;metroLink11.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;metroLink10.Name" xml:space="preserve">
+    <value>metroLink10</value>
+  </data>
+  <data name="&gt;&gt;metroLink10.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLink, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLink10.Parent" xml:space="preserve">
+    <value>helpTab</value>
+  </data>
+  <data name="&gt;&gt;metroLink10.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;metroLink9.Name" xml:space="preserve">
+    <value>metroLink9</value>
+  </data>
+  <data name="&gt;&gt;metroLink9.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLink, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLink9.Parent" xml:space="preserve">
+    <value>helpTab</value>
+  </data>
+  <data name="&gt;&gt;metroLink9.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;metroLink8.Name" xml:space="preserve">
+    <value>metroLink8</value>
+  </data>
+  <data name="&gt;&gt;metroLink8.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLink, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLink8.Parent" xml:space="preserve">
+    <value>helpTab</value>
+  </data>
+  <data name="&gt;&gt;metroLink8.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;metroLink7.Name" xml:space="preserve">
+    <value>metroLink7</value>
+  </data>
+  <data name="&gt;&gt;metroLink7.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLink, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLink7.Parent" xml:space="preserve">
+    <value>helpTab</value>
+  </data>
+  <data name="&gt;&gt;metroLink7.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;metroLink6.Name" xml:space="preserve">
+    <value>metroLink6</value>
+  </data>
+  <data name="&gt;&gt;metroLink6.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLink, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLink6.Parent" xml:space="preserve">
+    <value>helpTab</value>
+  </data>
+  <data name="&gt;&gt;metroLink6.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;githubGoBtn.Name" xml:space="preserve">
+    <value>githubGoBtn</value>
+  </data>
+  <data name="&gt;&gt;githubGoBtn.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;githubGoBtn.Parent" xml:space="preserve">
+    <value>helpTab</value>
+  </data>
+  <data name="&gt;&gt;githubGoBtn.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;jsRadioButton.Name" xml:space="preserve">
+    <value>jsRadioButton</value>
+  </data>
+  <data name="&gt;&gt;jsRadioButton.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroRadioButton, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;jsRadioButton.Parent" xml:space="preserve">
+    <value>helpTab</value>
+  </data>
+  <data name="&gt;&gt;jsRadioButton.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;textRadioButton.Name" xml:space="preserve">
+    <value>textRadioButton</value>
+  </data>
+  <data name="&gt;&gt;textRadioButton.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroRadioButton, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;textRadioButton.Parent" xml:space="preserve">
+    <value>helpTab</value>
+  </data>
+  <data name="&gt;&gt;textRadioButton.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;luaRadioBtn.Name" xml:space="preserve">
+    <value>luaRadioBtn</value>
+  </data>
+  <data name="&gt;&gt;luaRadioBtn.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroRadioButton, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;luaRadioBtn.Parent" xml:space="preserve">
+    <value>helpTab</value>
+  </data>
+  <data name="&gt;&gt;luaRadioBtn.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;addonNameLabel.Name" xml:space="preserve">
+    <value>addonNameLabel</value>
+  </data>
+  <data name="&gt;&gt;addonNameLabel.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;addonNameLabel.Parent" xml:space="preserve">
+    <value>helpTab</value>
+  </data>
+  <data name="&gt;&gt;addonNameLabel.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;githubTextBox.Name" xml:space="preserve">
+    <value>githubTextBox</value>
+  </data>
+  <data name="&gt;&gt;githubTextBox.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;githubTextBox.Parent" xml:space="preserve">
+    <value>helpTab</value>
+  </data>
+  <data name="&gt;&gt;githubTextBox.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;metroLink5.Name" xml:space="preserve">
+    <value>metroLink5</value>
+  </data>
+  <data name="&gt;&gt;metroLink5.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLink, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLink5.Parent" xml:space="preserve">
+    <value>helpTab</value>
+  </data>
+  <data name="&gt;&gt;metroLink5.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;metroLink4.Name" xml:space="preserve">
+    <value>metroLink4</value>
+  </data>
+  <data name="&gt;&gt;metroLink4.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLink, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLink4.Parent" xml:space="preserve">
+    <value>helpTab</value>
+  </data>
+  <data name="&gt;&gt;metroLink4.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;metroLink3.Name" xml:space="preserve">
+    <value>metroLink3</value>
+  </data>
+  <data name="&gt;&gt;metroLink3.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLink, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLink3.Parent" xml:space="preserve">
+    <value>helpTab</value>
+  </data>
+  <data name="&gt;&gt;metroLink3.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;metroLink2.Name" xml:space="preserve">
+    <value>metroLink2</value>
+  </data>
+  <data name="&gt;&gt;metroLink2.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLink, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLink2.Parent" xml:space="preserve">
+    <value>helpTab</value>
+  </data>
+  <data name="&gt;&gt;metroLink2.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;metroLink1.Name" xml:space="preserve">
+    <value>metroLink1</value>
+  </data>
+  <data name="&gt;&gt;metroLink1.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLink, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLink1.Parent" xml:space="preserve">
+    <value>helpTab</value>
+  </data>
+  <data name="&gt;&gt;metroLink1.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="helpTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 29</value>
+  </data>
+  <data name="helpTab.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="helpTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>327, 163</value>
+  </data>
+  <data name="helpTab.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="helpTab.Text" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="helpTab.ToolTipText" xml:space="preserve">
+    <value>Help related tools</value>
+  </data>
+  <data name="&gt;&gt;helpTab.Name" xml:space="preserve">
+    <value>helpTab</value>
+  </data>
+  <data name="&gt;&gt;helpTab.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;helpTab.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;helpTab.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="tabControl.ItemSize" type="System.Drawing.Size, System.Drawing">
+    <value>40, 25</value>
+  </data>
+  <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>260, 44</value>
+  </data>
+  <data name="tabControl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="tabControl.ShowToolTips" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>335, 196</value>
+  </data>
+  <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Name" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
   <data name="decompileVtexButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 40</value>
   </data>
@@ -476,36 +809,6 @@
   </data>
   <data name="&gt;&gt;compileVtexButton.ZOrder" xml:space="preserve">
     <value>3</value>
-  </data>
-  <data name="tools2Tab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 29</value>
-  </data>
-  <data name="tools2Tab.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 3, 4, 3</value>
-  </data>
-  <data name="tools2Tab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>327, 163</value>
-  </data>
-  <data name="tools2Tab.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="tools2Tab.Text" xml:space="preserve">
-    <value>T2</value>
-  </data>
-  <data name="tools2Tab.ToolTipText" xml:space="preserve">
-    <value>Tools page 2</value>
-  </data>
-  <data name="&gt;&gt;tools2Tab.Name" xml:space="preserve">
-    <value>tools2Tab</value>
-  </data>
-  <data name="&gt;&gt;tools2Tab.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;tools2Tab.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;tools2Tab.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <data name="metroLink12.Location" type="System.Drawing.Point, System.Drawing">
     <value>100, 100</value>
@@ -880,13 +1183,13 @@
     <value>NoControl</value>
   </data>
   <data name="resource.Location" type="System.Drawing.Point, System.Drawing">
-    <value>211, 1</value>
+    <value>169, 1</value>
   </data>
   <data name="resource.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 1, 2, 1</value>
   </data>
   <data name="resource.Size" type="System.Drawing.Size, System.Drawing">
-    <value>26, 21</value>
+    <value>21, 21</value>
   </data>
   <data name="resource.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1068,65 +1371,20 @@
   <data name="&gt;&gt;metroLink1.ZOrder" xml:space="preserve">
     <value>19</value>
   </data>
-  <data name="helpTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 29</value>
+  <data name="unitToAbilityBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
-  <data name="helpTab.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 3, 4, 3</value>
+  <data name="unitToAbilityBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
   </data>
-  <data name="helpTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>327, 163</value>
+  <data name="unitToAbilityBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="helpTab.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="&gt;&gt;unitToAbilityBtn.Name" xml:space="preserve">
+    <value>unitToAbilityBtn</value>
   </data>
-  <data name="helpTab.Text" xml:space="preserve">
-    <value>Help</value>
-  </data>
-  <data name="helpTab.ToolTipText" xml:space="preserve">
-    <value>Help related tools</value>
-  </data>
-  <data name="&gt;&gt;helpTab.Name" xml:space="preserve">
-    <value>helpTab</value>
-  </data>
-  <data name="&gt;&gt;helpTab.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;helpTab.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;helpTab.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="tabControl.ItemSize" type="System.Drawing.Size, System.Drawing">
-    <value>40, 25</value>
-  </data>
-  <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>260, 44</value>
-  </data>
-  <data name="tabControl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 3, 4, 3</value>
-  </data>
-  <data name="tabControl.ShowToolTips" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>335, 196</value>
-  </data>
-  <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Name" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
-    <value>19</value>
+  <data name="&gt;&gt;unitToAbilityBtn.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
   <data name="notificationLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1326,12 +1584,6 @@
   <metadata name="tileContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>314, 17</value>
   </metadata>
-  <data name="editTileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 22</value>
-  </data>
-  <data name="editTileToolStripMenuItem.Text" xml:space="preserve">
-    <value>Edit Tile</value>
-  </data>
   <data name="tileContextMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>117, 26</value>
   </data>
@@ -1367,6 +1619,12 @@
   </data>
   <data name="&gt;&gt;customTile1.ZOrder" xml:space="preserve">
     <value>10</value>
+  </data>
+  <data name="editTileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 22</value>
+  </data>
+  <data name="editTileToolStripMenuItem.Text" xml:space="preserve">
+    <value>Edit Tile</value>
   </data>
   <data name="customTile2.Location" type="System.Drawing.Point, System.Drawing">
     <value>215, 216</value>

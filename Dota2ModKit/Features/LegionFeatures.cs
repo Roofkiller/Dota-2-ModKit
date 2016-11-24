@@ -36,7 +36,7 @@ namespace Dota2ModKit.Features
         public static string PathToUnits => Path.Combine(MainForm.Instance.currAddon.gamePath, "scripts", "npc", "units");
         public static string PathToAbilities => Path.Combine(MainForm.Instance.currAddon.gamePath, "scripts", "npc", "abilities");
         public static string PathToIncomeUnits => Path.Combine(MainForm.Instance.currAddon.gamePath, "scripts", "npc", "units", "incomeunits");
-        public static string PathToWaveUnits => Path.Combine(MainForm.Instance.currAddon.gamePath, "scripts", "npc", "units", "incomeunits");
+        public static string PathToWaveUnits => Path.Combine(MainForm.Instance.currAddon.gamePath, "scripts", "npc", "units", "waveunits");
 
         public static List<Builder> Builders => Directory.GetDirectories(PathToUnits).Where(s => s.Contains("builder")).Select(s => new Builder(s)).ToList();
 
@@ -88,7 +88,7 @@ namespace Dota2ModKit.Features
             KeyValueData ability = GetSummonAbility(unit);
             if (!ability.KeyValue.HasKey("AbilityGoldCost"))
             {
-                return 0;
+                return -1;
             }
             int goldCost = ability.KeyValue["AbilityGoldCost"].GetInt();
             while (ability != null && ability.KeyValue.Key.Contains("upgrade"))
@@ -109,7 +109,7 @@ namespace Dota2ModKit.Features
 
         public static KeyValueData GetSummonAbility(KeyValueData unit)
         {
-            var name = "_" + Regex.Replace(unit.Name, ".*builder_", "") + @"\.txt";
+            var name = "_" + unit.ShortBuilderName + @"\.txt";
             return new KeyValueData(DirSearch($".*builder.*{name}", PathToAbilities));
         }
 
@@ -132,20 +132,40 @@ namespace Dota2ModKit.Features
     
     public class KeyValueData
     {
+        public string ShortBuilderName => Regex.Replace(Name, @".*builder_", "");
+        public string ShortIncomeName => Regex.Replace(Name, @"incomeunit_", "");
+        public string ShortWaveName => Regex.Replace(Name, @"unit_", "");
+
         public string Name { get; set; }
         public string Path { get; set; }
         public KeyValue KeyValue { get; set; }
 
+        public KeyValueData(string path, string kvData)
+        {
+            try
+            {
+                KeyValue = KVParser.KV1.Parse(kvData);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            Path = path;
+            Name = Regex.Replace(Regex.Replace(path, @".*\\", ""), ".txt", "");
+        }
+
         public KeyValueData(string path)
         {
             string content = "";
+            if (path == null)
+                path = "";
             if (File.Exists(path))
             {
                 content = File.ReadAllText(path);
             }
-            KeyValue = KVParser.KV1.Parse(content);
             Path = path;
             Name = Regex.Replace(Regex.Replace(path, @".*\\", ""), ".txt", "");
+            KeyValue = content == "" ? new KeyValue(Name) : KVParser.KV1.Parse(content);
         }
 
         public void Save()

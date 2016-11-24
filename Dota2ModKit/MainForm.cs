@@ -712,5 +712,11 @@ namespace Dota2ModKit {
             LegionFeatures.MatchAbilitiesToUnits();
             text_notification("Matched Abilities to Units", MetroColorStyle.Green, 2000);
         }
-  }
+
+        private void unitBrowserBtn_Click(object sender, EventArgs e)
+        {
+            UnitForm unitForm = new UnitForm(this);
+            unitForm.Show();
+        }
+    }
 }

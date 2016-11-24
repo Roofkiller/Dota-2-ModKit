@@ -56,9 +56,9 @@
             this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Regular;
             this.metroLabel1.Location = new System.Drawing.Point(241, 35);
             this.metroLabel1.Name = "metroLabel1";
-            this.metroLabel1.Size = new System.Drawing.Size(76, 25);
+            this.metroLabel1.Size = new System.Drawing.Size(63, 25);
             this.metroLabel1.TabIndex = 17;
-            this.metroLabel1.Text = "Preview:";
+            this.metroLabel1.Text = "Editor:";
             this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.metroLabel1.Click += new System.EventHandler(this.metroLabel1_Click);
             // 
@@ -113,6 +113,7 @@
             this.textBox1.CharWidth = 8;
             this.textBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.textBox1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.textBox1.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.textBox1.IsReplaceMode = false;
             this.textBox1.Language = FastColoredTextBoxNS.Language.JS;
             this.textBox1.LeftBracket = '(';
@@ -163,6 +164,7 @@
             this.textBox2.CharWidth = 8;
             this.textBox2.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.textBox2.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.textBox2.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.textBox2.IsReplaceMode = false;
             this.textBox2.Language = FastColoredTextBoxNS.Language.JS;
             this.textBox2.LeftBracket = '(';
