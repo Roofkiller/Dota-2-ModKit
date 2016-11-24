@@ -774,6 +774,7 @@ namespace Dota2ModKit
 		    if (!name.Equals("legion_td"))
 		    {
 		        mainForm.unitToAbility.Visible = false;
+		        mainForm.unitBrowserBtn.Visible = false;
 		    }
 
 			displayAddonSize();
