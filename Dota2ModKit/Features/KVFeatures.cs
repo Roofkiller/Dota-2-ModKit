@@ -41,7 +41,7 @@ namespace Dota2ModKit.Features {
 
 					//}
 					string[] items = new string[1];
-					Console.WriteLine("dirName: " + dirName);
+//					Console.WriteLine("dirName: " + dirName);
 					items[0] = dirName;
 					combine(items);
 
@@ -67,7 +67,9 @@ namespace Dota2ModKit.Features {
 			}
 		}
 
-		internal void combine(string[] itemsArg) {
+		internal void combine(string[] itemsArg)
+		{
+		    if (MainForm.Instance.currAddon.FilesLocked) return;
 			Console.WriteLine("Combining.");
 			string[] items = { "heroes", "units", "items", "abilities" };
 			if (itemsArg != null) {
@@ -126,9 +128,10 @@ namespace Dota2ModKit.Features {
 					text = new StringBuilder("\"DOTAUnits\"" + "\n{\n");
 				}
 
-				foreach (string file in files) {
+				foreach (string file in files)
+				{
 
-					bool addTab = false;
+				    bool addTab = false;
 					string[] lines = File.ReadAllLines(file);
 					for (int j = 0; j < lines.Length; j++) {
 						string line = lines[j];

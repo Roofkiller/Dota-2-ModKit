@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dota2ModKit", "Dota2ModKit\Dota2ModKit.csproj", "{DE831F6F-6C5D-4426-93EC-82105A7407FB}"
 EndProject
@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{6B997B
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KVLib", "KVLib\KVLib\KVLib.csproj", "{482F47E3-83C1-4884-88BB-3D66B157ED23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +24,10 @@ Global
 		{DE831F6F-6C5D-4426-93EC-82105A7407FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE831F6F-6C5D-4426-93EC-82105A7407FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE831F6F-6C5D-4426-93EC-82105A7407FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{482F47E3-83C1-4884-88BB-3D66B157ED23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{482F47E3-83C1-4884-88BB-3D66B157ED23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{482F47E3-83C1-4884-88BB-3D66B157ED23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{482F47E3-83C1-4884-88BB-3D66B157ED23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

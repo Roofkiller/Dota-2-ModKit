@@ -403,4 +403,10 @@ selected particles.</value>
   <data name="String8" xml:space="preserve">
     <value>f</value>
   </data>
+  <data name="UnitToAbility" xml:space="preserve">
+    <value>Unit-&gt;Ability</value>
+  </data>
+  <data name="UnitToAbilityTooltip" xml:space="preserve">
+    <value>Adjusts the values in the abilites to match units</value>
+  </data>
 </root>

@@ -221,7 +221,9 @@ namespace Dota2ModKit
 			}
 		}
 
-		/// <summary>
+	    public bool FilesLocked { get; set; }
+
+	    /// <summary>
 		/// Default libs are mainly libs that are local.
 		/// </summary>
 		public void checkForDefaultLibs() {
@@ -768,6 +770,11 @@ namespace Dota2ModKit
 				mainForm.kvFeatures.setupNPCWatchers(this);
 				mainForm.kvFeatures.setupCoffeeWatcher(this);
 			});
+
+		    if (!name.Equals("legion_td"))
+		    {
+		        mainForm.unitToAbility.Visible = false;
+		    }
 
 			displayAddonSize();
 

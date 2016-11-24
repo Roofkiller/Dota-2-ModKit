@@ -19,7 +19,9 @@ using System.Threading;
 using Dota2ModKit.HelperClasses;
 
 namespace Dota2ModKit {
-	public partial class MainForm : MetroForm {
+	public partial class MainForm : MetroForm
+	{
+	    public static MainForm Instance { get; private set; }
 		public bool DEBUG = false;
 
 		public Addon currAddon;
@@ -49,7 +51,9 @@ namespace Dota2ModKit {
 		public string newVersUrl = "";
 		public string releases_page_source = "";
 
-		public MainForm() {
+		public MainForm()
+		{
+		    Instance = this;
 			// bring up the UI
 			InitializeComponent();
 
@@ -110,7 +114,6 @@ namespace Dota2ModKit {
 
 			// init our features of Modkit
 			initFeatures();
-
 		}
 
 		private void initFeatures() {
@@ -702,5 +705,12 @@ namespace Dota2ModKit {
 			DonateForm df = new DonateForm(this);
 			df.ShowDialog();
 		}
-	}
+
+        private void unitToAbility_Click(object sender, EventArgs e)
+        {
+            fixButton();
+            LegionFeatures.MatchAbilitiesToUnits();
+            text_notification("Matched Abilities to Units", MetroColorStyle.Green, 2000);
+        }
+  }
 }

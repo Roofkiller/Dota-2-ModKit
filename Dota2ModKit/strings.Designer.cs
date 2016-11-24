@@ -822,6 +822,24 @@ namespace Dota2ModKit {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unit-&gt;Ability.
+        /// </summary>
+        internal static string UnitToAbility {
+            get {
+                return ResourceManager.GetString("UnitToAbility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adjusts the values in the abilites to match units.
+        /// </summary>
+        internal static string UnitToAbilityTooltip {
+            get {
+                return ResourceManager.GetString("UnitToAbilityTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update Available!.
         /// </summary>
         internal static string UpdateAvailable {

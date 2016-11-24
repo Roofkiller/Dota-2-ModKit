@@ -20,6 +20,9 @@ namespace Dota2ModKit.HelperClasses {
 			mf.combineKVBtn.Text = strings.CombineKVFiles;
 			mf.mainFormToolTip.SetToolTip(mf.combineKVBtn, strings.CombineKVFilesBtnTooltip);
 
+			mf.unitToAbilityBtn.Text = strings.UnitToAbility;
+			mf.mainFormToolTip.SetToolTip(mf.unitToAbilityBtn, strings.UnitToAbilityTooltip);
+
 			mf.generateAddonLangsBtn.Text = strings.GenerateTooltips;
 			mf.mainFormToolTip.SetToolTip(mf.generateAddonLangsBtn, strings.GenerateTooltipsBtnTooltip);
 
