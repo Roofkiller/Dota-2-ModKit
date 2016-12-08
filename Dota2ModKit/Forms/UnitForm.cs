@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Dota2ModKit.Features;
 using KVLib;
@@ -22,6 +23,7 @@ namespace Dota2ModKit.Forms
         private List<Builder> builders;
         private List<KeyValueData> units = new List<KeyValueData>();
         private KeyValueData _currentUnit;
+        private KeyValue waveInfos;
 
         private KeyValueData currentUnit
         {
@@ -35,6 +37,7 @@ namespace Dota2ModKit.Forms
 
         public UnitForm(MainForm mainForm)
         {
+            waveInfos = KVParser.KV1.Parse(File.ReadAllText(Path.Combine(MainForm.Instance.currAddon.gamePath, "scripts", "maps", "legion_td_4v4.txt")));
             MainForm.Instance.currAddon.FilesLocked = true;
             this.mainForm = mainForm;
 
@@ -55,10 +58,13 @@ namespace Dota2ModKit.Forms
                     // ignored
                 }
                 if (newData != null)
+                {
                     currentUnit.KeyValue = newData;
+                    currentUnit.Text = textBox1.Text;
+                }
                 if (currentUnit != null)
                     FillStats(_currentUnit);
-                currentUnit?.Save();
+                currentUnit?.SaveText();
             };
 
             this.Closed += (sender, args) => MainForm.Instance.currAddon.FilesLocked = false;
@@ -75,13 +81,13 @@ namespace Dota2ModKit.Forms
 	                var unitNode = node.Nodes.Add(unit.ShortBuilderName);
 	            }
             }
-	        var incomeNode = treeView1.Nodes.Add("incomeunits");
+	        var incomeNode = treeView1.Nodes.Add("incomeunit");
             foreach (var unit in LegionFeatures.IncomeUnits)
 	        {
                 units.Add(unit);
 	            incomeNode.Nodes.Add(unit.ShortIncomeName);
 	        }
-	        var waveNode = treeView1.Nodes.Add("waveunits");
+	        var waveNode = treeView1.Nodes.Add("unit");
 	        foreach (var unit in LegionFeatures.WaveUntis)
 	        {
 	            units.Add(unit);
@@ -96,7 +102,7 @@ namespace Dota2ModKit.Forms
 	            if (unit != null)
                 {
                     currentUnit = unit;
-                    textBox1.Text = unit.KeyValue.ToString();
+                    textBox1.Text = unit.Text;
                     textBox1.ClearUndo();
                 }
             };
@@ -106,9 +112,9 @@ namespace Dota2ModKit.Forms
 	    {
 	        KeyValue kv = unit.KeyValue;
 	        bool isIncome = false;
-	        int cost = LegionFeatures.GetTotalGoldCost(unit);
+	        int cost = unit.TotalGoldCost;
 	        if (isIncome = cost == -1)
-	            cost = LegionFeatures.GetTangoCost(unit);
+	            cost = unit.TangoCost;
             float dmg = (kv["AttackDamageMin"].GetFloat() + kv["AttackDamageMax"].GetFloat()) / 2;
             float ar = kv["AttackRate"].GetFloat();
             float dps = dmg / ar;
@@ -134,55 +140,53 @@ namespace Dota2ModKit.Forms
 	            }
 	            val = (dpsVal*dpsVal*hpVal*hpVal);
 	        }
-//	        var s = new
-//	        {
-//	            cost = cost,
-//	            dmg = dmg,
-//	            ar = ar,
-//	            dps = dps,
-//	            dps_p_c = dps_p_c,
-//	            health = health,
-//	            effHealth = effHealth,
-//	            effHealth_p_g = effHealth_p_g,
-//	            range = range,
-//	            value = val,
-//	        };
+	        int unitCount = GetUnitCount(unit);
+	        float waveDps = dps*unitCount;
+	        float waveHealth = effHealth*unitCount;
 	        string stats = $"Cost : {cost} \n" +
 	                       $"Damage : {dmg} \n" +
 	                       $"AttackRate : {ar}\n" +
 	                       $"DPS : {dps}\n" +
-	                       (cost != -1 ? $"DPS/Cost : {dps_p_c}\n" : "") +
 	                       $"Health : {health}\n" +
 	                       $"Armor : {armor}\n" +
 	                       $"EffHealth : {effHealth}\n" +
-	                       (cost != -1 ? $"EffHealth/Cost : {effHealth_p_g}\n" : "") +
 	                       $"Range : {range}\n" +
-	                       (cost != -1 ? $"Value : {val} (This is just a guideline, abilities arent calculated!)" : "");
+                           (cost != -1 ? $"DPS/Cost : {dps_p_c}\n" +
+                                         $"EffHealth/Cost : {effHealth_p_g}\n" +
+                                         $"Value : {val} (This is just a guideline, abilities arent calculated!)" : "") +
+                           (unitCount > 0 ? $"UnitCount : {unitCount} \n" +
+                                            $"Wave DPS : {waveDps} \n" +
+                                            $"Wave Health : {waveHealth}" : "");
 	        textBox2.Text = stats;
 	    }
+
+        private int GetUnitCount(KeyValueData unit)
+        {
+            foreach (var info in waveInfos.Children)
+            {
+                if (info.HasChildren)
+                {
+                    if (info.HasKey("Unit"))
+                    {
+                        if (info["Unit"]["NPCName"].GetString().Equals(unit.Name))
+                        {
+                            return info["Unit"]["UnitCount"].GetInt();
+                        }
+                    }
+                }
+            }
+            return -1;
+        }
 
 	    private KeyValueData GetUnit(TreeNode node)
 	    {
 	        if (node.Parent != null)
 	        {
-	            var unit = units.First(u => u.Path.Contains(node.Parent.Text) && u.Name.Contains(node.Text));
+	            var unit = units.Single(u => Regex.Match(u.Path, $@".*{node.Parent.Text}_{node.Text}.txt").Success);
 	            return unit;
 	        }
 	        return null;
 	    }
-
-	    private void copySpellBtn_Click(object sender, EventArgs e) {
-			metroRadioButton1.Select();
-
-			Clipboard.SetText(textBox1.Text);
-			text_notification(strings.Copied, MetroColorStyle.Blue, 1000);
-		}
-        
-
-		private void metroScrollBar1_Scroll(object sender, ScrollEventArgs e) {
-			Console.WriteLine(e.NewValue);
-			Console.WriteLine(textBox1.AutoScrollOffset.X + ", " + textBox1.AutoScrollOffset.Y);
-		}
 
 		public void text_notification(string text, MetroColorStyle color, int duration) {
 			System.Timers.Timer notificationLabelTimer = new System.Timers.Timer(duration);
