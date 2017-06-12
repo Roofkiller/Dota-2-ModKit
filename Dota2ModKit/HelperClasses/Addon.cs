@@ -292,6 +292,8 @@ namespace Dota2ModKit
 				writeTooltips();
 				mainForm.text_notification(strings.TooltipsSuccessfully, MetroColorStyle.Green, 2500);
 			} catch (Exception ex) {
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
 				string msg = ex.Message;
 				if (ex.InnerException != null) {
 					msg = ex.InnerException.Message;
@@ -486,8 +488,8 @@ namespace Dota2ModKit
 				}
 
 				unitEntries.Add(new UnitEntry(this, kv.Key));
-			}
-		}
+            }
+        }
 
 		private void generateUnitTooltips() {
 			string path = Path.Combine(gamePath, "scripts", "npc", "npc_units_custom.txt");
@@ -495,7 +497,6 @@ namespace Dota2ModKit
 			if (!File.Exists(path)) {
 				return;
 			}
-
 			KeyValue kvs = kvs = KVParser.KV1.ParseAll(File.ReadAllText(path))[0];
 
 			foreach (KeyValue kv in kvs.Children) {
@@ -503,8 +504,8 @@ namespace Dota2ModKit
 					continue;
 				}
 				unitEntries.Add(new UnitEntry(this, kv.Key));
-			}
-		}
+            }
+        }
 
 		internal void delete() {
 			DialogResult dr = MetroMessageBox.Show(mainForm,
